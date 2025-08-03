@@ -10,10 +10,10 @@ summary: 这篇文章介绍了如何在文章中嵌入视频和代码。
 ## Codepen
 
 ```md
-::codepen{#gOyLepE author="lxchapu"}
+::codepen{#gOyLepE author="your-username"}
 ```
 
-::codepen{#gOyLepE author="lxchapu"}
+<!-- CodePen 示例暂时移除，需要时请添加你的 CodePen 用户名 -->
 
 ## YouTube
 
