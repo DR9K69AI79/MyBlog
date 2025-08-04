@@ -9,6 +9,7 @@ import {
   useShouldHeaderMetaShow,
 } from './hooks'
 import { RootPortal } from '@/components/RootPortal'
+import { withBase } from '@/utils/path'
 
 export function HeaderContent() {
   return (
@@ -87,7 +88,7 @@ function HeaderMenu({ isBgShow }: { isBgShow: boolean }) {
         {menus.map((menu) => (
           <HeaderMenuItem
             key={menu.name}
-            href={menu.link}
+            href={withBase(menu.link)}
             title={menu.name}
             icon={menu.icon}
             isActive={pathName === menu.link}

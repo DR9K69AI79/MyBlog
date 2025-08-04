@@ -1,5 +1,6 @@
 ---
 import { slugify } from '@/utils/content'
+import { withBase } from '@/utils/path'
 
 interface Props {
   tags: string[]
@@ -17,7 +18,7 @@ const { tags, category, class: className } = Astro.props
         <i class="iconfont icon-folder" />
         <a
           class="hover:text-accent hover:underline underline-offset-2 decoration-dashed"
-          href={`/categories/${slugify(category)}`}
+          href={withBase(`/categories/${slugify(category)}`)}
         >
           {category}
         </a>
@@ -33,7 +34,7 @@ const { tags, category, class: className } = Astro.props
             {index > 0 && <span>, </span>}
             <a
               class="hover:text-accent hover:underline underline-offset-2 decoration-dashed"
-              href={`/tags/${slugify(tag)}`}
+              href={withBase(`/tags/${slugify(tag)}`)}
             >
               {tag}
             </a>

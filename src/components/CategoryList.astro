@@ -1,4 +1,6 @@
 ---
+import { withBase } from '@/utils/path'
+
 interface Props {
   categories: {
     name: string
@@ -16,7 +18,7 @@ const { categories } = Astro.props
   ) : (
     <div class="space-y-2.5">
       {categories.map((category) => (
-        <a class="relative block group" href={`/categories/${category.slug}`}>
+        <a class="relative block group" href={withBase(`/categories/${category.slug}`)}>
           <div class="absolute -z-1 inset-0 rounded-lg bg-accent/10 group-hover:transition group-hover:bg-accent/20 group-hover:scale-105" />
           <div class="px-2.5 py-2 text-sm flex gap-1 select-none">
             <i class="shrink-0 iconfont icon-folder" />

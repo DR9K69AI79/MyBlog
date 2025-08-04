@@ -10,9 +10,11 @@ interface Props {
 const { entry } = Astro.props
 
 const { remarkPluginFrontmatter } = await entry.render()
+
+import { withBase } from '@/utils/path'
 ---
 
-<a class="block relative py-8 focus-visible:outline-0" href={`/posts/${entry.slug}`}>
+<a class="block relative py-8 focus-visible:outline-0" href={withBase(`/posts/${entry.slug}`)}>
   <PostCardHoverOverlay client:only="react" />
   <h2 class="relative text-2xl font-bold">
     {entry.data.title}
