@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Page Redirect</title>
+    <script>
+        // GitHub Pages 客户端路由重定向
+        // 这会将所有 404 请求重定向到根页面，让客户端路由接管
+        const path = window.location.pathname;
+        const base = '/MyBlog_astro-gyoza';
+        
+        // 如果不是根路径，重定向到带有路径参数的根页面
+        if (path !== base + '/' && path !== base) {
+            const redirect = base + '/?redirect=' + encodeURIComponent(path.replace(base, ''));
+            window.location.replace(redirect);
+        }
+    </script>
+</head>
+<body>
+    Redirecting...
+</body>
+</html>

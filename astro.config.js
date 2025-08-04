@@ -22,6 +22,7 @@ import swup from '@swup/astro'
 export default defineConfig({
   site: site.url,
   base: process.env.NODE_ENV === 'production' ? '/MyBlog_astro-gyoza' : undefined,
+  output: 'static',
   integrations: [
     tailwind(),
     react(),
