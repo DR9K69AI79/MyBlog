@@ -3,6 +3,7 @@ import { createContext, useContext, useState, forwardRef } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { motion, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
+import { withBase } from '@/utils/path'
 
 const contentVariants = {
   hidden: {
@@ -106,7 +107,7 @@ function DrawerContentImpl() {
     <ul className="mt-8 pb-8 overflow-y-auto overflow-x-hidden min-h-0">
       {menus.map((menu) => (
         <motion.li key={menu.name} variants={menuItemVariants}>
-          <a className="inline-flex p-2 space-x-4" href={menu.link} onClick={dismiss}>
+          <a className="inline-flex p-2 space-x-4" href={withBase(menu.link)} onClick={dismiss}>
             <i className={clsx('iconfont', menu.icon)}></i>
             <span>{menu.name}</span>
           </a>

@@ -4,9 +4,20 @@
  */
 export function getBasePath(): string {
   if (typeof window !== 'undefined') {
-    // Client-side: get base from current URL
-    return import.meta.env.BASE_URL || '/'
+    // Client-side: get base from current URL or import.meta.env
+    const baseUrl = import.meta.env.BASE_URL
+    if (baseUrl && baseUrl !== '/') {
+      return baseUrl
+    }
+
+    // Fallback: extract base from current pathname
+    const pathname = window.location.pathname
+    if (pathname.startsWith('/MyBlog_astro-gyoza')) {
+      return '/MyBlog_astro-gyoza'
+    }
+    return '/'
   }
+
   // Server-side: use the configured base
   return import.meta.env.BASE_URL || '/'
 }
