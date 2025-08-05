@@ -2,17 +2,20 @@
 category: 技术分享
 comments: true
 date: '2025-08-05'
-description: ''
+description: 深入解析Unity中C#脚本的编译与运行流程，包括Mono、IL2CPP和Burst Compiler的工作原理，帮助开发者理解Unity底层执行机制。
 draft: false
 lastMod: '2025-08-05'
 sticky: 0
-summary: ''
+summary: 本文详细解析Unity中C#脚本的不同编译与运行流程，包括常规.NET环境、Unity编辑器模式下的Mono执行、发布构建时的IL2CPP工作原理，以及Burst
+  Compiler的性能优化机制，为Unity开发者提供深入的技术参考。
 tags:
-- 博客
+- C#
+- 异步编程
+- 编程范式
 title: 未命名文章
 ---
 
-本文概述了 Unity 中 C# 脚本可能经历的不同编译与运行流程。有待整理润色。
+本文概述了 Unity 中 C# 脚本可能经历的不同编译与运行流程。有待进一步整理润色。
 
 ---
 
