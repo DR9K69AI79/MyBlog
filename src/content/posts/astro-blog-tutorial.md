@@ -1,10 +1,9 @@
 ---
 category: 技术分享
 comments: true
-date: 2025-08-05
-description: 使用Astro框架搭建基础博客的教程，适合网页开发初学者。详细介绍项目文件结构和博客搭建计划，包括标签分类、LaTeX公式渲染等功能实现。
+date: '2025-08-05T16:11:53.700Z'
 draft: false
-lastMod: 2025-08-05T11:19:10.376Z
+lastMod: '2025-08-05T11:19:10.376Z'
 sticky: 0
 summary: 本文记录了使用Astro框架搭建基础博客的学习过程，适合网页开发初学者。介绍了项目文件结构及博客搭建计划，包括标签分类、LaTeX渲染等功能实现。
 tags:
