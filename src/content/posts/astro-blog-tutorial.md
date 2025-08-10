@@ -1,11 +1,10 @@
 ---
 title: 快速搭建一个基于Astro框架的博客模板项目
-date: '2025-08-10'
-lastMod: null
+date: 2025-08-10
 summary: 本文作为首篇博客，将简单讲讲该站搭建与配置自动化的过程。
 category: 实践记录
 tags:
-- VibeCoding
+  - VibeCoding
 comments: true
 draft: false
 sticky: 0
