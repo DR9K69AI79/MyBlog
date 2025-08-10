@@ -1,33 +1,23 @@
-# Gyoza
+# DWHITE's Blog
 
-Gyoza is a static blog template built with Astro and React.
+个人技术博客。基于 Astro 构建，用于记录学习和技术实践。
 
 ![astro version](https://img.shields.io/badge/astro-4.6-red)
 ![node version](https://img.shields.io/badge/node-18.18-green)
 
-Demo Site:
+站点地址：[https://dr9k69ai79.github.io/MyBlog](https://dr9k69ai79.github.io/MyBlog)
 
-- [gyoza.lxchapu.com](https://gyoza.lxchapu.com)
-- [www.lxchapu.com](https://www.lxchapu.com)
+## 特性
 
-Enjoy it!
+- ✅ SEO 优化，包含规范的 URL 和 OpenGraph 信息
+- ✅ 支持站点地图和 RSS 订阅
+- ✅ 夜间模式切换
+- ✅ 响应式设计
+- ✅ 评论系统集成
+- ✅ 代码语法高亮
+- ✅ 特殊日期标记
 
-## 📷 Screenshots
-
-![Preview](https://s2.loli.net/2024/05/06/A9rzC3Uym7RwdQc.webp)
-
-## 🎉 Features
-
-- ✅ 有着规范的 URL 和 OpenGraph 信息，对 SEO 友好
-- ✅ 支持站点地图
-- ✅ 支持 RSS 订阅
-- ✅ 支持夜间模式
-- ✅ 特殊日期变灰
-- ✅ 简单干净的配色和主题
-- ✅ 支持评论系统
-- ✅ 支持代码高亮
-
-## 🔧 Tech Stack
+## 技术栈
 
 - [Astro](https://astro.build/)
 - [React](https://reactjs.org/)
@@ -35,11 +25,33 @@ Enjoy it!
 - [Framer Motion](https://www.framer.com/motion/)
 - [Jotai](https://jotai.org/)
 
-## 📖 Documentation
+## 使用
 
-前往：[Documentation](https://gyoza.lxchapu.com/posts/guide)
+### 安装依赖
 
-## 🚀 Project Structure
+```bash
+pnpm install
+```
+
+### 开发环境
+
+```bash
+pnpm dev
+```
+
+### 构建
+
+```bash
+pnpm build
+```
+
+### 预览
+
+```bash
+pnpm preview
+```
+
+## 项目结构
 
 ```text
 ├── public/
@@ -59,14 +71,18 @@ Enjoy it!
 └── tsconfig.json
 ```
 
-网站配置保存在 `config.json` 文件。
+网站配置保存在 `src/config.json` 文件中。
 
-## 🧞 Commands
+## 命令
 
-| Command        | Action                                       |
-| :------------- | :------------------------------------------- |
-| `pnpm i`       | Installs dependencies                        |
-| `pnpm dev`     | Starts local dev server at `localhost:4321`  |
-| `pnpm build`   | Build your production site to `./dist/`      |
-| `pnpm preview` | Preview your build locally, before deploying |
-| `pnpm format`  | Format code using Prettier                   |
+| 命令           | 说明                                  |
+| :------------- | :------------------------------------ |
+| `pnpm i`       | 安装依赖                              |
+| `pnpm dev`     | 启动开发服务器，地址 `localhost:4321` |
+| `pnpm build`   | 构建生产版本到 `./dist/` 目录         |
+| `pnpm preview` | 本地预览构建结果                      |
+| `pnpm format`  | 使用 Prettier 格式化代码              |
+
+## 致谢
+
+本项目基于 [Gyoza](https://github.com/lxchapu/astro-gyoza) 模板构建，感谢原作者的开源贡献。
