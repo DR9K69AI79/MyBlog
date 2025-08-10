@@ -1,4 +1,5 @@
 ---
+<<<<<<< Updated upstream
 category: 技术分享
 comments: true
 date: '2023-11-07T00:00:00.000Z'
@@ -14,6 +15,19 @@ tags:
 title: Astro博客入门
 ---
 
+=======
+title: "astro blog tutorial"
+date: "2025-02-19"
+lastMod: "2025-08-06"
+summary: "本文作为首篇博客，粗略记录我使用Astro搭博客的学习及过程，主要目的是~~写着好玩~~通过一定的输出来辅助记忆与学习。因为完全没有网页开发的知识与经验，所以可预见的，本文将会有不少理解、描述上的不严谨甚至错误，见谅。"
+category: "技术分享"
+tags:
+  - 博客
+comments: True
+draft: False
+sticky: 0
+---
+>>>>>>> Stashed changes
 # 简介
 
 本文作为首篇博客，粗略记录我使用Astro搭博客的学习及过程，主要目的是~~写着好玩~~通过一定的输出来辅助记忆与学习。因为完全没有网页开发的知识与经验，所以可预见的，本文将会有不少理解、描述上的不严谨甚至错误，见谅。
