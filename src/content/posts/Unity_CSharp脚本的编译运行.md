@@ -1,12 +1,11 @@
 ---
 title: Unity内C#脚本的编译运行
-date: '2025-04-01'
-lastMod: null
+date: 2025-04-01
 summary: 本文概述了 Unity 中 C脚本可能经历的不同编译与运行流程。有待进一步整理润色。
 category: 学习笔记
 tags:
-- Unity
-- CSharp
+  - Unity
+  - CSharp
 comments: true
 draft: false
 sticky: 0
