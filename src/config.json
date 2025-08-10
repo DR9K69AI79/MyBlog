@@ -26,13 +26,13 @@
       },
       {
         "name": "Bilibili",
-        "icon": "icon-tv",
+        "icon": "icon-bilibili",
         "url": "https://space.bilibili.com/30935698",
         "color": "rgb(0, 174, 236)"
       },
       {
         "name": "Steam",
-        "icon": "icon-gamepad-2",
+        "icon": "icon-steam",
         "url": "https://steamcommunity.com/profiles/76561198321291020/",
         "color": "rgb(23, 26, 33)"
       },
