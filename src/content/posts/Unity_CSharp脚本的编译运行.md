@@ -1,4 +1,5 @@
 ---
+<<<<<<< Updated upstream
 category: 技术分享
 comments: true
 date: '2023-11-07T00:00:00.000Z'
@@ -15,6 +16,19 @@ tags:
 title: Unity C编译流程
 ---
 
+=======
+title: "Unity CSharp脚本的编译运行"
+date: "2025-08-05"
+lastMod: "2025-08-06"
+summary: "本文概述了 Unity 中 C脚本可能经历的不同编译与运行流程。有待进一步整理润色。"
+category: "技术分享"
+tags:
+  - 博客
+comments: True
+draft: False
+sticky: 0
+---
+>>>>>>> Stashed changes
 本文概述了 Unity 中 C# 脚本可能经历的不同编译与运行流程。有待进一步整理润色。
 
 ---
