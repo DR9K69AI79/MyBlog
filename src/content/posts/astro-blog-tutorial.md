@@ -1,27 +1,16 @@
 ---
-<<<<<<< Updated upstream
-title: "快速搭建一个基于Astro框架的博客模板项目"
-date: "2025-08-10"
-lastMod: "2025-08-10"
-summary: "本文作为首篇博客，将简单讲讲该站搭建与配置自动化的过程。"
-category: "实践记录"
-tags:
-  - 博客
-comments: True
-draft: False
-=======
 title: 快速搭建一个基于Astro框架的博客模板项目
 date: 2025-08-10
-lastMod: 
+lastMod:
 summary: 本文作为首篇博客，将简单讲讲该站搭建与配置自动化的过程。
 category: 实践记录
 tags:
   - VibeCoding
 comments: true
 draft: false
->>>>>>> Stashed changes
 sticky: 0
 ---
+
 # 简介
 
 本文作为首篇博客，粗略记录我使用Astro搭博客的学习及过程，主要目的是~~写着好玩~~通过一定的输出来辅助记忆与学习。因为完全没有网页开发的知识与经验，所以可预见的，本文将会有不少理解、描述上的不严谨甚至错误，见谅。
