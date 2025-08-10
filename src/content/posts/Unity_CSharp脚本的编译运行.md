@@ -1,11 +1,18 @@
 ---
+<<<<<<< Updated upstream
 title: "Unity内C#脚本的编译运行"
 date: "2025-08-10"
 lastMod: "2025-08-10"
 summary: "本文概述了 Unity 中 C脚本可能经历的不同编译与运行流程。有待进一步整理润色。"
 category: "学习笔记"
+=======
+title: Unity内C#脚本的编译运行
+date: 2025-04-01
+lastMod: 
+summary: 本文概述了 Unity 中 C脚本可能经历的不同编译与运行流程。有待进一步整理润色。
+category: 学习笔记
+>>>>>>> Stashed changes
 tags:
-  - 博客
   - Unity
   - CSharp
 comments: True
