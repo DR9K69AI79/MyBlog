@@ -1,10 +1,10 @@
 ---
 title: 测试文章
-date: '2024-01-15'
+date: 2024-01-15
 category: 技术分享
 tags:
-- 测试
-- 博客
+  - 测试
+  - 博客
 comments: true
 draft: false
 sticky: 0
