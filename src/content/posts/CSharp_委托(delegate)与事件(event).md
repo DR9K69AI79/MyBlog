@@ -5,7 +5,6 @@ lastMod: "2025-08-10"
 summary: "委托 (delegate) 是一种基于类的数据类型，功能类似于C++中的函数指针。该类型用于表示对于具有特定参数列表与返回类型的方法的引用。"
 category: "学习笔记"
 tags:
-  - 博客
   - CSharp
 comments: True
 draft: False
