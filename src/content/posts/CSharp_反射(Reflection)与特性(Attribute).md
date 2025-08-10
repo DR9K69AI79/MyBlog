@@ -1,4 +1,5 @@
 ---
+<<<<<<< Updated upstream
 category: 技术分享
 comments: true
 date: '2023-11-15T00:00:00.000Z'
@@ -16,6 +17,20 @@ title: 反射与特性
 ---
 
 > [!summary]
+=======
+title: "CSharp 反射(Reflection)与特性(Attribute)"
+date: "2025-08-05"
+lastMod: "2025-08-06"
+summary: "> 总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。"
+category: "技术分享"
+tags:
+  - 博客
+comments: True
+draft: False
+sticky: 0
+---
+> **Summary**
+>>>>>>> Stashed changes
 > 总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。
 # 基本概念梳理
 
