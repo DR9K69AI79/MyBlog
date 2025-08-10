@@ -1,34 +1,16 @@
 ---
-<<<<<<< Updated upstream
-category: 技术分享
-comments: true
-date: '2023-11-07T00:00:00.000Z'
-draft: false
-lastMod: '2025-08-05T17:04:59.889Z'
-sticky: 0
-summary: 本文详细解析Unity中C#脚本的不同编译与运行流程，包括常规.NET环境、编辑器Mono模式、发布构建IL2CPP及Burst Compiler优化机制，帮助开发者深入理解Unity脚本执行原理。
-tags:
-- CSharp
-- Unity
-- 编译
-- IL2CPP
-- Burst
-title: Unity C编译流程
----
-
-=======
-title: "Unity CSharp脚本的编译运行"
-date: "2025-08-05"
-lastMod: "2025-08-06"
-summary: "本文概述了 Unity 中 C脚本可能经历的不同编译与运行流程。有待进一步整理润色。"
-category: "技术分享"
+title: 'Unity CSharp脚本的编译运行'
+date: '2025-08-05'
+lastMod: '2025-08-06'
+summary: '本文概述了 Unity 中 C脚本可能经历的不同编译与运行流程。有待进一步整理润色。'
+category: '技术分享'
 tags:
   - 博客
 comments: True
 draft: False
 sticky: 0
 ---
->>>>>>> Stashed changes
+
 本文概述了 Unity 中 C# 脚本可能经历的不同编译与运行流程。有待进一步整理润色。
 
 ---
