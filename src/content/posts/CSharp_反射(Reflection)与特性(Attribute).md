@@ -1,18 +1,28 @@
 ---
+<<<<<<< Updated upstream
 title: "C#的反射(Reflection)与特性(Attribute)"
 date: "2025-08-10"
 lastMod: "2025-08-10"
 summary: "总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。"
 category: "学习笔记"
+=======
+title: C#的反射(Reflection)与特性(Attribute)
+date: 2025-04-01
+lastMod: 
+summary: 总的来说，这两个要点与常规的游戏gameplay逻辑关联较小，运用不多。更多用于开发工具和实现一些进阶的业务需求上。
+category: 学习笔记
+>>>>>>> Stashed changes
 tags:
-  - 博客
   - CSharp
 comments: True
 draft: False
 sticky: 0
 ---
+<<<<<<< Updated upstream
 > **Summary**
 > 总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。
+=======
+>>>>>>> Stashed changes
 
 # 基本概念梳理
 
