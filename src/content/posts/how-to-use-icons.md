@@ -1,16 +1,15 @@
 ---
-title: '如何在 Gyoza 中使用图标？'
-date: '2024-05-08'
-lastMod: '2025-08-10'
-summary: 'Gyoza 选择 font-class 的方式引用图标。这些图标大部分来源于 Remix Icons，并且在 iconfont 上进行管理和导出。'
-category: '教程'
+title: "如何在 Gyoza 中使用图标？"
+date: "2024-05-08"
+lastMod: "2025-08-10"
+summary: "Gyoza 选择 font-class 的方式引用图标。这些图标大部分来源于 Remix Icons，并且在 iconfont 上进行管理和导出。"
+category: "教程"
 tags:
   - Icon
 comments: True
 draft: True
 sticky: 0
 ---
-
 Gyoza 选择 font-class 的方式引用图标。这些图标大部分来源于 [Remix Icons](https://remixicon.com/)，并且在 [iconfont](https://www.iconfont.cn/) 上进行管理和导出。
 
 下图展示了项目中的所有图标：
