@@ -1,16 +1,17 @@
 ---
-category: "分类（由 GLM 自动推荐）"
-comments: True
-date: "2025-08-05"
-draft: False
-lastMod: "2024-08-04"
-sticky: 0
-summary: "文章摘要（由 GLM 自动生成）"
+title: '文章标题'
+date: '2025-08-05'
+lastMod: '2024-08-04'
+summary: '文章摘要（由 GLM 自动生成）'
+category: '分类（由 GLM 自动推荐）'
 tags:
   - 标签1
   - 标签2
-title: "文章标题"
+comments: True
+draft: True
+sticky: 0
 ---
+
 # 文章标题
 
 这里是文章内容...
