@@ -1,16 +1,16 @@
 ---
-title: 'CSharp 反射(Reflection)与特性(Attribute)'
-date: '2025-08-05'
-lastMod: '2025-08-06'
-summary: '> 总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。'
-category: '技术分享'
+title: "C#的反射(Reflection)与特性(Attribute)"
+date: "2025-08-10"
+lastMod: "2025-08-10"
+summary: "总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。"
+category: "学习笔记"
 tags:
   - 博客
+  - CSharp
 comments: True
 draft: False
 sticky: 0
 ---
-
 > **Summary**
 > 总的来说，这两个要点都和游戏的基本gameplay相关开发没有什么比较直接的运用。更多在于开发工具和一些高级业务需求上。
 
