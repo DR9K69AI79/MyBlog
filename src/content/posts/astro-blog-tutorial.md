@@ -1,4 +1,5 @@
 ---
+<<<<<<< Updated upstream
 title: "快速搭建一个基于Astro框架的博客模板项目"
 date: "2025-08-10"
 lastMod: "2025-08-10"
@@ -8,6 +9,17 @@ tags:
   - 博客
 comments: True
 draft: False
+=======
+title: 快速搭建一个基于Astro框架的博客模板项目
+date: 2025-08-10
+lastMod: 
+summary: 本文作为首篇博客，将简单讲讲该站搭建与配置自动化的过程。
+category: 实践记录
+tags:
+  - VibeCoding
+comments: true
+draft: false
+>>>>>>> Stashed changes
 sticky: 0
 ---
 # 简介
