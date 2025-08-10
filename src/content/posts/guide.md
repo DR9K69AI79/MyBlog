@@ -1,9 +1,9 @@
 ---
-title: 'Gyoza 使用指南'
-date: '2025-08-10'
-lastMod: '2024-08-10'
-summary: '欢迎使用 Gyoza，Gyoza 是一款 Astro 博客主题，它保持简洁和可爱的风格。本篇文章将会介绍如何使用并部署 Gyoza。'
-category: '教程'
+title: "Gyoza 使用指南"
+date: "2025-08-10"
+lastMod: "2024-08-10"
+summary: "欢迎使用 Gyoza，Gyoza 是一款 Astro 博客主题，它保持简洁和可爱的风格。本篇文章将会介绍如何使用并部署 Gyoza。"
+category: "教程"
 tags:
   - Astro
   - Gyoza
@@ -11,7 +11,6 @@ comments: True
 draft: True
 sticky: 1
 ---
-
 ## 前置条件
 
 - node 版本 >= 18.18.0
