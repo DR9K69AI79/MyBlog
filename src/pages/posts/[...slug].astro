@@ -18,7 +18,7 @@ import { PostCopyright } from '@/components/post/PostCopyright'
 export const getStaticPaths = (async () => {
   const sortedPosts = await getSortedPosts()
 
-  return sortedPosts.map((post, index) => ({
+  return sortedPosts.map((post: CollectionEntry<'posts'>, index: number) => ({
     params: { slug: post.slug },
     props: {
       current: post,

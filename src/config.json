@@ -11,30 +11,30 @@
   "author": {
     "name": "DWHITE",
     "twitterId": "",
-    "avatar": "https://avatars.githubusercontent.com/u/185234493?v=4"
+    "avatar": "src/assets/hero_Img.jpeg"
   },
   "hero": {
     "name": "DWHITE",
-    "bio": "Digital Media Technology Student & Game Dev Enthusiast",
-    "description": "Minimalist. Creative. Future-focused.",
+    "bio": " ",
+    "description": " ",
     "socials": [
       {
         "name": "Github",
         "icon": "icon-github",
         "url": "https://github.com/DR9K69AI79",
-        "color": "rgb(24, 23, 23)"
+        "color": "rgb(34, 45, 61)"
       },
       {
         "name": "Bilibili",
         "icon": "icon-bilibili",
         "url": "https://space.bilibili.com/30935698",
-        "color": "rgb(0, 174, 236)"
+        "color": "rgb(234, 122, 153)"
       },
       {
         "name": "Steam",
         "icon": "icon-steam",
         "url": "https://steamcommunity.com/profiles/76561198321291020/",
-        "color": "rgb(23, 26, 33)"
+        "color": "rgb(41, 84, 132)"
       },
       {
         "name": "Email",
@@ -90,11 +90,6 @@
       "name": "关于",
       "link": "/about",
       "icon": "icon-ghost"
-    },
-    {
-      "name": "友链",
-      "link": "/friends",
-      "icon": "icon-hearts"
     }
   ],
   "posts": {
