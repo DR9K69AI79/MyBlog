@@ -65,7 +65,7 @@ const lastMod = current.data.lastMod || current.data.date
     data-pagefind-body
   >
     <div class="min-w-0">
-      <header class="space-y-4">
+      <header class="space-y-4 mb-12">
         <h1 class="text-4xl font-bold text-center break-words hyphens-auto">
           {current.data.title}
         </h1>
@@ -90,7 +90,7 @@ const lastMod = current.data.lastMod || current.data.date
         <Content />
       </MarkdownWrapper>
 
-      <section class="space-y-6" data-pagefind-ignore>
+      <section class="space-y-6 mt-12" data-pagefind-ignore>
         <PostCopyright title={current.data.title} slug={mdSlug} lastMod={lastMod} client:visible />
         <PostNav prev={prev} next={next} />
         {current.data.comments && <Comments />}

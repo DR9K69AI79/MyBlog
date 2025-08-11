@@ -39,7 +39,14 @@ export default defineConfig({
     remarkPlugins: [remarkMath, remarkDirective, remarkEmbed, remarkSpoiler, remarkReadingTime],
     rehypePlugins: [
       rehypeHeadingIds,
-      rehypeKatex,
+      [
+        rehypeKatex,
+        {
+          strict: false, // 放宽严格模式，允许Unicode字符
+          trust: true, // 允许更多的LaTeX命令
+          throwOnError: false, // 出错时警告而不是抛出错误
+        },
+      ],
       rehypeLink,
       rehypeImage,
       rehypeHeading,
