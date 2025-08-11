@@ -21,7 +21,7 @@ import swup from '@swup/astro'
 // https://astro.build/config
 export default defineConfig({
   site: site.url,
-  base: process.env.NODE_ENV === 'production' ? '/MyBlog_astro-gyoza' : undefined,
+  base: process.env.NODE_ENV === 'production' ? '/MyBlog' : undefined,
   integrations: [
     tailwind(),
     react(),
