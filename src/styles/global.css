@@ -42,3 +42,37 @@ html.gray {
 * {
   scrollbar-width: thin;
 }
+
+/* 处理长文本换行 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* 确保整体布局不会因为长文本而溢出 */
+.markdown-wrapper,
+.post-header,
+article {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* 处理长URL和链接 */
+a,
+span,
+p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* 防止长单词撑破容器 */
+.break-long-words {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}

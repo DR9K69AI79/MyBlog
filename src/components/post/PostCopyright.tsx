@@ -33,9 +33,10 @@ export function PostCopyright({
     <section className="text-xs leading-loose text-secondary">
       <p>文章标题：{title}</p>
       <p>文章作者：{author.name}</p>
-      <p>
-        <span>文章链接：{url}</span>
-        <span role="button" className="cursor-pointer select-none" onClick={handleCopyUrl}>
+      <p className="break-all">
+        <span>文章链接：</span>
+        <span className="break-all" style={{ wordBreak: 'break-all', overflowWrap: 'anywhere' }}>{url}</span>
+        <span role="button" className="cursor-pointer select-none ml-2" onClick={handleCopyUrl}>
           [复制]
         </span>
       </p>
