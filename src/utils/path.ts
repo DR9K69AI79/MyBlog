@@ -12,8 +12,8 @@ export function getBasePath(): string {
 
     // Fallback: extract base from current pathname
     const pathname = window.location.pathname
-    if (pathname.startsWith('/MyBlog_astro-gyoza')) {
-      return '/MyBlog_astro-gyoza'
+    if (pathname.startsWith('/MyBlog')) {
+      return '/MyBlog'
     }
     return '/'
   }
