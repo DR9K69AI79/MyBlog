@@ -8,6 +8,14 @@ function getPostUrl(slug: string) {
   return new URL(slug, site.url).href
 }
 
+function getDecodedUrl(url: string) {
+  try {
+    return decodeURIComponent(url)
+  } catch {
+    return url
+  }
+}
+
 export function PostCopyright({
   title,
   slug,
@@ -19,6 +27,7 @@ export function PostCopyright({
 }) {
   const [lastModStr, setLastModStr] = useState('')
   const url = getPostUrl(slug)
+  const displayUrl = getDecodedUrl(url)
 
   function handleCopyUrl() {
     navigator.clipboard.writeText(url)
@@ -35,7 +44,7 @@ export function PostCopyright({
       <p>文章作者：{author.name}</p>
       <p className="break-all">
         <span>文章链接：</span>
-        <span className="break-all" style={{ wordBreak: 'break-all', overflowWrap: 'anywhere' }}>{url}</span>
+        <span className="break-all" style={{ wordBreak: 'break-all', overflowWrap: 'anywhere' }}>{displayUrl}</span>
         <span role="button" className="cursor-pointer select-none ml-2" onClick={handleCopyUrl}>
           [复制]
         </span>
