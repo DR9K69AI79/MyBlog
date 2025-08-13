@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-06-XSLT 高级元素：模板规则与转换技术
+title: XML-06-XSLT 高级元素：模板规则与转换技术
 date: 2024-12-09
 summary: 深入学习 XSLT 高级元素，包括模板规则、条件处理、循环遍历、排序以及客户端 XML 到 XHTML 转换技术。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XSLT
