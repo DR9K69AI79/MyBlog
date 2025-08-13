@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-04-隐藏表面消除
+title: CG-04-隐藏表面消除
 date: 2024-05-03
 summary: 本章介绍了计算机图形学中的隐藏表面消除问题，包括画家算法、Z-Buffer算法、扫描线算法、二进制空间分区等多种可见性计算方法。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
