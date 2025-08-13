@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-01-XML基础概念与语法
+title: XML-01-XML基础概念与语法
 date: 2024-12-09
 summary: 介绍XML的基本概念、历史背景、语法规则和优缺点，涵盖XML与HTML的对比、文档结构、元素属性定义及实际应用场景。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XML
