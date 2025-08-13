@@ -1,20 +1,22 @@
 ---
-title: 算法-08-主定理
+title: "算法-08-主定理"
 date: 2024-04-30
-summary: 详细介绍主定理（Master Theorem）的理论基础和应用，包括三种情况的递推关系求解方法，以及在归并排序等分治算法复杂度分析中的具体应用。
-category: DMT211_Algorithm Analysis and Design
+summary: "详细介绍主定理（Master Theorem）的理论基础和应用，包括三种情况的递推关系求解方法，以及在归并排序等分治算法复杂度分析中的具体应用。"
+category: "DMT211_Algorithm Analysis and Design"
 tags:
   - 课程笔记
   - 主定理
   - 递推关系
   - 复杂度分析
-comments: true
-draft: false
+comments: True
+draft: False
 sticky: 0
 ---
 Master theorem（主定理）是一种用于解决以下形式的递推关系的工具：
 
-$$T(n) = aT(\frac{n}{b}) + f(n)$$
+$$
+T(n) = aT(\frac{n}{b}) + f(n)
+$$
 
 其中：
 - $n$ 是问题的规模
@@ -43,7 +45,9 @@ $$T(n) = aT(\frac{n}{b}) + f(n)$$
 
 以归并排序为例，其递推关系为：
 
-$$T(n) = 2T(\frac{n}{2}) + \Theta(n)$$
+$$
+T(n) = 2T(\frac{n}{2}) + \Theta(n)
+$$
 
 对应于主定理的情况2，其中 $a=2$，$b=2$，$f(n)=\Theta(n)=\Theta(n^{\log_b a} \log^0 n)$。因此，归并排序的时间复杂度为 $T(n) = \Theta(n \log n)$。
 
