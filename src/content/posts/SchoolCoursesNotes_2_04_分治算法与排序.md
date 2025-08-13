@@ -1,15 +1,15 @@
 ---
-title: "算法-04-分治算法与排序"
+title: 算法-04-分治算法与排序
 date: 2024-04-30
-summary: "深入探讨分治算法的设计思想和应用，包括归并排序、快速排序、大整数乘法、最近点对问题、凸包问题、矩阵乘法、二叉树遍历等经典算法及其复杂度分析。"
-category: "DMT211_Algorithm Analysis and Design"
+summary: 深入探讨分治算法的设计思想和应用，包括归并排序、快速排序、大整数乘法、最近点对问题、凸包问题、矩阵乘法、二叉树遍历等经典算法及其复杂度分析。
+category: DMT211_Algorithm Analysis and Design
 tags:
   - 课程笔记
   - 分治算法
   - 排序算法
   - 算法设计
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 分治算法概述
