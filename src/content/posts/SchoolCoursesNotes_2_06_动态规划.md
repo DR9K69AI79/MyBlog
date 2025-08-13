@@ -1,15 +1,15 @@
 ---
-title: 算法-06-动态规划
+title: "算法-06-动态规划"
 date: 2024-06-11
-summary: 全面介绍动态规划算法的设计思想和应用，包括斐波那契数列、硬币行问题、零钱兑换问题、背包问题等经典问题的动态规划解法，以及与贪心算法和分治算法的比较。
-category: DMT211_Algorithm Analysis and Design
+summary: "全面介绍动态规划算法的设计思想和应用，包括斐波那契数列、硬币行问题、零钱兑换问题、背包问题等经典问题的动态规划解法，以及与贪心算法和分治算法的比较。"
+category: "DMT211_Algorithm Analysis and Design"
 tags:
   - 课程笔记
   - 动态规划
   - 最优化问题
   - 算法设计
-comments: true
-draft: false
+comments: True
+draft: False
 sticky: 0
 ---
 # 动态规划（Dynamic Programming）
@@ -29,11 +29,13 @@ sticky: 0
 
 ### 斐波那契数列定义
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 F(n) &= F(n - 1) + F(n - 2) \\
 F(0) &= 0 \\
 F(1) &= 1
-\end{aligned}$$
+\end{aligned}
+$$
 
 ### 自顶向下计算（递归）
 
@@ -100,7 +102,9 @@ int fib(int n) {
 设 $F(n)$ 为从前n个硬币中能挑选的最大金额，那么递推公式可以表示如下：
 
 $$
+
 F(n) = \max\{c_n + F(n-2), F(n-1)\}, \text{for } n > 1
+
 $$
 
 其中：
@@ -117,8 +121,11 @@ $$
 
 1. 初始化边界条件：$F(0) = 0$, $F(1) = c_1$。
 2. 递推计算$F(n)$：
+
 $$
+
    F(n) = \max\{c_n + F(n-2), F(n-1)\}
+
 $$
 
 ### 举例
@@ -136,11 +143,13 @@ $$
 ### 递推公式总结
 
 $$
+
 F(n) = \begin{cases}
 0 & \text{if } n = 0 \\
 c_1 & \text{if } n = 1 \\
 \max\{c_n + F(n-2), F(n-1)\} & \text{if } n > 1
 \end{cases}
+
 $$
 
 通过这个递推公式，可以有效地解决硬币行问题，找到能够挑选的最大金额。
@@ -155,8 +164,13 @@ $$
 
 设 $F(n)$ 为凑出金额n的最少硬币数。
 
-$$F(n) = \min_{j:n \geq d_j} \{F(n - d_j) + 1\} \text{ for } n > 0$$
-$$F(0) = 0$$
+$$
+F(n) = \min_{j:n \geq d_j} \{F(n - d_j) + 1\} \text{ for } n > 0
+$$
+
+$$
+F(0) = 0
+$$
 
 ### 示例
 
@@ -178,18 +192,24 @@ $$F(0) = 0$$
 ### 递推公式
 
 $$
+
 V(0, j) = 0 \text{ for } j \geq 0
+
 $$
 
 $$
+
 V(i, 0) = 0 \text{ for } i \geq 0
+
 $$
 
 $$
+
 V(i, j) = \begin{cases} 
 V(i - 1, j) & \text{if } j - w_i < 0 \\
 \max\{V(i - 1, j), v_i + V(i - 1, j - w_i)\} & \text{if } j - w_i \geq 0 
 \end{cases}
+
 $$
 
 ### 示例
