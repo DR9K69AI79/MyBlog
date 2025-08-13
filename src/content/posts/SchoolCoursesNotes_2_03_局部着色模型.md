@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-03-局部着色模型
+title: CG-03-局部着色模型
 date: 2024-05-02
 summary: 本章介绍了局部着色模型的基本原理，包括漫反射、镜面反射、环境光等光照模型，以及在OpenGL中的实现方法和着色插值技术。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
