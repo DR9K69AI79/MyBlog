@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-04-XML Schema数据类型与限制
+title: XML-04-XML Schema数据类型与限制
 date: 2024-12-09
 summary: 深入介绍XML Schema的内置数据类型、自定义派生类型、限制机制和正则表达式应用，提供完整的数据验证解决方案。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XML
