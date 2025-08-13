@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react'
 import { toast } from "react-toastify";
 
 function getPostUrl(slug: string) {
-  return new URL(slug, site.url).href
+  // 移除开头的斜杠，确保作为相对路径处理
+  const relativePath = slug.startsWith('/') ? slug.slice(1) : slug
+  return new URL(relativePath, site.url).href
 }
 
 function getDecodedUrl(url: string) {
