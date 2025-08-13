@@ -2,7 +2,7 @@
 title: DMT211_算法-03-算法分析（续）
 date: 2024-04-23
 summary: 继续深入算法分析，涵盖常见函数的渐近界、求和公式、非递归算法分析、递归算法分析、递归关系求解以及斐波那契数列的递归分析方法。
-category: DMT211_ALGORITHM
+category: DMT211_Algorithm Analysis and Design
 tags:
   - 课程笔记
   - 算法分析
