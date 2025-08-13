@@ -1,8 +1,8 @@
 ---
-title: G0123_MATLAB-02-MATLAB文本处理与绘图基础
+title: MATLAB-02-文本处理与绘图基础
 date: 2025-02-19
 summary: 介绍MATLAB中的文本数据类型（字符与字符串）、文本格式化方法，以及基础的绘图功能，包括plot函数、图例、坐标轴设置等。
-category: G0123 MATLAB
+category: G0123_Mathematical Graphics
 tags:
   - 课程笔记
   - MATLAB
