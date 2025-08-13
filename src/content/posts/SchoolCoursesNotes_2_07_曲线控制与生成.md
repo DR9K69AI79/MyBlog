@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-07-曲线控制与生成
+title: CG-07-曲线控制与生成
 date: 2024-05-30
 summary: 本章介绍了计算机图形学中的曲线生成技术，重点讲解贝塞尔曲线和NURBS曲线的数学原理、控制点设置以及在OpenGL中的具体实现方法。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
