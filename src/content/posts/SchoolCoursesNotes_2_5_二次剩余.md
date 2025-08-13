@@ -1,8 +1,8 @@
 ---
-title: 初等数论 - 第5章 - 二次剩余
+title: 数论 - 第5章 - 二次剩余
 date: 2024-03-21
 summary: 本章系统介绍二次剩余理论，包括勒让德符号、欧拉判别法、高斯引理、二次互反律以及雅可比符号等重要概念，为深入研究数论中的二次型问题奠定基础。
-category: 初等数论
+category: G0111_Elementary Number Theory
 tags:
   - 课程笔记
   - 数论
