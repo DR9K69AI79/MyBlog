@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-05-阴影
+title: CG-05-阴影
 date: 2024-05-16
 summary: 本章介绍了计算机图形学中的阴影生成技术，包括硬阴影与软阴影的区别、阴影映射、阴影体积、平面投影阴影等多种阴影算法。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
