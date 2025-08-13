@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-09-AJAX 技术：异步 JavaScript 与 XML 详解
+title: XML-09-AJAX 技术：异步 JavaScript 与 XML 详解
 date: 2024-12-09
 summary: 学习 AJAX 异步技术的核心概念，包括工作原理、XMLHttpRequest 对象、优缺点分析以及实际应用示例。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - AJAX
