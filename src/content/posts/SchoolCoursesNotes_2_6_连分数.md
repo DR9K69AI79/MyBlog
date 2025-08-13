@@ -1,15 +1,15 @@
 ---
-title: 数论 - 第6章 - 连分数
+title: "数论 - 第6章 - 连分数"
 date: 2024-03-19
-summary: 本章深入探讨连分数理论，包括有限连分数、无限连分数、周期连分数以及它们在丢番图近似和二次无理数中的重要应用。
-category: G0111_Elementary Number Theory
+summary: "本章深入探讨连分数理论，包括有限连分数、无限连分数、周期连分数以及它们在丢番图近似和二次无理数中的重要应用。"
+category: "G0111_Elementary Number Theory"
 tags:
   - 课程笔记
   - 数论
   - 连分数
   - 数学
-comments: true
-draft: false
+comments: True
+draft: False
 sticky: 0
 ---
 # 6.1 小数展开
@@ -18,14 +18,25 @@ sticky: 0
 
 任意实数 $x$ 都可以写成如下形式：
 
-$$x = \lfloor x \rfloor + \sum_{j=1}^{\infty} \frac{c_j}{10^j}$$
+$$
+x = \lfloor x \rfloor + \sum_{j=1}^{\infty} \frac{c_j}{10^j}
+$$
 
 其中 $x = \lfloor x \rfloor.c_1c_2c_3\ldots$ 称为 $x$ 的小数展开式。令 $c_0 = \lfloor x \rfloor$，则 $c_j$ 可通过以下算法计算：
 
-$$\gamma_0 = x$$
+$$
+\gamma_0 = x
+$$
+
 对于 $i \geq 0$，有：
-$$c_i = \lfloor \gamma_i \rfloor$$
-$$\gamma_{i+1} = 10(\gamma_i - c_i)$$
+
+$$
+c_i = \lfloor \gamma_i \rfloor
+$$
+
+$$
+\gamma_{i+1} = 10(\gamma_i - c_i)
+$$
 
 ## 定理
 
@@ -36,13 +47,17 @@ $$\gamma_{i+1} = 10(\gamma_i - c_i)$$
 
 假设我们在第 $n$ 步时，小数展开结束，此时有：
 
-$$10^n x = 10^n \frac{r}{s} = k$$
+$$
+10^n x = 10^n \frac{r}{s} = k
+$$
 
 其中 $k$ 是一个整数。这意味着 $10^n r = k s$。
 
 因为 $10 = 2 \times 5$，所以 $10^n = 2^n \times 5^n$。如果 $s$ 的质因子只包含 2 和 5，那么 $s$ 可以写成 $2^a \times 5^b$ 的形式，其中 $a$ 和 $b$ 是非负整数。这样，我们就有：
 
-$$2^n \times 5^n \times r = k \times 2^a \times 5^b$$
+$$
+2^n \times 5^n \times r = k \times 2^a \times 5^b
+$$
 
 我们可以调整 $n$ 的值，使得 $n \geq a$ 且 $n \geq b$，这样就能保证等式左右两边的 2 和 5 的指数都是非负的。这意味着等式左边是一个整数，因此 $k$ 也必须是一个整数。
 
@@ -56,7 +71,9 @@ $$2^n \times 5^n \times r = k \times 2^a \times 5^b$$
 
 有限连分数是形如以下的表达式：
 
-$$a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \frac{1}{a_3 + \frac{1}{\ddots + \frac{1}{a_{n-1} + \frac{1}{a_n}}}}}}$$
+$$
+a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \frac{1}{a_3 + \frac{1}{\ddots + \frac{1}{a_{n-1} + \frac{1}{a_n}}}}}}
+$$
 
 其中 $a_0, a_1, \ldots, a_n$ 是实数，且 $a_1, a_2, \ldots, a_n$ 为正数。如果 $a_0, a_1, a_2, \ldots, a_n$ 都是整数，则称该连分数为简单连分数。我们可以用 $[a_0; a_1, a_2, \ldots, a_n]$ 来表示这个数。
 
@@ -73,29 +90,55 @@ $$a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \frac{1}{a_3 + \frac{1}{\ddots + \frac{1}{
 
 设 $a_0, a_1, \ldots, a_n$ 是实数，且 $a_1, a_2, \ldots, a_n$ 为正数。令
 
-$$p_0 = a_0, \quad q_0 = 1$$
-$$p_1 = a_1a_0 + 1, \quad q_1 = a_1$$
-$$p_2 = a_2p_1 + p_0, \quad q_2 = a_2q_1 + q_0$$
-$$\vdots$$
-$$p_k = a_kp_{k-1} + p_{k-2}, \quad q_k = a_kq_{k-1} + q_{k-2}$$
+$$
+p_0 = a_0, \quad q_0 = 1
+$$
+
+$$
+p_1 = a_1a_0 + 1, \quad q_1 = a_1
+$$
+
+$$
+p_2 = a_2p_1 + p_0, \quad q_2 = a_2q_1 + q_0
+$$
+
+$$
+\vdots
+$$
+
+$$
+p_k = a_kp_{k-1} + p_{k-2}, \quad q_k = a_kq_{k-1} + q_{k-2}
+$$
 
 则有
 
-$$p_kq_{k-1} - p_{k-1}q_k = (-1)^{k-1}$$
-$$(p_k, q_k) = 1$$
-$$C_k = [a_0; a_1, \ldots, a_k] = \frac{p_k}{q_k}$$
+$$
+p_kq_{k-1} - p_{k-1}q_k = (-1)^{k-1}
+$$
+
+$$
+(p_k, q_k) = 1
+$$
+
+$$
+C_k = [a_0; a_1, \ldots, a_k] = \frac{p_k}{q_k}
+$$
 
 ## 定理
 
 设 $C_k = \frac{p_k}{q_k}$ 是简单连分数 $[a_0; a_1, \ldots, a_n]$ 的第 $k$ 个渐近分数，则 $q_k \geq k$，且
 
-$$C_k - C_{k-1} = \frac{(-1)^{k-1}}{q_kq_{k-1}}$$
+$$
+C_k - C_{k-1} = \frac{(-1)^{k-1}}{q_kq_{k-1}}
+$$
 
 ## 定理
 
 设 $C_k = \frac{p_k}{q_k}$ 是简单连分数 $[a_0; a_1, \ldots, a_n]$ 的第 $k$ 个渐近分数，则
 
-$$C_0 < C_2 < C_4 < \ldots < C_5 < C_3 < C_1$$
+$$
+C_0 < C_2 < C_4 < \ldots < C_5 < C_3 < C_1
+$$
 
 # 6.3 无限连分数
 
@@ -103,25 +146,33 @@ $$C_0 < C_2 < C_4 < \ldots < C_5 < C_3 < C_1$$
 
 设 $a_0, a_1, a_2, \ldots$ 是一个由整数组成的无限序列，其中 $a_1, a_2, \ldots$ 为正数，令 $C_k = [a_0; a_1, \ldots, a_k]$。则渐近分数 $C_k$ 收敛于一个极限 $\alpha$，即
 
-$$\lim_{k \to \infty} C_k = \alpha$$
+$$
+\lim_{k \to \infty} C_k = \alpha
+$$
 
 ## 定理
 
 设 $\alpha = \alpha_0$ 是一个无理数。$\alpha$ 的无限简单连分数展开式可以通过以下方式计算：
 
-$$a_k = \lfloor \alpha_k \rfloor, \quad \alpha_{k+1} = \frac{1}{\alpha_k - a_k}$$
+$$
+a_k = \lfloor \alpha_k \rfloor, \quad \alpha_{k+1} = \frac{1}{\alpha_k - a_k}
+$$
 
 ## 定理
 
 设 $\alpha$ 是一个无理数，其简单连分数展开式为 $[a_0; a_1, a_2, \ldots]$，渐近分数为 $C_k = \frac{p_k}{q_k}$，则
 
-$$\left|\alpha - \frac{p_k}{q_k}\right| < \frac{1}{q_kq_{k+1}}$$
+$$
+\left|\alpha - \frac{p_k}{q_k}\right| < \frac{1}{q_kq_{k+1}}
+$$
 
 ## Dirichlet 关于丢番图近似的定理
 
 如果 $\alpha$ 是一个无理数，则存在无穷多个有理数 $\frac{p}{q}$ 满足
 
-$$\left|\alpha - \frac{p}{q}\right| < \frac{1}{q^2}$$
+$$
+\left|\alpha - \frac{p}{q}\right| < \frac{1}{q^2}
+$$
 
 ## 定理
 
@@ -136,7 +187,9 @@ $$\left|\alpha - \frac{p}{q}\right| < \frac{1}{q^2}$$
 
 如果 $\alpha$ 是一个无理数，且 $\frac{r}{s}$ 是一个最简有理数，其中 $r$ 和 $s$ 是整数且 $s>0$，满足
 
-$$\left|\alpha - \frac{r}{s}\right| < \frac{1}{2s^2}$$
+$$
+\left|\alpha - \frac{r}{s}\right| < \frac{1}{2s^2}
+$$
 
 则 $\frac{r}{s}$ 一定是 $\alpha$ 的简单连分数展开式的一个渐近分数。
 
@@ -146,7 +199,9 @@ $$\left|\alpha - \frac{r}{s}\right| < \frac{1}{2s^2}$$
 
 如果一个无理数 $\alpha$ 是一个整系数二次多项式的根，即满足
 
-$$A\alpha^2 + B\alpha + C = 0$$
+$$
+A\alpha^2 + B\alpha + C = 0
+$$
 
 则称 $\alpha$ 为二次无理数。
 
@@ -154,13 +209,17 @@ $$A\alpha^2 + B\alpha + C = 0$$
 
 一个实数 $\alpha$ 是二次无理数当且仅当存在整数 $a,b,c$，其中 $b>0$，$c \neq 0$，$b$ 不是完全平方数，使得
 
-$$\alpha = \frac{a + \sqrt{b}}{c}$$
+$$
+\alpha = \frac{a + \sqrt{b}}{c}
+$$
 
 ## 定义
 
 在上述定理的记号下，$\alpha$ 的共轭定义为
 
-$$\alpha' = \frac{a - \sqrt{b}}{c}$$
+$$
+\alpha' = \frac{a - \sqrt{b}}{c}
+$$
 
 ## 命题
 
@@ -171,14 +230,27 @@ $$\alpha' = \frac{a - \sqrt{b}}{c}$$
 
 如果
 
-$$\alpha = \frac{P_0 + \sqrt{d}}{Q_0}$$
+$$
+\alpha = \frac{P_0 + \sqrt{d}}{Q_0}
+$$
 
 其中 $P_0, Q_0$ 是整数，$d$ 不是完全平方数，且 $Q_0 | d - P_0^2$，定义
 
-$$\alpha_k = \frac{P_k + \sqrt{d}}{Q_k}$$
-$$a_k = \lfloor \alpha_k \rfloor$$
-$$P_{k+1} = a_kQ_k - P_k$$
-$$Q_{k+1} = \frac{d - P_{k+1}^2}{Q_k}$$
+$$
+\alpha_k = \frac{P_k + \sqrt{d}}{Q_k}
+$$
+
+$$
+a_k = \lfloor \alpha_k \rfloor
+$$
+
+$$
+P_{k+1} = a_kQ_k - P_k
+$$
+
+$$
+Q_{k+1} = \frac{d - P_{k+1}^2}{Q_k}
+$$
 
 则 $\alpha = [a_0; a_1, a_2, \ldots]$。
 
@@ -190,7 +262,9 @@ $$Q_{k+1} = \frac{d - P_{k+1}^2}{Q_k}$$
 
 如果简单连分数 $[a_0; a_1, a_2, \ldots]$ 满足
 
-$$[a_0; a_1, a_2, \ldots] = [\overline{a_0; a_1, a_2, \ldots, a_{n-1}}]$$
+$$
+[a_0; a_1, a_2, \ldots] = [\overline{a_0; a_1, a_2, \ldots, a_{n-1}}]
+$$
 
 则称其为纯循环连分数。
 
@@ -202,7 +276,9 @@ $$[a_0; a_1, a_2, \ldots] = [\overline{a_0; a_1, a_2, \ldots, a_{n-1}}]$$
 
 如果 $D$ 是一个不是完全平方数的正整数，则
 
-$$\sqrt{D} = [a_0; \overline{a_1, a_2, \ldots, a_n, 2a_0}]$$
+$$
+\sqrt{D} = [a_0; \overline{a_1, a_2, \ldots, a_n, 2a_0}]
+$$
 
 这个定理揭示了二次无理数（特别是形如 $\sqrt{D}$ 的二次无理数）的连分数展开与佩尔方程（Pell's equation）之间的一个重要联系。
 
@@ -214,11 +290,15 @@ $$\sqrt{D} = [a_0; \overline{a_1, a_2, \ldots, a_n, 2a_0}]$$
 
 假设我们有一个佩尔方程 $x^2 - Dy^2 = 1$，我们可以将其重写为：
 
-$$(x + y\sqrt{D})(x - y\sqrt{D}) = 1$$
+$$
+(x + y\sqrt{D})(x - y\sqrt{D}) = 1
+$$
 
 如果我们将 $x + y\sqrt{D}$ 看作是一个整体，记为 $u + v\sqrt{D}$，那么上述等式可以写成：
 
-$$(u + v\sqrt{D})(u - v\sqrt{D}) = 1$$
+$$
+(u + v\sqrt{D})(u - v\sqrt{D}) = 1
+$$
 
 这意味着，如果我们能找到 $\sqrt{D}$ 的一个有理数逼近 $v/u$，使得上述等式近似成立，那么我们就可以找到佩尔方程的一个近似解。
 
