@@ -1,16 +1,16 @@
 ---
-title: CG-03-局部着色模型
+title: "CG-03-局部着色模型"
 date: 2024-05-02
-summary: 本章介绍了局部着色模型的基本原理，包括漫反射、镜面反射、环境光等光照模型，以及在OpenGL中的实现方法和着色插值技术。
-category: DMT201_Computer Graphics
+summary: "本章介绍了局部着色模型的基本原理，包括漫反射、镜面反射、环境光等光照模型，以及在OpenGL中的实现方法和着色插值技术。"
+category: "DMT201_Computer Graphics"
 tags:
   - 课程笔记
   - 计算机图形学
   - 着色模型
   - 光照
   - OpenGL
-comments: true
-draft: false
+comments: True
+draft: False
 sticky: 0
 ---
 # 局部着色模型(Local Shading Models)
@@ -39,7 +39,11 @@ sticky: 0
   - 表面的漫反射系数(Diffuse reflectance coefficient) $k_d$ 
 - 背面不被照亮，使用 $\max(0, \vec{N} \cdot \vec{L})$
 - 漫反射光强: 
-$$I_d = k_d I_i \max(\vec{N} \cdot \vec{L}, 0)$$
+
+$$
+I_d = k_d I_i \max(\vec{N} \cdot \vec{L}, 0)
+$$
+
 *Note：*
 - $I_d$: 最终Diffuse Illumination的强度
 - $k_d$: 该表面的漫反射系数(Diffuse reflectance coefficient)
@@ -56,7 +60,11 @@ $$I_d = k_d I_i \max(\vec{N} \cdot \vec{L}, 0)$$
   - 镜面反射系数(Specular reflectance coefficient) $k_s$
   - 参数$n$控制镜面反射光的表观尺寸，$n$越大，高光越小
 - 镜面反射光强:
-$$I_s = k_s I_i (\vec{R} \cdot \vec{V})^n$$
+
+$$
+I_s = k_s I_i (\vec{R} \cdot \vec{V})^n
+$$
+
 *Note:*
 - $I_s$: 最终的Specular光强
 - $k_s$: 镜面反射系数(Specular reflectance coefficient)
@@ -70,14 +78,21 @@ $$I_s = k_s I_i (\vec{R} \cdot \vec{V})^n$$
   - 比镜面方向更容易计算，结果相同
   - $\vec{H} = (\vec{L} + \vec{V}) / 2$  
 - 镜面反射光强(优化版):
-$$I_s = k_s I_i (\vec{N} \cdot \vec{H})^n$$
+
+$$
+I_s = k_s I_i (\vec{N} \cdot \vec{H})^n
+$$
 
 ## 完整的光照模型
 - 全局环境光强度(Global ambient intensity) $I_a$:
   - 对所有其他表面反弹光线的粗略近似
   - 由环境反射系数(Ambient reflectance) $k_a$ 调制
 - 将所有项相加:  
-$$I = k_a I_a + k_d I_i (\vec{N} \cdot \vec{L}) + k_s I_i (\vec{N} \cdot \vec{H})^n$$
+
+$$
+I = k_a I_a + k_d I_i (\vec{N} \cdot \vec{L}) + k_s I_i (\vec{N} \cdot \vec{H})^n
+$$
+
 - 如果有多个光源，则将每个光源的贡献相加
 - 有几种变体和近似方法
 
@@ -88,7 +103,10 @@ $$I = k_a I_a + k_d I_i (\vec{N} \cdot \vec{L}) + k_s I_i (\vec{N} \cdot \vec{H}
   - 颜色空间中的混叠(Aliasing)现象 
   - 使用9个颜色样本会得到更好的结果
 - 对于红色分量:
-$$I_r = k_{a,r} I_{a,r} + k_{d,r} I_{i,r} (\vec{N} \cdot \vec{L}) + k_{s,r} I_{i,r} (\vec{N} \cdot \vec{H})^n$$
+
+$$
+I_r = k_{a,r} I_{a,r} + k_{d,r} I_{i,r} (\vec{N} \cdot \vec{L}) + k_{s,r} I_{i,r} (\vec{N} \cdot \vec{H})^n
+$$
 
 ## 为加速进行的近似
 - 视角方向$\vec{V}$和光照方向$\vec{L}$取决于所考虑的表面位置$\vec{x}$ 
