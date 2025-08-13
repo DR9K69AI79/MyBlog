@@ -1,8 +1,8 @@
 ---
-title: 高等数学2 - 第13章 向量函数
+title: 高数2 - 第13章 向量函数
 date: 2024-03-23
 summary: 本章介绍向量函数和空间曲线的概念、向量函数的导数和积分、弧长计算，以及空间运动中的速度和加速度分析。
-category: 高等数学2
+category: G0212_Introduction to Advanced Mathematics II
 tags:
   - 课程笔记
   - 高等数学
