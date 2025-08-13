@@ -1,8 +1,8 @@
 ---
-title: G0123_MATLAB-04-MATLAB填充绘图与颜色映射
+title: MATLAB-04-填充绘图与颜色映射
 date: 2025-02-19
 summary: 介绍MATLAB中的填充绘图技术，包括area、patch、fill函数，以及颜色映射、透明度控制和多边形绘制等高级可视化方法。
-category: G0123 MATLAB
+category: G0123_Mathematical Graphics
 tags:
   - 课程笔记
   - MATLAB
