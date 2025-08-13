@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-05-XSLT 和 XPath 基础：XML 转换与路径语言
+title: XML-05-XSLT 和 XPath 基础：XML 转换与路径语言
 date: 2024-12-09
 summary: 学习 XSLT 可扩展样式表转换语言的基础知识，包括 XML 文档转换、XPath 路径表达式、节点关系和操作符使用。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XSLT
