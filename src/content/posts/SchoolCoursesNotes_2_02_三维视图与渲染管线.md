@@ -1,15 +1,15 @@
 ---
-title: CG-02-三维视图和图形渲染管线回顾
+title: "CG-02-三维视图和图形渲染管线回顾"
 date: 2024-04-18
-summary: 本章详细介绍了三维视图的基本概念、图形渲染管线的各个阶段，包括模型变换、视图变换、投影变换、裁剪和光栅化等核心内容。
-category: DMT201_Computer Graphics
+summary: "本章详细介绍了三维视图的基本概念、图形渲染管线的各个阶段，包括模型变换、视图变换、投影变换、裁剪和光栅化等核心内容。"
+category: "DMT201_Computer Graphics"
 tags:
   - 课程笔记
   - 计算机图形学
   - 渲染管线
   - OpenGL
-comments: true
-draft: false
+comments: True
+draft: False
 sticky: 0
 ---
 # 三维视图和图形渲染管线回顾
@@ -40,13 +40,20 @@ sticky: 0
 
 1. 平移变换 $T(-x^w_{min}, -y^w_{min})$
 2. 缩放变换 
-$$S\left(\frac{x^v_{max}-x^v_{min}}{x^w_{max}-x^w_{min}}, \frac{y^v_{max}-y^v_{min}}{y^w_{max}-y^w_{min}}\right)$$
+
+$$
+S\left(\frac{x^v_{max}-x^v_{min}}{x^w_{max}-x^w_{min}}, \frac{y^v_{max}-y^v_{min}}{y^w_{max}-y^w_{min}}\right)
+$$
+
 3. 如果两个缩放因子不相等，则会改变宽高比(aspect ratio)导致失真(distortion)
 4. 平移变换 $T(x^v_{min}, y^v_{min})$
 5. 综合变换:
-$$T(x^v_{min}, y^v_{min})  
+
+$$
+T(x^v_{min}, y^v_{min})  
 S\left(\frac{x^v_{max}-x^v_{min}}{x^w_{max}-x^w_{min}}, \frac{y^v_{max}-y^v_{min}}{y^w_{max}-y^w_{min}}\right)
-T(-x^w_{min}, -y^w_{min})$$
+T(-x^w_{min}, -y^w_{min})
+$$
 
 ## OpenGL中的二维视图
 
@@ -63,17 +70,28 @@ gluOrtho2D(xwmin, xwmax, ywmin, ywmax);
 glViewport(xvmin, yvmin, vpWidth, vpHeight);
 ```
 4. 为防止失真,需确保:
-$$\frac{yw_{max} - yw_{min}}{xw_{max} - xw_{min}} = \frac{vpWidth}{vpHeight}$$
+
+$$
+\frac{yw_{max} - yw_{min}}{xw_{max} - xw_{min}} = \frac{vpWidth}{vpHeight}
+$$
 
 ## 二维裁剪(2D Clipping)
 
 - 裁剪就是移除裁剪窗口外部的部分
 - 有许多裁剪算法:点裁剪、线裁剪、区域填充、曲线裁剪等
 - 点裁剪:如果点$P=(x,y)$在矩形内部则保留,即
-$$xw_{min} \leq x \leq xw_{max} \text{ and } yw_{min} \leq y \leq yw_{max}$$
+
+$$
+xw_{min} \leq x \leq xw_{max} \text{ and } yw_{min} \leq y \leq yw_{max}
+$$
+
 - 线裁剪:
   - 基本算法:计算线段PQ与裁剪窗口边的**交点**,得到参数u的区间$(u_0, u_1)$,其中
-$$X(u) = P + u(Q-P), 0 \leq u \leq 1$$
+
+$$
+X(u) = P + u(Q-P), 0 \leq u \leq 1
+$$
+
   - **Cohen-Sutherland算法:**
     - 为每个端点赋予一个4位的区域码(region code)
     - 区域码1表示在外部,0表示在内部
@@ -114,14 +132,21 @@ $$X(u) = P + u(Q-P), 0 \leq u \leq 1$$
    - $\vec{u} = \frac{\vec{V} \times \vec{n}}{|\vec{V} \times \vec{n}|} = (u_x, u_y, u_z)$, 与$\vec{n}$垂直
    - $\vec{v} = \vec{n} \times \vec{u} = (v_x, v_y, v_z)$, 与$\vec{u}$垂直
 4. 从世界坐标到视图坐标的变换矩阵:
-$$M_{WC \rightarrow VC} = T(-P_0) R$$
+
+$$
+M_{WC \rightarrow VC} = T(-P_0) R
+$$
+
 其中
-$$R = \begin{bmatrix} 
+
+$$
+R = \begin{bmatrix} 
 u_x & u_y & u_z & 0\\
 v_x & v_y & v_z & 0\\
 n_x & n_y & n_z & 0\\
 0 & 0 & 0 & 1
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 ## 投影变换(Projection Transformations)
 
@@ -133,7 +158,11 @@ n_x & n_y & n_z & 0\\
 1. **平行投影** + 投影线垂直于投影平面 = **正交投影**
 2. 如果投影线与坐标轴夹角相等,则称为**等轴测投影(Isometric Projection)**  
 3. 正交投影的变换非常简单:
-$$ x = x, y = y, z = z_p$$
+
+$$
+ x = x, y = y, z = z_p
+$$
+
 其中$z_p$是常数,表示投影平面的z坐标
 4. 正交投影的观察体(View Volume)是一个长方体,由远近裁剪平面(Near/Far Clipping Plane)和裁剪窗口(Clipping Window)决定
 5. 将观察体变换为规范化观察体 $[-1,1]^3$:
@@ -172,7 +201,9 @@ $$ x = x, y = y, z = z_p$$
   - 笛卡尔坐标下为(x/w, y/w, z/w)
   - 一般情况下w=1,但透视投影中w=-z
 - 透视投影变换可以写作矩阵形式:
-$$\begin{aligned}
+
+$$
+\begin{aligned}
 \begin{bmatrix}
 x_p \\ y_p \\ z_p \\ w_p
 \end{bmatrix} &=
@@ -191,12 +222,17 @@ x_v \\ y_v \\ z_v
 \begin{bmatrix}
 x_p/w_p \\ y_p/w_p \\ z_p/w_p  
 \end{bmatrix}
-\end{aligned}$$
+\end{aligned}
+$$
+
 - 简化情形(正方形裁剪窗口,边长为2r,裁剪平面与视平面重合即zn=zvp):
-$$\begin{aligned}  
+
+$$
+\begin{aligned}  
 s_{xx} &= \frac{z_n}{r}, s_{yy}=\frac{z_n}{r}, s_{zz}=\frac{z_f+z_n}{z_f-z_n}\\
 t_x &= t_y = 0, t_z = \frac{-2z_fz_n}{z_f-z_n}
-\end{aligned}$$
+\end{aligned}
+$$
 
 ## OpenGL中的3D视图
 
