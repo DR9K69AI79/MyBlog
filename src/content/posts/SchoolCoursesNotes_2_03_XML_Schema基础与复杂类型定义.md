@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-03-XML Schema基础与复杂类型定义
+title: XML-03-XML Schema基础与复杂类型定义
 date: 2024-12-09
 summary: 介绍XML Schema的概念、与DTD的比较、简单类型和复杂类型的定义方法，以及XML文档与Schema的链接方式。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XML
