@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-08-OpenGL函数参考
+title: CG-08-OpenGL函数参考
 date: 2024-06-13
 summary: 本文档总结了常用的OpenGL函数，包括窗口创建、矩阵操作、绘制设置、光照材质等核心功能函数的详细说明和参数解释。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
