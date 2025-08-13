@@ -1,8 +1,8 @@
 ---
-title: G0123_MATLAB-03-MATLAB高级绘图：多图布局与对数坐标系
+title: MATLAB-03-高级绘图：多图布局与对数坐标系
 date: 2025-02-19
 summary: 介绍MATLAB中的常见数学函数、多图布局方法（tiledlayout、subplot）、对数坐标系绘图以及双y轴绘图等高级可视化技术。
-category: G0123 MATLAB
+category: G0123_Mathematical Graphics
 tags:
   - 课程笔记
   - MATLAB
