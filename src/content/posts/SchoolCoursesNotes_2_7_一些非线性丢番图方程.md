@@ -1,8 +1,8 @@
 ---
-title: 初等数论 - 第7章 - 一些非线性丢番图方程
+title: 数论 - 第7章 - 一些非线性丢番图方程
 date: 2024-03-19
 summary: 本章探讨几种重要的非线性丢番图方程，包括勾股数组、费马大定理、平方和问题等，涵盖经典数论问题及其解决方法。
-category: 初等数论
+category: G0111_Elementary Number Theory
 tags:
   - 课程笔记
   - 数论
