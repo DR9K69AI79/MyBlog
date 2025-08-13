@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-02-DTD文档类型定义
+title: XML-02-DTD文档类型定义
 date: 2024-12-09
 summary: 详细介绍DTD（文档类型定义）的概念、声明方式、元素属性定义，以及实体使用方法，帮助理解XML文档结构验证机制。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XML
