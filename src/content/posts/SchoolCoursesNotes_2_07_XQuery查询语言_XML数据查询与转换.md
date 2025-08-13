@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-07-XQuery 查询语言：XML 数据查询与转换
+title: XML-07-XQuery 查询语言：XML 数据查询与转换
 date: 2024-12-09
 summary: 学习 XQuery 查询语言的基础知识，包括 FLWOR 表达式、条件查询、HTML 生成以及与 XSLT 的结合使用。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XQuery
