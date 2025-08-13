@@ -1,8 +1,8 @@
 ---
-title: G0123_MATLAB-05-MATLAB三维绘图技术
+title: MATLAB-05-三维绘图技术
 date: 2025-02-19
 summary: 介绍MATLAB中的三维绘图功能，包括三维线图、网格曲面图、等高线图、球体椭球体绘制以及三维图形的旋转和视角控制。
-category: G0123 MATLAB
+category: G0123_Mathematical Graphics
 tags:
   - 课程笔记
   - MATLAB
