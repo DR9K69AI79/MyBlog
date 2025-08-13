@@ -1,8 +1,8 @@
 ---
-title: G0123_MATLAB-01-MATLAB基础：变量、数组与矩阵操作
+title: MATLAB-01-基础：变量、数组与矩阵操作
 date: 2025-02-19
 summary: 介绍MATLAB的基础操作，包括变量创建、工作区管理、数组与矩阵创建、索引操作以及基础运算等内容。
-category: G0123 MATLAB
+category: G0123_Mathematical Graphics
 tags:
   - 课程笔记
   - MATLAB
