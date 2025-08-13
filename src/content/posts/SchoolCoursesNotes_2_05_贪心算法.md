@@ -1,5 +1,5 @@
 ---
-title: DMT211_算法-05-贪心算法
+title: 算法-05-贪心算法
 date: 2024-05-14
 summary: 详细介绍贪心算法的设计思想和应用，包括区间调度问题、区间划分问题、最小生成树（Prim算法、Kruskal算法）、单源最短路径（Dijkstra算法）等经典问题的贪心解法。
 category: DMT211_Algorithm Analysis and Design
