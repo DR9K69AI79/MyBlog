@@ -1,15 +1,15 @@
 ---
-title: "CG-02-三维视图和图形渲染管线回顾"
+title: CG-02-三维视图和图形渲染管线回顾
 date: 2024-04-18
-summary: "本章详细介绍了三维视图的基本概念、图形渲染管线的各个阶段，包括模型变换、视图变换、投影变换、裁剪和光栅化等核心内容。"
-category: "DMT201_Computer Graphics"
+summary: 本章详细介绍了三维视图的基本概念、图形渲染管线的各个阶段，包括模型变换、视图变换、投影变换、裁剪和光栅化等核心内容。
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
   - 渲染管线
   - OpenGL
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 三维视图和图形渲染管线回顾
