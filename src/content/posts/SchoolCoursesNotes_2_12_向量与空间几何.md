@@ -1,8 +1,8 @@
 ---
-title: 高等数学2 - 第12章 向量与空间几何
+title: 高数2 - 第12章 向量与空间几何
 date: 2024-03-23
 summary: 本章介绍三维坐标系、向量的基本概念和运算、点积和叉积的性质、直线和平面的方程，以及柱面和二次曲面的分类和性质。
-category: 高等数学2
+category: G0212_Introduction to Advanced Mathematics II
 tags:
   - 课程笔记
   - 高等数学
