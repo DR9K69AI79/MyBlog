@@ -1,14 +1,14 @@
 ---
-title: CG-01-线性代数复习
+title: "CG-01-线性代数复习"
 date: 2024-04-04
-summary: 本章回顾了线性代数中的基本概念，包括向量及其性质、矩阵及其表示方法、特殊矩阵以及矩阵运算，为计算机图形学的学习打下基础。
-category: DMT201_Computer Graphics
+summary: "本章回顾了线性代数中的基本概念，包括向量及其性质、矩阵及其表示方法、特殊矩阵以及矩阵运算，为计算机图形学的学习打下基础。"
+category: "DMT201_Computer Graphics"
 tags:
   - 课程笔记
   - 线性代数
   - 计算机图形学
-comments: true
-draft: false
+comments: True
+draft: False
 sticky: 0
 ---
 # 线性代数复习
@@ -31,7 +31,11 @@ sticky: 0
 ### 向量的加法和减法
 
 - 将两个向量$a$和$b$首尾相连形成一个三角形，即可完成向量的加法。
-$$\vec{AB} + \vec{BC} = \vec{AC}$$
+
+$$
+\vec{AB} + \vec{BC} = \vec{AC}
+$$
+
 - 向量的减法通过加上负向量来实现：$a - b = a + (-b)$。
 
 ### 将向量分解为两个垂直分量
@@ -39,11 +43,15 @@ $$\vec{AB} + \vec{BC} = \vec{AC}$$
 - 正如两个向量可以相加形成一个合成向量，我们可以将任何向量分解为两个垂直的向量，当它们相加时，就形成了原始向量。
 - 考虑直角三角形OAB，我们可以看到$OB = a \cos(\theta)$，$BA = OC = a \sin(\theta)$。因此，如果我们知道向量$a$的方向$\theta$，我们可以将其分解为分量$a \cos(\theta)$和$a \sin(\theta)$，使得：
 
-$$a = OA = OB + BA = OB + OC$$
+$$
+a = OA = OB + BA = OB + OC
+$$
 
 ### 单位向量
 
-$$v_{unit} = \frac{v}{|v|}$$
+$$
+v_{unit} = \frac{v}{|v|}
+$$
 
 ## 矩阵
 
@@ -52,12 +60,14 @@ $$v_{unit} = \frac{v}{|v|}$$
 - 具有$m$行和$n$列的矩阵被称为$m \times n$阶矩阵。
 - 一个$m \times n$阶矩阵$A$可以表示为：
 
-$$A = \begin{bmatrix}
+$$
+A = \begin{bmatrix}
 a_{11} & a_{12} & \cdots & a_{1n} \\
 a_{21} & a_{22} & \cdots & a_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
 a_{m1} & a_{m2} & \cdots & a_{mn}
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 ### 矩阵相等的定义
 
@@ -67,11 +77,13 @@ a_{m1} & a_{m2} & \cdots & a_{mn}
 
 - **零矩阵**：每个元素都为零的矩阵称为零矩阵，用$0$表示。例如：
 
-$$\begin{bmatrix}
+$$
+\begin{bmatrix}
 0 & 0 & 0 \\
 0 & 0 & 0 \\
 0 & 0 & 0
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 - **方阵**：行数等于列数的矩阵称为方阵。因此，它的阶数为$m \times m$（对于某个$m$），并用$m$表示。
 - **对角线元素**：在$n$阶方阵$A = [a_{ij}]$中，元素$a_{11}, a_{22}, \ldots, a_{nn}$称为对角线元素，形成$A$的主对角线。
@@ -91,7 +103,9 @@ $$\begin{bmatrix}
 
 假设$A$是一个$m \times n$矩阵，$B$是一个$n \times p$矩阵，那么$A$和$B$的乘积$AB$是一个$m \times p$矩阵$C = [c_{ij}]$，其中：
 
-$$c_{ij} = \sum_{k=1}^{n} a_{ik}b_{kj}$$
+$$
+c_{ij} = \sum_{k=1}^{n} a_{ik}b_{kj}
+$$
 
 对于$i = 1, 2, \ldots, m$和$j = 1, 2, \ldots, p$。
 
