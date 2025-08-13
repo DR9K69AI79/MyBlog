@@ -1,5 +1,5 @@
 ---
-title: DMT211_算法-02-算法分析与设计
+title: 算法-02-算法分析与设计
 date: 2024-04-09
 summary: 深入探讨算法分析的理论基础，包括实证分析与理论分析方法，介绍大O符号、大Ω符号、大Θ符号等渐近符号，以及基本效率类的分类和应用。
 category: DMT211_Algorithm Analysis and Design
