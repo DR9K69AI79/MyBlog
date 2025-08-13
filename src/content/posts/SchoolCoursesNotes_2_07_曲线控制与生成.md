@@ -74,11 +74,19 @@ NURBS广泛用于表面设计，例如通过在xy平面上建模一个样条曲�
 
 ## 数学公式示例
 - 贝塞尔曲线参数公式:
-  $$ P(t) = \sum_{i=0}^{n} B_{i,n}(t) \cdot P_i $$
+  
+$$
+ P(t) = \sum_{i=0}^{n} B_{i,n}(t) \cdot P_i 
+$$
+
   其中$B_{i,n}(t)$是贝塞尔基函数，$P_i$是控制点。
 
 - NURBS曲线参数公式:
-  $$ C(u) = \frac{\sum_{i=0}^{n} N_{i,p}(u) \cdot w_i \cdot P_i}{\sum_{i=0}^{n} N_{i,p}(u) \cdot w_i} $$
+  
+$$
+ C(u) = \frac{\sum_{i=0}^{n} N_{i,p}(u) \cdot w_i \cdot P_i}{\sum_{i=0}^{n} N_{i,p}(u) \cdot w_i} 
+$$
+
   其中$N_{i,p}(u)$是B样条基函数，$w_i$是权重，$P_i$是控制点。
 
 这一章节详细介绍了如何在OpenGL中使用贝塞尔曲线和NURBS曲线进行图形生成，以及这些技术的数学基础和实际应用。
