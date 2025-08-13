@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-01-线性代数复习
+title: CG-01-线性代数复习
 date: 2024-04-04
 summary: 本章回顾了线性代数中的基本概念，包括向量及其性质、矩阵及其表示方法、特殊矩阵以及矩阵运算，为计算机图形学的学习打下基础。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 线性代数
