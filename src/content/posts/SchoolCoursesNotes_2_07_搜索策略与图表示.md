@@ -2,7 +2,7 @@
 title: DMT211_算法-07-搜索策略与图表示
 date: 2024-07-02
 summary: 深入介绍图的搜索策略，包括深度优先搜索(DFS)和广度优先搜索(BFS)的算法原理、实现和应用，以及图的邻接矩阵和邻接表表示方法。
-category: DMT211_ALGORITHM
+category: DMT211_Algorithm Analysis and Design
 tags:
   - 课程笔记
   - 图算法
