@@ -1,8 +1,8 @@
 ---
-title: DMT201_CG-06-纹理映射
+title: CG-06-纹理映射
 date: 2024-05-30
 summary: 本章详细介绍了纹理映射的基本原理和应用，包括纹理坐标、过滤模式、Mipmapping、环境映射等技术，以及在OpenGL中的具体实现方法。
-category: DMT201_CG
+category: DMT201_Computer Graphics
 tags:
   - 课程笔记
   - 计算机图形学
