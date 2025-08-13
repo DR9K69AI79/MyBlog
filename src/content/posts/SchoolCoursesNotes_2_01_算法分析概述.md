@@ -2,7 +2,7 @@
 title: DMT211_算法-01-算法分析概述
 date: 2024-04-09
 summary: 本课程介绍算法的基本概念、重要性以及算法设计技术。涵盖算法分析的基础知识，包括时间效率、空间效率、最优性等核心概念，以及常见的问题类型如排序、搜索、字符串处理等。
-category: DMT211_ALGORITHM
+category: DMT211_Algorithm Analysis and Design
 tags:
   - 课程笔记
   - 算法基础
