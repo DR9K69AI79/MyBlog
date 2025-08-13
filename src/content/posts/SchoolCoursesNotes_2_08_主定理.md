@@ -1,5 +1,5 @@
 ---
-title: DMT211_算法-08-主定理
+title: 算法-08-主定理
 date: 2024-04-30
 summary: 详细介绍主定理（Master Theorem）的理论基础和应用，包括三种情况的递推关系求解方法，以及在归并排序等分治算法复杂度分析中的具体应用。
 category: DMT211_Algorithm Analysis and Design
