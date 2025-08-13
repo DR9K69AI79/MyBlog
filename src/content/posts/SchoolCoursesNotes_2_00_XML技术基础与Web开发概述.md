@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-00-XML技术基础与Web开发概述
+title: XML-00-XML技术基础与Web开发概述
 date: 2024-10-01
 summary: 本课程介绍Web技术基础，重点讲解HTML、CSS和XML的核心概念与应用，涵盖网站三层结构、标记语言特性及样式表技术。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XML
