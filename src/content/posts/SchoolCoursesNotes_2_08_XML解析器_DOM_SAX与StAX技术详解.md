@@ -1,8 +1,8 @@
 ---
-title: DMT313_XML-08-XML 解析器：DOM、SAX 与 StAX 技术详解
+title: XML-08-XML 解析器：DOM、SAX 与 StAX 技术详解
 date: 2024-12-09
 summary: 深入学习 XML 解析器的工作原理，包括 DOM、SAX 和 StAX 三种解析方式的比较，以及 DOM 节点操作和修改方法。
-category: DMT313 XML设计技术
+category: DMT313_XML Design Technology
 tags:
   - 课程笔记
   - XML解析器
