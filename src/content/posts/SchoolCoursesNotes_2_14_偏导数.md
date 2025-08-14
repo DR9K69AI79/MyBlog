@@ -1,16 +1,16 @@
 ---
-title: "高数2 - 第14章 偏导数"
+title: 高数2 - 第14章 偏导数
 date: 2024-03-23
-summary: "本章介绍多元函数的概念、极限与连续性、偏导数的定义和计算、切平面与线性近似、链式法则、方向导数与梯度向量，以及多元函数的极值问题和拉格朗日乘数法。"
-category: "G0212_Introduction to Advanced Mathematics II"
+summary: 本章介绍多元函数的概念、极限与连续性、偏导数的定义和计算、切平面与线性近似、链式法则、方向导数与梯度向量，以及多元函数的极值问题和拉格朗日乘数法。
+category: G0212_Introduction to Advanced Mathematics II
 tags:
   - 课程笔记
   - 高等数学
   - 偏导数
   - 多元函数
   - 梯度
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 第14章 偏导数

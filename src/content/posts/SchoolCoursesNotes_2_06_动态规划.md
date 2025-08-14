@@ -1,15 +1,15 @@
 ---
-title: "算法-06-动态规划"
+title: 算法-06-动态规划
 date: 2024-06-11
-summary: "全面介绍动态规划算法的设计思想和应用，包括斐波那契数列、硬币行问题、零钱兑换问题、背包问题等经典问题的动态规划解法，以及与贪心算法和分治算法的比较。"
-category: "DMT211_Algorithm Analysis and Design"
+summary: 全面介绍动态规划算法的设计思想和应用，包括斐波那契数列、硬币行问题、零钱兑换问题、背包问题等经典问题的动态规划解法，以及与贪心算法和分治算法的比较。
+category: DMT211_Algorithm Analysis and Design
 tags:
   - 课程笔记
   - 动态规划
   - 最优化问题
   - 算法设计
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 动态规划（Dynamic Programming）

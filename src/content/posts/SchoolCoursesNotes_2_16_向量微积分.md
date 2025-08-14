@@ -1,8 +1,8 @@
 ---
-title: "高数2 - 第16章 向量微积分"
+title: 高数2 - 第16章 向量微积分
 date: 2024-03-24
-summary: "本章介绍向量场、线积分、线积分基本定理、格林定理、旋度与散度、参数曲面及其面积、曲面积分、斯托克斯定理和散度定理，是向量微积分的核心内容。"
-category: "G0212_Introduction to Advanced Mathematics II"
+summary: 本章介绍向量场、线积分、线积分基本定理、格林定理、旋度与散度、参数曲面及其面积、曲面积分、斯托克斯定理和散度定理，是向量微积分的核心内容。
+category: G0212_Introduction to Advanced Mathematics II
 tags:
   - 课程笔记
   - 高等数学
@@ -10,8 +10,8 @@ tags:
   - 向量场
   - 线积分
   - 曲面积分
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 第16章 向量微积分

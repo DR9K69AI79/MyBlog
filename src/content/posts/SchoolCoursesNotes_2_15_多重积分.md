@@ -1,8 +1,8 @@
 ---
-title: "高数2 - 第15章 多重积分"
+title: 高数2 - 第15章 多重积分
 date: 2024-03-23
-summary: "本章介绍二重积分和三重积分的概念和计算方法，包括在矩形区域和一般区域上的积分、极坐标下的二重积分、柱坐标系和球坐标系下的三重积分，以及多重积分中的变量替换。"
-category: "G0212_Introduction to Advanced Mathematics II"
+summary: 本章介绍二重积分和三重积分的概念和计算方法，包括在矩形区域和一般区域上的积分、极坐标下的二重积分、柱坐标系和球坐标系下的三重积分，以及多重积分中的变量替换。
+category: G0212_Introduction to Advanced Mathematics II
 tags:
   - 课程笔记
   - 高等数学
@@ -10,8 +10,8 @@ tags:
   - 极坐标
   - 柱坐标
   - 球坐标
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 第15章 多重积分

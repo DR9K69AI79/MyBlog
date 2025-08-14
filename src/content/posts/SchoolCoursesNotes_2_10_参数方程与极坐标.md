@@ -1,16 +1,16 @@
 ---
-title: "高数2 - 第10章 参数方程与极坐标"
+title: 高数2 - 第10章 参数方程与极坐标
 date: 2024-03-23
-summary: "本章介绍参数方程定义的曲线、参数曲线的微积分、极坐标系统、极坐标下的面积与长度计算，以及圆锥曲线的性质和方程。"
-category: "G0212_Introduction to Advanced Mathematics II"
+summary: 本章介绍参数方程定义的曲线、参数曲线的微积分、极坐标系统、极坐标下的面积与长度计算，以及圆锥曲线的性质和方程。
+category: G0212_Introduction to Advanced Mathematics II
 tags:
   - 课程笔记
   - 高等数学
   - 参数方程
   - 极坐标
   - 圆锥曲线
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 第10章 参数方程与极坐标

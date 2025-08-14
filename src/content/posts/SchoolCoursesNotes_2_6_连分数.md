@@ -1,15 +1,15 @@
 ---
-title: "数论 - 第6章 - 连分数"
+title: 数论 - 第6章 - 连分数
 date: 2024-03-19
-summary: "本章深入探讨连分数理论，包括有限连分数、无限连分数、周期连分数以及它们在丢番图近似和二次无理数中的重要应用。"
-category: "G0111_Elementary Number Theory"
+summary: 本章深入探讨连分数理论，包括有限连分数、无限连分数、周期连分数以及它们在丢番图近似和二次无理数中的重要应用。
+category: G0111_Elementary Number Theory
 tags:
   - 课程笔记
   - 数论
   - 连分数
   - 数学
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 6.1 小数展开
