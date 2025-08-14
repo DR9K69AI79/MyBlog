@@ -18,6 +18,7 @@ export default function ModelViewer({ modelType, className = '' }: ModelViewerPr
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
+    handleTouchStart,
     cleanup,
   } = useModelViewer()
 
@@ -81,6 +82,8 @@ export default function ModelViewer({ modelType, className = '' }: ModelViewerPr
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        style={{ touchAction: 'none' }} // 防止移动端的默认触摸行为
       >
         {isLoading && (
           <div className="w-full h-full flex items-center justify-center">

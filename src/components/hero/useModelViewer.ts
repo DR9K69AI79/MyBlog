@@ -1,4 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
+import { useAtomValue } from 'jotai'
+import { isMobileAtom } from '@/store/viewport'
 
 interface ModelViewerState {
   isDragging: boolean
@@ -15,6 +17,9 @@ export const useModelViewer = () => {
     lastMouseX: 0,
     lastMouseY: 0,
   })
+
+  // 检测是否为移动端
+  const isMobile = useAtomValue(isMobileAtom)
 
   const sceneRef = useRef<any>(null)
   const cameraRef = useRef<any>(null)
@@ -298,14 +303,14 @@ export const useModelViewer = () => {
     return pyramid
   }
 
-  // 鼠标事件处理
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    console.log('Mouse down')
+  // 统一的拖拽开始处理
+  const handleDragStart = useCallback((clientX: number, clientY: number) => {
+    console.log('Drag start')
     setMouseState((prev) => ({
       ...prev,
       isDragging: true,
-      lastMouseX: e.clientX,
-      lastMouseY: e.clientY,
+      lastMouseX: clientX,
+      lastMouseY: clientY,
     }))
 
     // 记录拖拽开始时的基础旋转
@@ -313,13 +318,37 @@ export const useModelViewer = () => {
     rotationRef.current.baseY = rotationRef.current.y
   }, [])
 
-  // 使用全局鼠标事件
+  // 鼠标事件处理
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (isMobile) return // 移动端不使用鼠标事件
+      e.preventDefault()
+      handleDragStart(e.clientX, e.clientY)
+    },
+    [isMobile, handleDragStart],
+  )
+
+  // 触摸事件处理
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isMobile) return // 桌面端不使用触摸事件
+      // 不在这里调用 preventDefault，让全局事件处理器处理
+      const touch = e.touches[0]
+      if (touch) {
+        handleDragStart(touch.clientX, touch.clientY)
+      }
+    },
+    [isMobile, handleDragStart],
+  )
+
+  // 使用全局事件处理拖拽和触摸
   useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
+    // 统一的拖拽移动处理
+    const handleDragMove = (clientX: number, clientY: number) => {
       if (!mouseState.isDragging || !modelRef.current) return
 
-      const deltaX = e.clientX - mouseState.lastMouseX
-      const deltaY = e.clientY - mouseState.lastMouseY
+      const deltaX = clientX - mouseState.lastMouseX
+      const deltaY = clientY - mouseState.lastMouseY
 
       // 直接更新旋转值
       rotationRef.current.x = rotationRef.current.baseX + deltaY * 0.01
@@ -332,10 +361,11 @@ export const useModelViewer = () => {
       console.log('Rotating:', rotationRef.current.x, rotationRef.current.y)
     }
 
-    const handleGlobalMouseUp = () => {
+    // 统一的拖拽结束处理
+    const handleDragEnd = () => {
       if (!mouseState.isDragging) return
 
-      console.log('Mouse up - 开始回归动画')
+      console.log('Drag end - 开始回归动画')
 
       // 设置目标位置为原始位置
       rotationRef.current.targetX = 0
@@ -348,16 +378,56 @@ export const useModelViewer = () => {
       }))
     }
 
+    // 鼠标事件
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isMobile) return // 移动端不处理鼠标事件
+      handleDragMove(e.clientX, e.clientY)
+    }
+
+    const handleGlobalMouseUp = () => {
+      if (isMobile) return // 移动端不处理鼠标事件
+      handleDragEnd()
+    }
+
+    // 触摸事件
+    const handleGlobalTouchMove = (e: TouchEvent) => {
+      if (!isMobile) return // 桌面端不处理触摸事件
+      // 只在拖拽时防止页面滚动
+      if (mouseState.isDragging) {
+        e.preventDefault()
+      }
+      const touch = e.touches[0]
+      if (touch) {
+        handleDragMove(touch.clientX, touch.clientY)
+      }
+    }
+
+    const handleGlobalTouchEnd = () => {
+      if (!isMobile) return // 桌面端不处理触摸事件
+      handleDragEnd()
+    }
+
     if (mouseState.isDragging) {
-      document.addEventListener('mousemove', handleGlobalMouseMove)
-      document.addEventListener('mouseup', handleGlobalMouseUp)
+      // 根据设备类型添加相应的事件监听器
+      if (isMobile) {
+        // 对于 touchmove，我们需要非被动监听器来调用 preventDefault
+        document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false })
+        document.addEventListener('touchend', handleGlobalTouchEnd, { passive: true })
+      } else {
+        document.addEventListener('mousemove', handleGlobalMouseMove)
+        document.addEventListener('mouseup', handleGlobalMouseUp)
+      }
     }
 
     return () => {
+      // 清理所有事件监听器，确保选项匹配
       document.removeEventListener('mousemove', handleGlobalMouseMove)
       document.removeEventListener('mouseup', handleGlobalMouseUp)
+      // 移除触摸事件时也要匹配添加时的选项
+      document.removeEventListener('touchmove', handleGlobalTouchMove)
+      document.removeEventListener('touchend', handleGlobalTouchEnd)
     }
-  }, [mouseState.isDragging, mouseState.lastMouseX, mouseState.lastMouseY])
+  }, [mouseState.isDragging, mouseState.lastMouseX, mouseState.lastMouseY, isMobile])
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     // 这个函数现在不需要做任何事，因为我们使用全局事件
@@ -397,6 +467,7 @@ export const useModelViewer = () => {
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
+    handleTouchStart,
     cleanup,
   }
 }
