@@ -58,6 +58,26 @@ This is **Gyoza**, a static blog template built with Astro and React. It's a mod
   - `provider/` - React context providers for state management
   - `ui/modal/` - Modal system with stack management
   - `comment/` - Waline comment system integration
+  - `hero/` - Homepage hero section with 3D interactive model system
+
+#### Hero 3D Interactive Model System
+
+- **Hero.astro** - Main hero section container that integrates all hero components
+- **InteractiveProject.tsx** - Main 3D project viewer component with project switching functionality
+- **ProjectViewer.tsx** - Three.js-based 3D model viewer with mouse/touch interaction support
+- **ProjectSwitcher.tsx** - Project navigation controls with previous/next buttons and project list
+- **ProjectLibrary.ts** - Project management system with YAML configuration support
+- **useProjectViewer.ts** - Custom hook for Three.js scene management and model loading
+- **SocialList.tsx** - Social media links with animated hover effects
+
+**Key Features:**
+
+- **3D Model Loading**: Supports both built-in geometric shapes (sphere, cube, torus, pyramid) and external 3D models (.glb, .gltf, .obj)
+- **Interactive Controls**: Mouse drag and touch support for model rotation with elastic return animation
+- **Project Management**: Dynamic project loading from YAML configuration with display control
+- **Responsive Design**: Adaptive sizing for mobile (200px) and desktop (300px) displays
+- **Error Handling**: Graceful fallback to avatar image on 3D loading errors
+- **Animation**: Smooth transitions using Framer Motion for project switching and UI elements
 
 #### Plugin System
 

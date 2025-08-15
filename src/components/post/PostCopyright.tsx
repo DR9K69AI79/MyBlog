@@ -2,7 +2,7 @@ import { author, site } from '@/config.json'
 import { getFormattedDateTime } from '@/utils/date'
 import { AnimatedSignature } from '../AnimatedSignature'
 import { useEffect, useState } from 'react'
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify'
 
 function getPostUrl(slug: string) {
   // 移除开头的斜杠，确保作为相对路径处理
@@ -46,7 +46,9 @@ export function PostCopyright({
       <p>文章作者：{author.name}</p>
       <p className="break-all">
         <span>文章链接：</span>
-        <span className="break-all" style={{ wordBreak: 'break-all', overflowWrap: 'anywhere' }}>{displayUrl}</span>
+        <span className="break-all" style={{ wordBreak: 'break-all', overflowWrap: 'anywhere' }}>
+          {displayUrl}
+        </span>
         <span role="button" className="cursor-pointer select-none ml-2" onClick={handleCopyUrl}>
           [复制]
         </span>

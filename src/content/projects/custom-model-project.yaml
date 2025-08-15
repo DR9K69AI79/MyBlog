@@ -1,0 +1,36 @@
+id: custom-model-project
+displayName: 自定义模型项目
+description: 这是一个使用自定义3D模型文件的项目示例
+showOnHomepage: true
+modelType: custom
+modelPath: 'public/models/retro_computer_setup_free.glb'
+color: '#7c3aed'
+modelParams:
+  scale: 2
+  rotation:
+    x: -0.3
+    y: 0
+    z: 0
+  position:
+    x: 0
+    y: 0
+    z: 0
+  material:
+    metalness: 0.6
+    roughness: 0.4
+    opacity: 1.0
+    transparent: false
+    wireframe: false
+  lighting:
+    intensity: 3
+    ambientIntensity: 2
+    enableShadows: false
+  animation:
+    autoRotate: false
+    rotationSpeed: 1.0
+    bounceEnabled: true
+projectUrl: 'https://github.com/DR9K69AI79/MyBlog'
+cover: 'https://images.unsplash.com/photo-1634078622491-93312b54636c?w=800&h=400&fit=crop'
+tags: ['Three.js', 'WebGL', '3D', 'Custom Model']
+category: '3D Graphics'
+timeText: '2024年开发'

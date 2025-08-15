@@ -2,7 +2,12 @@
 import { hero } from '@/config.json'
 import { SocialList } from './SocialList'
 import Highlight from '@/components/Highlight.astro'
-import InteractiveModel from './InteractiveModel'
+import InteractiveProject from './InteractiveProject'
+import { getCollection } from 'astro:content'
+
+// 获取项目配置，检查是否有项目在主页显示
+const yamlProjects = await getCollection('projects')
+const hasHomepageProjects = yamlProjects.some((project) => project.data.showOnHomepage !== false)
 ---
 
 <div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px]">
@@ -17,7 +22,11 @@ import InteractiveModel from './InteractiveModel'
       <SocialList className="mt-[60px]" client:load />
     </div>
     <div class="mt-20 lg:mt-0">
-      <InteractiveModel client:only="react" />
+      {
+        (hasHomepageProjects || yamlProjects.length === 0) && (
+          <InteractiveProject client:only="react" />
+        )
+      }
     </div>
 
     <div class="mt-10 lg:mt-0 lg:absolute inset-x-0 bottom-0 flex flex-col items-center">

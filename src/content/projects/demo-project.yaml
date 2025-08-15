@@ -1,0 +1,11 @@
+id: demo-project
+displayName: 演示项目
+description: 这是一个演示新YAML配置格式的项目
+showOnHomepage: true
+modelType: sphere
+color: '#4F46E5'
+projectUrl: 'https://github.com/DR9K69AI79/MyBlog'
+cover: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop'
+tags: ['Astro', 'React', 'TypeScript']
+category: 'Web Development'
+timeText: '2024年更新'

@@ -13,14 +13,14 @@ const projects = await getCollection('projects')
             <div class="aspect-video overflow-hidden">
               <img
                 class="size-full object-cover transition-transform group-hover:scale-110"
-                src={project.data.image}
-                alt={`Project cover: ${project.data.title}`}
+                src={project.data.cover || '/placeholder-project.jpg'}
+                alt={`Project cover: ${project.data.displayName}`}
                 loading="lazy"
               />
             </div>
             <div class="p-4">
               <div class="group-hover:text-accent">
-                <span class="text-xl font-bold">{project.data.title}</span>
+                <span class="text-xl font-bold">{project.data.displayName}</span>
                 <i class="ml-2 iconfont icon-external-link" />
               </div>
               <p class="mt-2 text-sm line-clamp-2">{project.data.description}</p>

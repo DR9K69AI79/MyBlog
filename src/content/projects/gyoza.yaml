@@ -1,4 +1,35 @@
-title: DWHITE Blog
+id: gyoza-blog
+displayName: DWHITE Blog
 description: 基于 Astro 构建的个人技术博客与作品集
-image: https://avatars.githubusercontent.com/u/185234493?v=4
-link: https://github.com/DR9K69AI79/MyBlog
+showOnHomepage: true
+modelType: sphere
+color: '#4F46E5'
+modelParams:
+  scale: 1.0
+  rotation:
+    x: 0.5
+    y: 0.8
+    z: 0
+  position:
+    x: 0
+    y: 0
+    z: 0
+  material:
+    metalness: 0.5
+    roughness: 0.5
+    opacity: 0.9
+    transparent: true
+    wireframe: false
+  lighting:
+    intensity: 1.0
+    ambientIntensity: 0.4
+    enableShadows: false
+  animation:
+    autoRotate: true
+    rotationSpeed: 0.5
+    bounceEnabled: true
+projectUrl: 'https://github.com/DR9K69AI79/MyBlog'
+cover: 'https://avatars.githubusercontent.com/u/185234493?v=4'
+tags: ['Astro', 'React', 'TypeScript', 'Blog']
+category: 'Web Development'
+timeText: '2024年开发'

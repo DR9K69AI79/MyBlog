@@ -1,6 +1,15 @@
 {
   "permissions": {
-    "allow": ["Bash(pnpm add:*)", "Bash(pnpm build:*)"],
+    "allow": [
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build:*)",
+      "Bash(mv:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm lint)",
+      "Bash(astro check:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)"
+    ],
     "deny": []
   }
 }
