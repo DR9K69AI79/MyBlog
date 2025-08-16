@@ -19,6 +19,14 @@ export default function ProjectViewer({
 }: ProjectViewerProps) {
   const isMobile = useAtomValue(isMobileAtom)
   
+  // 响应式尺寸计算 - 确保4:3比例，并适配不同屏幕
+  const rendererWidth = isMobile ? 280 : 420
+  const rendererHeight = isMobile ? 210 : 315
+  
+  // 容器尺寸 - 比渲染器稍小，营造出框效果
+  const containerWidth = isMobile ? 240 : 360
+  const containerHeight = isMobile ? 180 : 270
+  
   const {
     mountRef,
     isLoading,
@@ -26,18 +34,22 @@ export default function ProjectViewer({
     initScene,
     switchProject,
     updateCurrentModelParams,
+    updateRendererSize,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
     handleTouchStart,
     cleanup,
-  } = useProjectViewer(modelParams)
+  } = useProjectViewer(modelParams, { width: rendererWidth, height: rendererHeight })
 
   const sceneInitialized = useRef(false)
   
-  // 计算渲染器尺寸 - 4:3比例，增大尺寸以实现出框效果
-  const rendererWidth = isMobile ? 320 : 420
-  const rendererHeight = isMobile ? 240 : 315
+  // 监听尺寸变化并更新渲染器
+  useEffect(() => {
+    if (sceneInitialized.current) {
+      updateRendererSize({ width: rendererWidth, height: rendererHeight })
+    }
+  }, [rendererWidth, rendererHeight, updateRendererSize])
 
   useEffect(() => {
     const init = async () => {
@@ -102,30 +114,46 @@ export default function ProjectViewer({
   }
 
   return (
-    <div className={`relative ${className}`}>
-      {/* 外层容器 - 设置实际显示尺寸 */}
-      <div className="relative w-[200px] h-[200px] lg:w-[300px] lg:h-[300px]">
-        {/* 背景容器 - 缩小尺寸创建出框效果，适配4:3比例 */}
-        <div className="absolute left-1/2 top-1/2 w-5/6 h-3/4 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-primary bg-gradient-to-br from-blue-500/10 to-purple-600/10 backdrop-blur-sm z-0 shadow-2xl" />
+    <div className={`relative flex justify-center ${className}`}>
+      {/* 外层容器 - 精确控制尺寸确保居中 */}
+      <div 
+        className="relative"
+        style={{
+          width: `${containerWidth}px`,
+          height: `${containerHeight}px`
+        }}
+      >
+        {/* 背景容器 - 填满整个容器 */}
+        <div className="absolute inset-0 rounded-xl border border-primary bg-gradient-to-br from-blue-500/10 to-purple-600/10 backdrop-blur-sm z-0 shadow-2xl" />
         
         {/* 装饰性光晕效果 */}
-        <div className="absolute left-1/2 top-1/2 w-5/6 h-3/4 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gradient-to-br from-blue-400/5 to-purple-500/5 blur-xl z-[-1]" />
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/5 to-purple-500/5 blur-xl z-[-1]" />
         
         {/* 立体投影效果 */}
-        <div className="absolute left-1/2 bottom-2 w-4/5 h-2 -translate-x-1/2 bg-gradient-to-t from-black/10 to-transparent rounded-b-full blur-sm z-[-2]" />
+        <div 
+          className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gradient-to-t from-black/10 to-transparent rounded-b-full blur-sm z-[-2]"
+          style={{
+            width: `${containerWidth * 0.8}px`,
+            height: '8px'
+          }}
+        />
 
-        {/* Three.js 容器 - 完整尺寸，允许内容超出背景框 */}
+        {/* Three.js 容器 - 绝对定位居中，允许溢出 */}
         <div
-          className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing z-20"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing z-20"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onTouchStart={handleTouchStart}
-          style={{ touchAction: 'none' }}
+          style={{ 
+            touchAction: 'none',
+            width: `${rendererWidth}px`,
+            height: `${rendererHeight}px`
+          }}
         >
           {isLoading && (
-            <div className="w-full h-full flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
             </div>
           )}
@@ -134,16 +162,14 @@ export default function ProjectViewer({
             className={`${isLoading ? 'hidden' : 'block'}`}
             style={{ 
               width: `${rendererWidth}px`, 
-              height: `${rendererHeight}px`,
-              maxWidth: 'none',
-              maxHeight: 'none'
+              height: `${rendererHeight}px`
             }}
           />
         </div>
 
         {/* 拖拽提示 */}
         {!isLoading && !hasError && (
-          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs text-secondary opacity-70 z-30">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-secondary opacity-70 z-30">
             拖拽旋转
           </div>
         )}

@@ -6,6 +6,7 @@ import { projectLibraryManager } from './ProjectLibrary'
 import ProjectViewer from './ProjectViewer'
 import ProjectSwitcher from './ProjectSwitcher'
 import { motion } from 'framer-motion'
+import { ViewportDebug } from '@/components/debug/ViewportDebug'
 
 interface InteractiveProjectProps {
   className?: string
@@ -47,17 +48,19 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
   }
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`w-full max-w-sm mx-auto space-y-4 ${className}`}>
+      <ViewportDebug />
       {/* 3D项目查看器 */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
+        className="flex justify-center"
       >
         <ProjectViewer
           projectType={currentProject.modelPath || currentProject.modelType || 'sphere'}
           modelParams={currentProject.modelParams}
-          className="w-full"
+          className="shrink-0"
         />
       </motion.div>
 

@@ -1,6 +1,8 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { useAtomValue } from 'jotai'
 import { isMobileAtom } from '@/store/viewport'
+import { withBase } from '@/utils/path'
+import { debugPathResolution, validateModelPath } from '@/utils/debugPath'
 import type { ModelParams } from './ProjectLibrary'
 
 interface ModelViewerState {
@@ -9,7 +11,12 @@ interface ModelViewerState {
   lastMouseY: number
 }
 
-export const useProjectViewer = (modelParams?: ModelParams) => {
+interface ViewerDimensions {
+  width: number
+  height: number
+}
+
+export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerDimensions) => {
   const mountRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -21,6 +28,13 @@ export const useProjectViewer = (modelParams?: ModelParams) => {
 
   // 检测是否为移动端
   const isMobile = useAtomValue(isMobileAtom)
+
+  // 设置默认尺寸，如果没有传入则使用响应式默认值
+  const defaultDimensions = {
+    width: isMobile ? 320 : 420,
+    height: isMobile ? 240 : 315,
+  }
+  const rendererDimensions = dimensions || defaultDimensions
 
   const sceneRef = useRef<any>(null)
   const cameraRef = useRef<any>(null)
@@ -77,12 +91,12 @@ export const useProjectViewer = (modelParams?: ModelParams) => {
       cameraRef.current = camera
       console.log('相机创建成功')
 
-      // 创建渲染器 - 4:3比例
+      // 创建渲染器 - 使用传入的尺寸或响应式默认值
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
       })
-      renderer.setSize(420, 315)
+      renderer.setSize(rendererDimensions.width, rendererDimensions.height)
       renderer.setClearColor(0x000000, 0)
       renderer.outputColorSpace = THREE.SRGBColorSpace
       renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -109,6 +123,16 @@ export const useProjectViewer = (modelParams?: ModelParams) => {
       setHasError(true)
       setIsLoading(false)
       return false
+    }
+  }, [])
+
+  // 更新渲染器尺寸
+  const updateRendererSize = useCallback((newDimensions: ViewerDimensions) => {
+    if (rendererRef.current && cameraRef.current) {
+      rendererRef.current.setSize(newDimensions.width, newDimensions.height)
+      cameraRef.current.aspect = newDimensions.width / newDimensions.height
+      cameraRef.current.updateProjectionMatrix()
+      console.log('渲染器尺寸已更新:', newDimensions)
     }
   }, [])
 
@@ -221,6 +245,18 @@ export const useProjectViewer = (modelParams?: ModelParams) => {
     try {
       console.log('开始加载外部模型:', modelPath)
 
+      // 调试路径解析
+      debugPathResolution(modelPath)
+
+      // 验证模型路径
+      if (!validateModelPath(modelPath)) {
+        throw new Error(`无效的模型路径: ${modelPath}`)
+      }
+
+      // 处理模型路径，确保使用正确的base路径
+      const resolvedPath = withBase(modelPath)
+      console.log('解析后的模型路径:', resolvedPath)
+
       // 动态导入THREE和GLTFLoader
       const THREE = await import('three')
       const threeStdlib = await import('three-stdlib')
@@ -229,9 +265,9 @@ export const useProjectViewer = (modelParams?: ModelParams) => {
 
       return new Promise((resolve, reject) => {
         loader.load(
-          modelPath,
+          resolvedPath,
           (gltf: any) => {
-            console.log('外部模型加载成功:', modelPath)
+            console.log('外部模型加载成功:', resolvedPath)
             const model = gltf.scene
 
             // 优化材质
@@ -817,6 +853,7 @@ export const useProjectViewer = (modelParams?: ModelParams) => {
     initScene,
     switchProject,
     updateCurrentModelParams,
+    updateRendererSize,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
