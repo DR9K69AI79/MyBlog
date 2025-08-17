@@ -29,10 +29,67 @@
   background-color: theme('colors.accent/0.3');
 }
 
+/* 3D Hero 背景框特效 */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* 3D Hero 视口裁剪 */
+.hero-viewport-clip {
+  /* 使用视口单位确保内容不会超出屏幕边界 */
+  /* 水平方向允许一定的溢出，垂直方向更严格控制 */
+  clip-path: inset(-10vh calc(-40vw + 50%) -10vh calc(-40vw + 50%));
+  /* 确保布局稳定 */
+  contain: layout style;
+}
+
+/* 移动端优化的视口裁剪 */
+@media (max-width: 768px) {
+  .hero-viewport-clip {
+    /* 移动端更严格的裁剪控制 */
+    clip-path: inset(-5vh calc(-30vw + 50%) -5vh calc(-30vw + 50%));
+  }
+}
+
+/* 3D Hero 动态效果 */
+@keyframes hero-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-shine {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(400%) skewX(-12deg);
+  }
+}
+
+.hero-glow {
+  animation: hero-glow 3s ease-in-out infinite;
+}
+
+.hero-shine {
+  animation: hero-shine 4s ease-in-out infinite;
+}
+
 html {
   color: theme('textColor.primary');
   background-color: theme('backgroundColor.root');
   scroll-padding-top: 64px;
+  overflow-x: hidden; /* 防止横向滚动 */
+}
+
+body {
+  overflow-x: hidden; /* 确保body不产生横向滚动 */
 }
 
 html.gray {
@@ -75,4 +132,66 @@ p {
 .break-long-words {
   word-break: break-all;
   overflow-wrap: anywhere;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* 自定义滚动条样式 */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-primary\/30::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-primary\/30::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thumb-primary\/30::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--color-primary), 0.3);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
+
+.scrollbar-thumb-primary\/30:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--color-primary), 0.5);
+}
+
+.scrollbar-thumb-primary\/30::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--color-primary), 0.5);
+}
+
+/* Firefox滚动条样式 */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--color-primary), 0.3) transparent;
+}
+
+.scrollbar-thin:hover {
+  scrollbar-color: rgba(var(--color-primary), 0.5) transparent;
 }

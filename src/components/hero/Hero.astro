@@ -10,9 +10,9 @@ const yamlProjects = await getCollection('projects')
 const hasHomepageProjects = yamlProjects.some((project) => project.data.showOnHomepage !== false)
 ---
 
-<div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px]">
+<div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px] overflow-hidden">
   <div
-    class="relative max-w-[1300px] mx-auto h-full px-4 grid lg:grid-cols-2 items-center justify-items-center"
+    class="relative max-w-[1300px] mx-auto h-full px-4 grid lg:grid-cols-2 items-center justify-items-center overflow-hidden"
   >
     <div class="mt-[120px] lg:mt-0 max-w-[590px]">
       <h1 class="text-3xl text-center lg:text-left text-balance">
@@ -21,7 +21,7 @@ const hasHomepageProjects = yamlProjects.some((project) => project.data.showOnHo
       <div class="text-sm text-secondary mt-3 text-center lg:text-left">{hero.description}</div>
       <SocialList className="mt-[60px]" client:load />
     </div>
-    <div class="mt-20 lg:mt-0">
+    <div class="mt-20 lg:mt-0 overflow-visible flex justify-center">
       {
         (hasHomepageProjects || yamlProjects.length === 0) && (
           <InteractiveProject client:only="react" />

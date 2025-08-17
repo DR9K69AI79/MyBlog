@@ -85,11 +85,12 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
       sceneRef.current = scene
       console.log('场景创建成功')
 
-      // 创建相机 - 4:3比例
-      const camera = new THREE.PerspectiveCamera(50, 4 / 3, 0.1, 1000)
-      camera.position.z = 5
+      // 创建相机 - 动态比例，适应页面尺寸
+      const aspectRatio = rendererDimensions.width / rendererDimensions.height
+      const camera = new THREE.PerspectiveCamera(50, aspectRatio, 0.1, 1000) // 恢复50度FOV，让用户通过配置控制
+      camera.position.z = 5 // 恢复标准距离，用户可通过position.z配置调整
       cameraRef.current = camera
-      console.log('相机创建成功')
+      console.log('相机创建成功，视野角度: 50°，宽高比:', aspectRatio)
 
       // 创建渲染器 - 使用传入的尺寸或响应式默认值
       const renderer = new THREE.WebGLRenderer({
@@ -126,17 +127,50 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
     }
   }, [])
 
-  // 更新渲染器尺寸
+  // 更新渲染器尺寸 - 确保在合理范围内并保持宽高比
   const updateRendererSize = useCallback((newDimensions: ViewerDimensions) => {
     if (rendererRef.current && cameraRef.current) {
-      rendererRef.current.setSize(newDimensions.width, newDimensions.height)
-      cameraRef.current.aspect = newDimensions.width / newDimensions.height
+      // 限制渲染器尺寸在合理范围内，防止过大导致页面溢出
+      const maxSize = Math.min(window?.innerWidth || 1200, 800) // 限制最大尺寸
+      const constrainedWidth = Math.min(newDimensions.width, maxSize)
+      const constrainedHeight = Math.min(newDimensions.height, maxSize)
+
+      rendererRef.current.setSize(constrainedWidth, constrainedHeight)
+      cameraRef.current.aspect = constrainedWidth / constrainedHeight
       cameraRef.current.updateProjectionMatrix()
-      console.log('渲染器尺寸已更新:', newDimensions)
+      console.log('渲染器尺寸已更新:', {
+        requested: newDimensions,
+        actual: { width: constrainedWidth, height: constrainedHeight },
+      })
     }
   }, [])
 
-  // 更新灯光设置
+  // 设置渲染视口 - 让3D内容显示在屏幕中央合适位置
+  const setRenderViewport = useCallback((containerBounds: { width: number; height: number }) => {
+    if (rendererRef.current && typeof window !== 'undefined') {
+      const screenWidth = window.innerWidth
+      const screenHeight = window.innerHeight
+
+      // 计算容器在屏幕中的居中位置
+      const viewportX = (screenWidth - containerBounds.width) / 2
+      const viewportY = (screenHeight - containerBounds.height) / 2
+
+      // 设置渲染视口，让3D内容只在指定区域渲染
+      rendererRef.current.setViewport(
+        viewportX,
+        viewportY,
+        containerBounds.width,
+        containerBounds.height,
+      )
+
+      console.log('渲染视口已设置:', {
+        x: viewportX,
+        y: viewportY,
+        width: containerBounds.width,
+        height: containerBounds.height,
+      })
+    }
+  }, []) // 更新灯光设置
   const updateLighting = (THREE: any, scene: any) => {
     // 清除现有灯光
     scene.children = scene.children.filter((child: any) => !child.isLight)
@@ -354,14 +388,22 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
             const center = box.getCenter(new THREE.Vector3())
             const size = box.getSize(new THREE.Vector3())
 
-            // 应用模型参数中的缩放
+            // 应用用户配置的缩放 - 移除自动计算，让用户完全控制
             const params = currentModelParams.current
-            const baseScale = params.scale
-            const maxDim = Math.max(size.x, size.y, size.z)
-            const autoScale = maxDim > 0 ? 2 / maxDim : 1
+            const userScale = params.scale
 
-            model.scale.setScalar(baseScale * autoScale)
-            model.position.sub(center.multiplyScalar(baseScale * autoScale))
+            console.log('应用用户配置缩放:', {
+              modelSize: { x: size.x, y: size.y, z: size.z },
+              userScale,
+              position: params.position,
+              rotation: params.rotation,
+            })
+
+            // 应用用户指定的缩放
+            model.scale.setScalar(userScale)
+
+            // 居中模型（可通过position参数调整）
+            model.position.sub(center.multiplyScalar(userScale))
 
             // 应用位置偏移
             model.position.x += params.position.x
@@ -854,6 +896,7 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
     switchProject,
     updateCurrentModelParams,
     updateRendererSize,
+    setRenderViewport,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,

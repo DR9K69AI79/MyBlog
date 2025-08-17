@@ -5,6 +5,8 @@ import { useProjectViewer } from './useProjectViewer'
 import type { ModelParams } from './ProjectLibrary'
 import { useAtomValue } from 'jotai'
 import { isMobileAtom } from '@/store/viewport'
+import { motion } from 'framer-motion'
+import { calculateSafeRendererSize } from '@/utils/viewportUtils'
 
 interface ProjectViewerProps {
   projectType: string
@@ -19,13 +21,13 @@ export default function ProjectViewer({
 }: ProjectViewerProps) {
   const isMobile = useAtomValue(isMobileAtom)
   
-  // 响应式尺寸计算 - 确保4:3比例，并适配不同屏幕
-  const rendererWidth = isMobile ? 280 : 420
-  const rendererHeight = isMobile ? 210 : 315
-  
-  // 容器尺寸 - 比渲染器稍小，营造出框效果
-  const containerWidth = isMobile ? 240 : 360
-  const containerHeight = isMobile ? 180 : 270
+  // 使用新的尺寸计算函数
+  const {
+    containerWidth,
+    containerHeight,
+    rendererWidth,
+    rendererHeight
+  } = calculateSafeRendererSize(isMobile)
   
   const {
     mountRef,
@@ -44,8 +46,9 @@ export default function ProjectViewer({
 
   const sceneInitialized = useRef(false)
   
-  // 监听尺寸变化并更新渲染器
+  // 监听窗口尺寸变化 - 只在容器尺寸参数变化时更新，避免无意义的重新渲染
   useEffect(() => {
+    // 移除窗口resize监听，改为只在组件尺寸变化时更新
     if (sceneInitialized.current) {
       updateRendererSize({ width: rendererWidth, height: rendererHeight })
     }
@@ -97,12 +100,18 @@ export default function ProjectViewer({
 
   if (hasError) {
     return (
-      <div className={`relative ${className}`}>
-        <div className="relative w-[200px] h-[200px] lg:w-[300px] lg:h-[300px]">
-          <div className="absolute left-1/2 top-1/2 w-5/6 h-3/4 -translate-x-1/2 -translate-y-1/2 rounded-xl overflow-hidden border border-primary bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center z-0" />
+      <div className={`relative flex justify-center ${className}`}>
+        <div 
+          className="relative overflow-visible"
+          style={{
+            width: `${containerWidth}px`,
+            height: `${containerHeight}px`
+          }}
+        >
+          <div className="absolute inset-0 rounded-xl overflow-hidden border border-primary bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center z-0" />
           <div className="relative w-full h-full flex items-center justify-center z-20">
             <img
-              className="size-full object-cover"
+              className="w-3/4 h-3/4 object-cover rounded-lg"
               src="/avatar.jpeg"
               alt="Site owner avatar"
               loading="lazy"
@@ -115,62 +124,125 @@ export default function ProjectViewer({
 
   return (
     <div className={`relative flex justify-center ${className}`}>
-      {/* 外层容器 - 精确控制尺寸确保居中 */}
+      {/* 3D 渲染器容器 - 主体部分 */}
       <div 
-        className="relative"
+        className="relative overflow-visible"
         style={{
           width: `${containerWidth}px`,
           height: `${containerHeight}px`
         }}
       >
-        {/* 背景容器 - 填满整个容器 */}
-        <div className="absolute inset-0 rounded-xl border border-primary bg-gradient-to-br from-blue-500/10 to-purple-600/10 backdrop-blur-sm z-0 shadow-2xl" />
+        {/* 外层光环效果 - 最大的发光层 */}
+        <div className="absolute inset-[-20px] rounded-2xl bg-gradient-to-br from-accent/20 via-transparent to-accent/20 blur-2xl hero-glow z-[-3]" />
         
-        {/* 装饰性光晕效果 */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/5 to-purple-500/5 blur-xl z-[-1]" />
+        {/* 中层光环效果 - 中等发光层 */}
+        <div className="absolute inset-[-10px] rounded-xl bg-gradient-to-br from-accent/30 via-accent/10 to-accent/30 blur-xl z-[-2]" />
         
-        {/* 立体投影效果 */}
-        <div 
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gradient-to-t from-black/10 to-transparent rounded-b-full blur-sm z-[-2]"
-          style={{
-            width: `${containerWidth * 0.8}px`,
-            height: '8px'
-          }}
-        />
-
-        {/* Three.js 容器 - 绝对定位居中，允许溢出 */}
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing z-20"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onTouchStart={handleTouchStart}
-          style={{ 
-            touchAction: 'none',
-            width: `${rendererWidth}px`,
-            height: `${rendererHeight}px`
-          }}
-        >
-          {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-            </div>
-          )}
-          <div
-            ref={mountRef}
-            className={`${isLoading ? 'hidden' : 'block'}`}
-            style={{ 
-              width: `${rendererWidth}px`, 
-              height: `${rendererHeight}px`
+        {/* 动态光束效果 */}
+        <div className="absolute inset-[-5px] rounded-xl overflow-hidden z-[-1]">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/30 to-transparent hero-shine"></div>
+        </div>
+        
+        {/* 主背景框 - 多层次设计 */}
+        <div className="absolute inset-0 rounded-xl overflow-hidden z-0">
+          {/* 背景基础层 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/95 to-primary/90 backdrop-blur-xl" />
+          
+          {/* 彩色渐变叠加层 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/15 via-transparent to-accent/25 mix-blend-overlay" />
+          
+          {/* 网格纹理效果 */}
+          <div 
+            className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '20px 20px'
             }}
           />
+          
+          {/* 边框效果 - 动态彩色边框 */}
+          <div className="absolute inset-0 rounded-xl border-2 border-accent/30 shadow-lg shadow-accent/20" />
+          
+          {/* 内部高光边框 */}
+          <div className="absolute inset-[2px] rounded-lg border border-white/10 dark:border-white/5" />
+        </div>
+        
+        {/* 立体投影效果 - 增强深度感 */}
+        <div 
+          className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gradient-radial from-black/20 via-black/10 to-transparent blur-lg z-[-4]"
+          style={{
+            width: `${containerWidth * 0.9}px`,
+            height: '20px',
+            borderRadius: '50%'
+          }}
+        />
+        
+        {/* 角落装饰元素 */}
+        <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-accent/60 shadow-lg shadow-accent/40 z-10" />
+        <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent/40 shadow-md shadow-accent/30 z-10" />
+        <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-accent/40 shadow-md shadow-accent/30 z-10" />
+        <div className="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-accent/30 shadow-sm shadow-accent/20 z-10" />
+
+        {/* Three.js 容器 - 精确控制尺寸，确保不会溢出 */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 overflow-visible"
+          style={{ 
+            width: `${containerWidth}px`,
+            height: `${containerHeight}px`
+          }}
+        >
+          {/* 交互区域 - 覆盖整个容器 */}
+          <div
+            className="absolute inset-0 cursor-grab active:cursor-grabbing transition-transform duration-300 hover:scale-105"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            style={{ touchAction: 'none' }}
+          >
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent shadow-lg shadow-accent/30"></div>
+              </div>
+            )}
+            
+            {/* 大尺寸渲染器 - 居中但被容器严格裁切 */}
+            <div
+              ref={mountRef}
+              className={`${isLoading ? 'hidden' : 'block'} transition-opacity duration-500`}
+              style={{ 
+                width: `${rendererWidth}px`, 
+                height: `${rendererHeight}px`,
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                // 开发环境下显示边界（可选）
+                ...(process.env.NODE_ENV === 'development' ? {
+                  outline: '1px dashed rgba(255,165,0,0)', // 设置alpha来启用
+                  outlineOffset: '-1px'
+                } : {})
+              }}
+            />
+          </div>
         </div>
 
-        {/* 拖拽提示 */}
+        {/* 交互提示 - 重新设计 */}
         {!isLoading && !hasError && (
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-secondary opacity-70 z-30">
-            拖拽旋转
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/80 backdrop-blur-sm text-primary text-xs font-medium shadow-lg border border-primary/30"
+            >
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-sm shadow-accent/30"></div>
+              <span className="select-none">拖拽旋转</span>
+            </motion.div>
           </div>
         )}
       </div>

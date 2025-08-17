@@ -17,8 +17,8 @@ const { title, description, image } = Astro.props
   <Provider pathName={Astro.url.pathname} client:only="react" />
 
   <Header client:only="react" />
-  <main class="relative z-1 pt-16 min-h-main bg-primary">
-    <div class="swup-transition-fade">
+  <main class="relative z-1 pt-16 min-h-main bg-primary overflow-x-hidden">
+    <div class="swup-transition-fade max-w-full">
       <slot />
     </div>
   </main>

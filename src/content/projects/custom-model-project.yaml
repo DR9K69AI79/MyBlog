@@ -1,20 +1,23 @@
 id: custom-model-project
 displayName: 自定义模型项目
-description: 这是一个使用自定义3D模型文件的项目示例
+description: 这是一个使用自定义3D模型文件的项目示例，现在支持全屏渲染，无裁切限制
 showOnHomepage: true
 modelType: custom
 modelPath: '/models/retro_computer_setup_free.glb'
 color: '#7c3aed'
 modelParams:
-  scale: 1.8
+  # 缩放：完全由用户控制，建议值0.5-3.0
+  scale: 0.02
   rotation:
+    # 初始旋转角度（弧度）
     x: 0.2
     y: 0
     z: 0
   position:
+    # 3D空间中的位置偏移，可用于精确定位
     x: 0
     y: 0
-    z: 0
+    z: 0  # 正值向前，负值向后
   material:
     metalness: 0.6
     roughness: 0.4
