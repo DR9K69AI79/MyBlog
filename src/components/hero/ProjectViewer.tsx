@@ -33,6 +33,7 @@ export default function ProjectViewer({
     mountRef,
     isLoading,
     hasError,
+    isProjectSwitching,
     initScene,
     switchProject,
     updateCurrentModelParams,
@@ -204,43 +205,48 @@ export default function ProjectViewer({
             onTouchStart={handleTouchStart}
             style={{ touchAction: 'none' }}
           >
-            {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent shadow-lg shadow-accent/30"></div>
-              </div>
-            )}
-            
-            {/* 大尺寸渲染器 - 居中但被容器严格裁切 */}
+            {/* 大尺寸渲染器 - 居中但被容器严格裁切，添加切换动画 */}
             <div
-              ref={mountRef}
-              className={`${isLoading ? 'hidden' : 'block'} transition-opacity duration-500`}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
                 width: `${rendererWidth}px`, 
                 height: `${rendererHeight}px`,
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                // 开发环境下显示边界（可选）
-                ...(process.env.NODE_ENV === 'development' ? {
-                  outline: '1px dashed rgba(255,165,0,0)', // 设置alpha来启用
-                  outlineOffset: '-1px'
-                } : {})
               }}
-            />
+            >
+              <motion.div
+                ref={mountRef}
+                className="w-full h-full block"
+                initial={false}
+                animate={{ 
+                  opacity: isProjectSwitching ? 0 : 1,
+                  scale: isProjectSwitching ? 0.95 : 1,
+                }}
+                transition={{ 
+                  duration: 0.2, 
+                  ease: "easeOut" 
+                }}
+                style={{ 
+                  // 开发环境下显示边界（可选）
+                  ...(process.env.NODE_ENV === 'development' ? {
+                    outline: '1px dashed rgba(255,165,0,0)', // 设置alpha来启用
+                    outlineOffset: '-1px'
+                  } : {})
+                }}
+              />
+            </div>
           </div>
         </div>
 
-        {/* 交互提示 - 重新设计 */}
-        {!isLoading && !hasError && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30">
+        {/* 交互提示 - 右下角位置，视觉弱化 */}
+        {!hasError && !isProjectSwitching && (
+          <div className="absolute bottom-2 right-3 z-30">
             <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.6 }}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/80 backdrop-blur-sm text-primary text-xs font-medium shadow-lg border border-primary/30"
+              initial={{ opacity: 0, y: 10, scale: 0.8 }}
+              animate={{ opacity: 0.4, y: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, delay: 0.8 }}
+              className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-primary/40 backdrop-blur-sm text-secondary text-xs opacity-60 hover:opacity-80 transition-opacity duration-200"
             >
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-sm shadow-accent/30"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-secondary/70 animate-pulse"></div>
               <span className="select-none">拖拽旋转</span>
             </motion.div>
           </div>

@@ -20,6 +20,7 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
   const mountRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
+  const [isProjectSwitching, setIsProjectSwitching] = useState(false)
   const [mouseState, setMouseState] = useState<ModelViewerState>({
     isDragging: false,
     lastMouseX: 0,
@@ -97,6 +98,8 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
         antialias: true,
         alpha: true,
       })
+      // 设置像素比率，提升渲染质量（类似DSR）
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio * 1.5, 3))
       renderer.setSize(rendererDimensions.width, rendererDimensions.height)
       renderer.setClearColor(0x000000, 0)
       renderer.outputColorSpace = THREE.SRGBColorSpace
@@ -839,6 +842,11 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
     async (projectType: string) => {
       if (!sceneRef.current) return false
 
+      setIsProjectSwitching(true)
+
+      // 添加切换延迟以配合动画
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
       // 更新当前模型参数 - 每次切换都更新
       if (modelParams) {
         currentModelParams.current = { ...modelParams } // 创建新的对象引用
@@ -868,7 +876,14 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
         })
       }
 
-      return await createModel(projectType)
+      const result = await createModel(projectType)
+
+      // 模型创建完成后，再延迟一下让动画完成
+      setTimeout(() => {
+        setIsProjectSwitching(false)
+      }, 300)
+
+      return result
     },
     [modelParams, createModel],
   )
@@ -891,6 +906,7 @@ export const useProjectViewer = (modelParams?: ModelParams, dimensions?: ViewerD
     mountRef,
     isLoading,
     hasError,
+    isProjectSwitching,
     mouseState,
     initScene,
     switchProject,

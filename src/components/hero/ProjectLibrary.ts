@@ -72,13 +72,23 @@ export class ProjectLibraryManager {
     this.library = initialLibrary || createDefaultProjectLibrary()
   }
 
-  // 获取当前项目
-  getCurrentProject(): ProjectConfig {
-    // 如果没有YAML项目，返回默认项目
-    if (this.yamlProjects.length === 0) {
-      return this.getDefaultProject()
+  // 获取当前项目或默认项目（作为fallback）
+  getCurrentProjectOrDefault(): ProjectConfig {
+    const currentProject = this.getCurrentProject()
+    if (currentProject) {
+      return currentProject
     }
-    return this.yamlProjects[this.library.currentProjectIndex] || this.getDefaultProject()
+    // 只有在真正没有任何项目可用时才返回默认项目
+    return this.getDefaultProject()
+  }
+
+  // 获取当前项目
+  getCurrentProject(): ProjectConfig | null {
+    // 如果没有YAML项目，返回null而不是默认项目
+    if (this.yamlProjects.length === 0) {
+      return null
+    }
+    return this.yamlProjects[this.library.currentProjectIndex] || this.yamlProjects[0]
   }
 
   // 获取所有项目
@@ -177,16 +187,16 @@ export class ProjectLibraryManager {
   }
 
   // 切换到下一个项目（只在显示的项目中循环）
-  nextProject(): ProjectConfig {
+  nextProject(): ProjectConfig | null {
     if (this.yamlProjects.length === 0) {
-      return this.getDefaultProject()
+      return null
     }
 
     // 获取所有显示的项目
     const visibleProjects = this.yamlProjects.filter((project) => project.showOnHomepage !== false)
 
     if (visibleProjects.length === 0) {
-      return this.getDefaultProject()
+      return null
     }
 
     // 如果当前项目不在显示的项目中，切换到第一个显示的项目
@@ -215,16 +225,16 @@ export class ProjectLibraryManager {
   }
 
   // 切换到上一个项目（只在显示的项目中循环）
-  previousProject(): ProjectConfig {
+  previousProject(): ProjectConfig | null {
     if (this.yamlProjects.length === 0) {
-      return this.getDefaultProject()
+      return null
     }
 
     // 获取所有显示的项目
     const visibleProjects = this.yamlProjects.filter((project) => project.showOnHomepage !== false)
 
     if (visibleProjects.length === 0) {
-      return this.getDefaultProject()
+      return null
     }
 
     // 如果当前项目不在显示的项目中，切换到第一个显示的项目

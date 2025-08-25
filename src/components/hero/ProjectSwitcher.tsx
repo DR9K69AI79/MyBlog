@@ -28,14 +28,18 @@ export default function ProjectSwitcher({
 
   const handlePrevious = () => {
     const previousProject = projectLibraryManager.previousProject()
-    onProjectChange(previousProject)
-    setProjects(projectLibraryManager.getAllProjects())
+    if (previousProject) {
+      onProjectChange(previousProject)
+      setProjects(projectLibraryManager.getAllProjects())
+    }
   }
 
   const handleNext = () => {
     const nextProject = projectLibraryManager.nextProject()
-    onProjectChange(nextProject)
-    setProjects(projectLibraryManager.getAllProjects())
+    if (nextProject) {
+      onProjectChange(nextProject)
+      setProjects(projectLibraryManager.getAllProjects())
+    }
   }
 
   const handleProjectSelect = (project: ProjectConfig) => {
