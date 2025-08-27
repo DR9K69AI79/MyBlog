@@ -5,10 +5,21 @@ import { useDebounceValue } from '@/hooks/useDebounceValue'
 
 let pagefind: any = null
 async function loadPagefind() {
-  if (import.meta.env.PROD && !pagefind) {
-    const url = '/pagefind/pagefind.js'
-    pagefind = await import(/* @vite-ignore */ url)
+  if (!pagefind) {
+    try {
+      if (import.meta.env.PROD) {
+        const url = '/pagefind/pagefind.js'
+        pagefind = await import(/* @vite-ignore */ url)
+      } else {
+        // 开发环境直接返回null，避免404错误
+        return null
+      }
+    } catch (error) {
+      console.warn('Pagefind 加载失败:', error)
+      return null
+    }
   }
+  return pagefind
 }
 
 export function SearchButton() {
@@ -48,11 +59,16 @@ function SearchPanel() {
       return
     }
     setIsLoading(true)
-    await loadPagefind()
-    if (pagefind) {
-      const res = await pagefind.search(value)
-      const nextResults = await Promise.all(res.results.map((r: any) => r.data()))
-      setResults(nextResults)
+    const pagefindInstance = await loadPagefind()
+    if (pagefindInstance) {
+      try {
+        const res = await pagefindInstance.search(value)
+        const nextResults = await Promise.all(res.results.map((r: any) => r.data()))
+        setResults(nextResults)
+      } catch (error) {
+        console.warn('搜索失败:', error)
+        setResults([])
+      }
     }
     setIsLoading(false)
   }
@@ -142,33 +158,37 @@ function SearchPanel() {
   }
 
   return (
-    <motion.div
-      className="bg-primary rounded-lg w-[90vw] h-[80vh] max-w-[680px] max-h-[480px] border border-primary flex flex-col"
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 20, opacity: 0 }}
-    >
-      <input
-        className="px-4 py-3 outline-none bg-transparent border-b border-primary"
-        type="text"
-        placeholder="Search..."
-        maxLength={64}
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-      />
-      <div className="px-4 py-3 overflow-y-auto grow">{resultList}</div>
-      <div className="px-3 py-2 flex justify-end">
-        <a
-          href="https://pagefind.app/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center "
-        >
-          <span className="mr-2 text-xs">Search by</span>
-          <span className="font-semibold">pagefind</span>
-        </a>
-      </div>
-    </motion.div>
+    <>
+      <Dialog.Title className="sr-only">搜索文章</Dialog.Title>
+      <Dialog.Description className="sr-only">在博客中搜索文章内容</Dialog.Description>
+      <motion.div
+        className="bg-primary rounded-lg w-[90vw] h-[80vh] max-w-[680px] max-h-[480px] border border-primary flex flex-col"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 20, opacity: 0 }}
+      >
+        <input
+          className="px-4 py-3 outline-none bg-transparent border-b border-primary"
+          type="text"
+          placeholder="Search..."
+          maxLength={64}
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+        <div className="px-4 py-3 overflow-y-auto grow">{resultList}</div>
+        <div className="px-3 py-2 flex justify-end">
+          <a
+            href="https://pagefind.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center "
+          >
+            <span className="mr-2 text-xs">Search by</span>
+            <span className="font-semibold">pagefind</span>
+          </a>
+        </div>
+      </motion.div>
+    </>
   )
 }
 

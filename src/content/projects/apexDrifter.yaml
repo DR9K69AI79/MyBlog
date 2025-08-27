@@ -17,7 +17,7 @@ modelParams:
     # 3D空间中的位置偏移，可用于精确定位
     x: 0.1
     y: 0
-    z: 0  # 正值向前，负值向后
+    z: 0 # 正值向前，负值向后
   material:
     metalness: 0.1
     roughness: 0.8

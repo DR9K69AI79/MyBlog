@@ -8,7 +8,8 @@
       "Bash(pnpm lint)",
       "Bash(astro check:*)",
       "Bash(curl:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(pnpm preview:*)"
     ],
     "deny": []
   }
