@@ -1,0 +1,257 @@
+---
+title: "ApexDrifters多人在线小车PVP开发流程"
+date: 2025-09-04
+summary: "记录了ApexDrifters游戏的完整开发流程，包括概念设计、核心系统实现、网络同步技术和团队协作经验。"
+category: "项目总结"
+tags:
+  - Unity
+  - 游戏开发
+  - 多人在线
+  - Photon PUN2
+  - 项目总结
+comments: True
+draft: False
+sticky: 0
+---
+## 引言
+
+### 参考游戏选择和简介
+
+本项目的灵感来自于由Mewsturbo开发的像素风格街机动作游戏"Drift Survivor"。该游戏将漂移驾驶与自动攻击相结合，形成快节奏且流畅的游戏体验。其复古艺术风格和丝滑的反馈机制为我们的创作提供了重要参考。
+
+在此基础上，我们开发了一个原创作品——"ApexDrifters"。游戏结合了漂移机制、射击战斗和评分竞赛。玩家驾驶不同风格的战斗车辆，通过在高强度对抗中巧妙的漂移来躲避攻击，并使用自动射击来反击敌人。我们采用街机风格的控制逻辑，使操作简单但富有深度，既能唤起复古街机的感觉，又具有现代游戏的手感和流畅度。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\02 游戏概念图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-02_游戏概念图.jpg)
+
+### 目标
+
+- 创建快节奏的动作赛车PVP射击游戏
+- 实现多人在线对战功能，支持玩家间实时竞赛
+- 结合复古街机玩法与现代像素风格艺术表现
+
+### 使命
+
+我们开发ApexDrifters的初衷是在快节奏、大型游戏之外，寻找街机游戏的纯粹乐趣和挑战。
+
+在当今游戏市场中，许多作品都专注于沉浸式体验和复杂系统，但我们相信简单、直观、操作驱动的游戏玩法仍然具有不可替代的魅力。
+
+通过这款游戏，我们希望传达这样的理念：
+
+"游戏的乐趣不一定依赖于高预算或复杂机制。只要有扎实的手感、明确的目标和不断挑战自我的空间，就能激发玩家的参与感和热情。"
+
+同时，漂移这一驾驶行为本身就象征着在混乱中保持控制，在危机中寻找突破。它既紧张又优雅，就像我们希望玩家在游戏中体验到的节奏和情感张力。
+
+因此，ApexDrifters的开发使命不仅是创造一个有趣的街机游戏，更是尝试将街机精神重新包装成适合当代玩家节奏的作品，让更多人能够理解和喜欢这种"技术优先、回报明确"的游戏风格。
+
+## 收获经验
+
+在ApexDrifters的开发过程中，我们不仅完成了一个结合漂移、射击和街机机制的完整游戏原型，还在许多方面获得了宝贵的实践经验和技术成长：
+
+### 掌握像素风格化实现
+
+我们学会了如何在Unity中实现像素艺术风格，并对着色器的使用有了更深入的理解。
+
+### 深入理解在线游戏开发
+
+这个项目使我们更好地理解了Photon PUN等网络框架中玩家同步、输入响应延迟优化、网络状态管理、事件广播等核心机制，对多人在线游戏的开发逻辑有了更深刻的认识。
+
+此外，我们还意识到在多人环境中，需要特别关注性能优化和网络延迟对游戏体验的影响。我们开发的游戏有时会因为网络延迟而出现汽车飞在天空中。这对我们未来进一步开发竞技模式和跨平台在线游戏具有重要参考价值。
+
+### 加强模块化开发流程理解
+
+项目采用模块化架构进行开发，将车辆控制、自动攻击、武器管理等功能分割成独立系统，使我们能够更高效地进行迭代和测试。
+
+### 改善团队协作和版本管理能力
+
+在团队协作中，我们学会了如何使用Git进行多人协作开发，建立了基本的分支管理流程，避免了代码冲突，提高了开发效率。
+
+### 培养有限时间内完成可玩产品的能力
+
+这个项目训练了我们在时间限制下从构思、原型到完成版本的完整开发能力，学会了基于艺术、游戏性和技术可行性的平衡做出合理的权衡。
+
+## 游戏概念
+
+### 游戏背景故事
+
+在ApexDrifters的世界中，玩家将扮演具有自主意识的玩具车，生活在孩子们绘制的巨大"绘画世界"中。每辆车代表着不同的风格和个性，有的像红色跑车那样傲慢，有的像绿色经典车那样稳重，有的像赛博越野车那样疯狂。白天，它们只是放在桌上的玩具。当人类入睡时，它们会通过绘画上的"传送门"进入不同的手绘场景，开始激烈的漂移战斗。
+
+这些传送门由绘画上的"场景节点"组成，每个节点对应一个地图，如废弃矿场、炎热沙漠、城市塔楼、霓虹竞技场等。为了争夺"速度核心"资源，玩具车不断挑战彼此，提升排名，通过战斗赢得零件，解锁皮肤，最终成为绘画世界的漂移冠军。
+
+### 游戏玩法概述
+
+ApexDrifters是一款结合战斗、赛车和街机评分机制的多人在线游戏，支持玩家在多个地图中进行实时PVP对战。核心玩法包括：
+
+**战斗漂移机制**：玩家驾驶具有不同属性的车辆，在地图中漂移和加速，收集能量，锁定敌人并释放武器。精确的漂移不仅能积累能量，还能避免攻击。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\03 游戏模式图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-03_游戏模式图.jpg)
+
+**多种模式**：
+
+**死亡竞赛模式**：在限定时间内获得最多击杀的玩家获胜。
+
+**资源竞赛**：争夺散布在地图世界中的"速度核心"，得分最高者获胜。击杀对手玩家也可以加分。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\04 资源竞争图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-04_资源竞争图.jpg)
+
+**绘画主基地**：游戏大厅被设置为"绘画世界中心"，玩家在此选择车辆并进入传送门开始游戏。
+
+## 游戏开发
+
+### 灵感和早期设计
+
+游戏的最初灵感来自于对童年街机游戏的热爱和怀念。在当今AAA游戏大作的时代，仍然有玩家热爱传统街机游戏。针对这类玩家，我们希望开发一款既具有街机游戏特色又适合现代人玩的游戏。在寻找游戏参考时，我们发现了一款名为Drift Survivor的生存类游戏。该游戏具有出色的像素艺术设计和流畅的游戏体验，符合我们对街机游戏和现代人的双重要求。因此，我们计划学习其清爽的漂移和自动攻击游戏机制以及像素化艺术风格，并将其应用到我们的游戏中，同时满足现代人玩游戏的要求。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\05 游戏灵感图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-05_游戏灵感图.jpg)
+
+除了独特的像素艺术风格外，我们还希望添加更多街机元素。因此我们转向经典街机游戏寻找灵感。在探索中，我们发现经典街机游戏Pac-Man的收集玩法是一个不错的选择。这种玩法自游戏诞生以来就经久不衰，深受人们喜爱。今天，我们在许多流行游戏中仍然可以看到这种机制的影子。同时，其简单直接的交互方式易于开发。因此，我们设想将经典街机玩法如Arcade Collect与PVP战斗和漂移竞赛相结合。在创造一款既需要操作精准又具有爽快玩法的游戏的同时，这也是对街机游戏的致敬。
+
+## 玩家控制器
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\06 玩家控制器架构图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-06_玩家控制器架构图.jpg)
+
+我们设计了街机风格的玩家控制器来实现车辆操控。玩家控制由 `VehicleController` 组件统一管理,它整合了输入处理和车辆移动控制逻辑。每辆玩家车辆对象都包含一个 `VehicleController`,并依赖 `VehicleMovement` 组件提供实际物理运动。本地玩家的车辆在初始化时注册输入事件,监听全局 `InputManager` 的更新。`InputManager` 基于Unity的新输入系统,将加速、转向、手刹等控制映射为一个 `InputState` 结构并每帧广播。`VehicleController` 接收到输入后,将转向值和油门/刹车值传递给 `VehicleMovement` 的 `HandleMovement` 方法进行处理。为保持代码解耦,我们通过事件系统传递输入,这样在本地与网络模式下逻辑一致,而远程玩家的车辆不会误响应本地输入。
+
+`VehicleMovement` 实现了具体的车辆动力学。我们采用简化的漂移物理:车辆以刚体的前向和横向速度来模拟轮胎抓地力,通过侧滑速度动态调整摩擦力,实现漂移效果。当玩家按下漂移键(手刹)时,若启用了 `kartLike` 模式,则车辆转向力度乘以一个漂移系数,使车辆能够在高速下甩尾。转向通过对刚体施加扭矩来实现,油门则根据模式设置刚体线速度或角速度来驱动车辆。此外,我们根据车辆速度调整前轮朝向和车身倾斜,实现转向时车身侧倾和轮胎转动的视觉效果。玩家车辆在本地由物理引擎推进运动,而网络上的远程车辆则通过网络同步进行位置更新(详见下文"网络同步"部分)。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\07 车辆物理系统图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-07_车辆物理系统图.jpg)
+
+**本地与远程控制差异**: 由于项目为多人联网游戏,我们在玩家控制器中区分了本地玩家和远程玩家。`VehicleController` 的 `isLocalPlayer` 标志用于判定是否接收输入和启用物理模拟。对于远程玩家的车辆,我们在初始化时禁用它们的输入响应,并将其刚体设置为运动学模式(`Kinematic`),防止物理引擎对远程车辆产生干涉。本地玩家车辆则保持刚体动态模拟并启用AudioSouce等,使玩家只能控制自己的车辆，且保持场景中只有不出现多个AudioSouce组件。通过这种设计,我们确保每辆车仅由对应客户端模拟,避免了多端控制冲突,并为网络插值预留空间。
+
+## 武器与自动射击系统
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\08 武器系统架构图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-08_武器系统架构图.jpg)
+
+武器系统由多个组件协同实现,负责载具武器的管理、射击和自动瞄准射击逻辑。每辆载具的 `VehicleWeaponManager` 挂载在车辆对象上,内部包含一个 `Weapon` 武器组件和一个 `AutoShootingSystem` 自动射击组件。`VehicleWeaponManager` 会在启动时检查车辆的武器挂载点 `weaponHolder` 下是否已有武器,如无则实例化一个默认武器预制件并附加到车辆。`Weapon` 组件封装了具体武器的属性和行为,例如弹药量、射击间隔、伤害、子弹预制体等,通过引用 `WeaponData` 来配置。车辆初始化时, `Weapon` 将弹药数设置为最大值并通知UI更新。
+
+**射击机制**: 开火由 `Weapon.Fire()`方法实现。当玩家按下开火指令或自动射击触发时,本地拥有该武器的客户端会调用 `Fire(target)`。此时系统会先检查能否射击(是否有弹药且未在冷却中)。若可以,则扣减一发弹药并记录射击时间。然后,`Weapon` 通过Photon网络实例化一颗子弹Prefab,使所有客户端都生成该子弹对象。我们在 `Weapon` 中使用了 `photonView.RPC`调用,将射击指令和目标点广播给其他客户端同步弹药和开火事件。`Bullet` 子弹生成后,由其自身的脚本负责向前运动并检测碰撞。一旦子弹碰撞到车辆,便调用目标载具的 `VehicleHealth` 组件减少生命值,并触发相应的击毁判定。子弹在击中后会播放爆炸效果和声音,然后通过 `PhotonNetwork.Destroy()`销毁自身,实现统一的命中效果。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\09 射击机制图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-09_射击机制图.jpg)
+
+**自动瞄准与射击**: 为了降低玩家操作难度,我们实现了 `AutoShootingSystem` 模块,赋予车辆自动炮塔功能。`AutoShootingSystem` 会持续在车辆周围一定半径内扫描其他玩家车辆作为潜在目标,支持`OverlapSphere`或触发器两种检测模式。当检测到范围内有敌方车辆时,会选取最近的一个作为当前目标 `currentTarget`。如果开启了自动瞄准(`autoAim=true`),炮台武器的朝向会每帧插值转向目标方向;若开启了自动开火(`autoFire=true`),且当前有目标并且武器满足射击条件,则系统自动调用武器的`Fire()`朝目标开火。整个过程仅在武器拥有者的客户端执行(`photonView.IsMine` 判断),这样可以避免多客户端重复射击。同一时间,每辆车只有它自己的自动射击系统在本地生效,其他客户端只会通过网络收到射击结果(如子弹出现和命中)。我们在武器系统中还实现了弹药刷新和射速增益接口,例如 `ReloadAmmo()`会调用武器的 `RefillAmmo()`将弹药补满, `SetFireRateMultiplier()` 用于临时调整射击频率,这些功能被拾取物系统调用以提供特殊增益。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\10 自动瞄准系统图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-10_自动瞄准系统图.jpg)
+
+## 拾取物系统
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\11 拾取物系统图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-11_拾取物系统图.jpg)
+
+游戏中地图散布着各种拾取物品(Collectible),包括加分道具和增益道具。拾取物由 `CollectibleItem` 脚本控制,其功能结构涵盖物品生成、拾取判定、效果应用和物品重生等。每个拾取物在场景中作为触发器存在,当玩家驾驶的车辆进入其碰撞范围时, `OnTriggerEnter` 事件触发拾取逻辑。我们首先通过层级和Tag判断碰撞到的是玩家车辆,并确保同一个物品不会被多次拾取。当确认有效拾取后,系统会获取拾取者玩家的昵称用于记录。然后将物品标记为已拾取并调用 `ProcessCollection()`处理拾取效果,包括播放特效、音效、触发得分事件等。
+
+**道具效果与增益**: 根据物品类型的不同,我们在`ProcessItemTypeEffect` 中应用不同效果。
+* **分数道具 (ScoreOrb/BonusGem)**: 直接为拾取者增加基础分或倍数分,并通过 `ScoreManager` 记录。
+* **威力提升 (PowerUp)**: 临时强化玩家载具,如增加武器射速。在实现上,我们找到玩家车辆的 `VehicleWeaponManager` 组件,调用其 `SetFireRateMultiplier()`将射击频率提高一定倍数,并启动协程在持续时间结束后复原。
+* **HealthPack**: 为玩家车辆恢复一定生命值,我们调用载具的生命补给 `VehicleHealth.ResetHealth()`或特定恢复函数来实现瞬时治愈。
+* **弹药补给 (AmmoBox)**: 为玩家当前武器填满弹药,调用 `VehicleWeaponManager.ReloadAmmo()`实现。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\12 道具效果图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-12_道具效果图.jpg)
+
+所有上述增益效果都会在拾取当下即时生效,并通过日志或UI给予玩家反馈。
+
+**物品重生机制**: 为增加游戏的持续性,大部分拾取物在被拾取后会根据配置选择重生。我们采用主客户端托管重生的策略:只有房间Master客户端负责调度拾取物的重生计时。这是通过Photon的 `PhotonNetwork.IsMasterClient` 判断实现的。当一个物品被拾取后,Master会启动一个协程等待设定的重生延迟,然后调用 `RespawnItem()`复位物品位置并通知所有客户端物品重新出现。在其他客户端上,拾取物被拾取后会隐藏模型并进入等待,由于非Master不会执行计时逻辑,因此它们只通过RPC在重生发生时接收通知并显示物品。对于配置为"不重生"的物品,我们在拾取后直接销毁对象。通过这种设计,我们确保了多人游戏中道具状态的一致性 每个物品是否存在、何时重生完全由单一权威(Master)决定,避免并发冲突。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\13 物品重生机制图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-13_物品重生机制图.jpg)
+
+此外, `CollectibleItem` 还定义了一套事件(`OnItemCollected`等)供外部订阅,可用于更新比分板和触发其他连锁反应。计分系统(`ScoreManager`)会监听这些事件,将拾取计入玩家积分并在玩家达到胜利条件时触发游戏结束。
+
+## 大厅场景(选车菜单与房间系统)
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\14 大厅场景图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-14_大厅场景图.jpg)
+
+大厅场景是游戏开始前的准备区域,包括车辆选择菜单和网络房间管理两部分。进入大厅后,我们处于离线大厅状态,玩家可以自由浏览可选载具并进行选择。车辆选择通过 `VehicleSelector` 系统实现:场景中预先摆放了若干可选车辆模型,每个都附加了特殊Tag。`VehicleSelector` 脚本会射线检测玩家镜头前的车辆,实时高亮玩家视角中心的载具并在其上方生成一个箭头指示器。当玩家点击某辆车时,指示箭头锁定到该车并开始上下浮动表示选中,同时UI文本显示选中的车辆名称。此时我们调用 `GameManager.SetSelectedVehicle()`将玩家选择的车辆记录下来。通过`Cinemachine`虚拟摄像机,我们实现了车辆预览切换:每辆展示车对应一个虚拟摄像机,当车辆被选中时,我们提高该摄像机的优先级,使视角平滑切换过去跟随展示。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\15 车辆选择系统图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-15_车辆选择系统图.jpg)
+
+大厅UI还包括一个输入框供玩家输入昵称,以及“进入游戏”按钮。玩家输入昵称后,我们使用 `GameManager.SetPlayerName()`保存名称,并在检测到玩家已经选定载具且输入了名字时,将游戏状态切换为“准备连接”。当玩家点击开始游戏按钮,我们会正式进入房间连接流程。此时 `GameManager` 调用 `NetworkManager.ConnectToPhoton()` 连接到Photon服务器,然后创建或加入一个多人房间。连接成功后状态变为“在线房间”,表示玩家已进入房间但尚未开始游戏场景加载。我们设计了一步确认机制: 如果需要等待其他玩家或让玩家确认开始,游戏会在所有人都在房间后停留在大厅UI,直到玩家确认开始比赛才会继续。确认开始后,Master客户端将通过Photon的`LoadLevel` 同步所有客户端加载游戏场景。
+
+当游戏场景加载完成且所有玩家都已在房间中时,`GameManager` 把游戏状态切换为`InGame`,并调用 `SpawnPlayerAfterSceneLoad()` 协程来生成玩家载具。载具生成由 `NetworkManager.SpawnLocalPlayer()`完成:它会根据玩家在大厅中选定的车辆名称,从预制库中选择相应的载具预制体,在预设的出生点实例化。在调用`PhotonNetwork.Instantiate`生成载具时,Photon会确保每个客户端出现对应的车辆对象。`SpawnLocalPlayer()`随后调用 `ConfigurePlayerVehicle()`配置车辆组件,如设置 `VehicleController` 的本地/远程属性并关联摄像机跟随。为防止大厅里的展示车辆和真正游戏中的车辆混淆,我们在进入游戏场景时销毁或隐藏了大厅的临时载具对象,并移除大厅UI。
+
+**房间门户系统**: 大厅场景包含多个房间门户触发区域,每个门户对应不同的游戏场景房间。当玩家驾驶车辆进入门户的触发区域时,系统会显示倒计时UI。如果玩家在触发区域内停留指定时间,房间连接流程会自动启动。离开触发区域会立即取消倒计时并隐藏相关UI。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\16 房间门户系统图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-16_房间门户系统图.jpg)
+
+**房间信息面板**: 门户系统还包含复杂的房间信息面板,显示房间名称、当前玩家数量、玩家列表(显示昵称、延迟和主客户端标识)、区域信息等。该面板采用世界空间UI设计,实时更新位置跟随玩家,并被动监听Photon房间事件进行更新。玩家可以使用"确认"和"取消"按钮控制是否实际进入房间。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\17 房间信息面板图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-17_房间信息面板图.jpg)
+
+**网络连接流程**: 当门户被触发时,系统调用 `NetworkManager.ConnectToPhoton()` 开始网络连接。连接成功后进入房间信息显示阶段,玩家可以查看房间详情并最终确认。确认后开始场景加载流程, `GameManager` 状态机按顺序从 `OfflineLobby` → `ConnectingToRoom` → `OnlineRoom` → `InGame` 转换。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\18 网络连接流程图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-18_网络连接流程图.jpg)
+
+房间系统利用Photon PUN框架管理。我们设置每个房间最多4名玩家。当新玩家加入房间时,Photon自动在所有客户端同步房间成员列表, `NetworkManager.OnPlayerEnteredRoom` 会记录玩家加入日志。玩家离开房间时也类似,我们在回调中清除对应的载具实例。通过`PhotonNetwork.AutomaticallySyncScene` 设置,我们确保Master调用场景加载后,所有玩家同步加载地图。整个大厅到游戏的过渡流程被我们封装在 `GameManager` 的有限状态机里,用状态枚举清晰表示"`OfflineLobby`离线大厅"、"`ConnectingToRoom`连接中"、"`OnlineRoom`联网房间"、"`InGame`游戏中"等阶段,并确保只有按正确顺序转换。这种设计极大降低了状态管理的复杂度,避免了误操作导致的异常。
+
+## 问题与解决方案
+
+### 问题1: 车辆漂移操控的手感和平衡。
+在开发初期,我们发现直接使用Unity物理和轮胎摩擦很难达到理想的漂移效果 车辆要么过于灵敏打转,要么抓地力过强无法漂移。
+
+**解决方案**: 我们引入了自定义摩擦力曲线和扭矩控制。通过在 `VehicleMovement` 中根据横向速度动态调整`PhysicMaterial`摩擦系数,实现高速转弯时后轮打滑。同时,当玩家按下漂移键时增加转向扭矩的倍率,让车辆尾部甩出。我们不断调节 `driftMultiplier` 等参数,使车辆既易于漂移又不至于失控,从而获得了平滑的街机漂移手感。
+
+### 问题2: 多人网络中车辆运动的平滑同步。
+在网络模式下,不同客户端的车辆状态需要实时同步。如果每帧同步`Transform`,不但带宽开销大,还容易导致抖动。我们需要避免远程车辆的运动不流畅或与本地模拟冲突。
+
+**解决方案**: 我们设计了定制的`NetworkVehicle`同步组件。它通过实现PUN的`IPunObservable`接口,每隔固定帧率只同步必要的数据(如速度、转向、漂移状态)。远程客户端收到这些数据后,并不直接设置物体`Transform`,而是根据同步状态只应用视觉效果,如转动车轮、倾斜车身等。实际的位置同步则借助Photon的内置机制或简单插值。这种方案下,远程车辆由本地物理推动,其他客户端仅作模拟显示,避免了多重物理计算冲突。同时,我们在进入大厅时移除了车辆上的`PhotonView`, 在远程车辆上将刚体置为`Kinematic`,保证只有拥有者客户端的物理在运行。最终效果是各客户端看到的车辆运动平稳且几乎一致,网络延迟稍高时车辆位置也不会跳跃失准。
+
+### 问题3: 自动射击系统的目标选择与公平性。
+自动炮台需要智能选择目标并开火,但我们担心它过于精准和频繁会影响游戏平衡,而且所有客户端各自判断目标可能产生不一致结果。
+
+**解决方案**: 我们采取了有限距离+本地唯一决策的策略。首先,限制自动炮台的侦测半径,只有靠近的敌人才会被锁定,并在`WeaponData`中为不同武器配置不同的探测范围。其次,由于Photon房间内默认信任各客户端,我们让每辆车仅由自己的客户端执行自动瞄准和开火。这样一来,同一辆炮台不会出现多个客户端同时控制的问题。对于瞄准精度,我们适当降低炮台转速,确保快速移动的目标并非弹无虚发,从游戏性上留出空间。同时,我们在敌方车辆进入射程时才开始射击,并设计了弹药消耗和过热冷却机制(射击间隔),避免自动武器无限制扫射。通过这些平衡,自动射击既能辅助玩家攻击,又不会主宰战局。
+
+### 问题4: 大厅载具选择与游戏场景衔接。
+在大厅中玩家选择了车辆模型和自定义外观,但进入游戏后必须用选定的车辆生成真实可驾驶的载具。这中间涉及从离线单机状态过渡到在线多人状态,如果处理不当可能出现玩家载具不匹配、重复或丢失。
+
+**解决方案**: 我们引入了`GameManager`状态机和临时数据存储。当玩家在大厅选车后,我们用 `GameManager`暂存选中的载具名称 `tempSelectedVehicleName` 和玩家昵称 `tempPlayerName`。随后在连接Photon房间后,进入游戏场景加载前,Master会将这些选择广播给所有客户端(Photon自动同步玩家属性,也可在房间属性中记录)。场景加载完毕时,每个客户端各自调用 `NetworkManager.SpawnLocalPlayer()`,它会读取`GameManager`中记录的已选车辆名称,生成对应的载具预制体。我们确保如果玩家未选择车辆则使用默认车辆,从而避免空引用。与此同时,大厅里的展示车辆我们设置为仅供预览的物体,它们在游戏开始时要么被销毁要么留在大厅场景,不对游戏场景造成影响。通过严密的状态流转(`Offline Lobby` -> `Connecting ToRoom` - `OnlineRoom` -> `InGame`) 和数据传递,我们平稳地衔接了大厅和游戏:玩家总是驾驶自己选定的车辆进入战斗,无任何串线。
+
+## 游戏界面(HUD)
+
+游戏中的平视显示器(HUD)为玩家提供实时的游戏状态信息,包括生命值、弹药数量、得分、小地图等重要信息。HUD设计采用像素风格,与游戏整体美术风格保持一致,界面布局合理,信息显示清晰,确保玩家在激烈战斗中能够快速获取关键信息。
+
+![BLOG Ready\assets\ApexDrifters多人在线小车PVP开发流程\19 HUD界面图](/images/posts/BLOG_Ready-assets-ApexDrifters多人在线小车PVP开发流程-19_HUD界面图.jpg)
+
+## 道德故事/价值
+
+### 核心价值
+
+ApexDrifters的核心价值是在现代游戏背景下重新唤醒街机游戏的纯粹乐趣和永恒魅力。在当今由复杂3A大作和电影化叙事主导的游戏环境中，我们希望通过这部作品传达对"简单但深刻"游戏体验的欣赏。
+
+这个项目源于团队成员对童年街机游戏的记忆和热爱。我们希望向影响我们成长的经典作品致敬，并回应仍然热爱街机风格的当代玩家群体。我们引入了类似"Pac-Man"的经典"收集分数"机制，这不仅降低了入门门槛，还加强了街机风格的即时反馈体验。这种设计反映了我们对"简单互动和爽快体验"游戏理念的坚持。
+
+在艺术风格方面，ApexDrifters将像素风格与现代美学相结合，使游戏在向复古致敬的同时也具有时代感。这种"复古与现代融合"的设计理念也反映了我们的理解和尝试：创新不仅来自复杂系统，也可以通过对经典元素的重新诠释来实现。
+
+### 道德故事
+
+除了在游戏玩法和风格上的继承和创新外，"ApexDrifters"还试图通过游戏本身传达更深层的意义：
+
+**在混乱中保持控制，在压力中找到节奏。**
+
+在游戏中，玩家需要高速不断地做出判断和巧妙操作来躲避攻击和反击。这种紧张而富有节奏的体验象征着个人在现实环境中寻求平衡和突破的过程。
+
+我们试图通过"漂移"这一象征性行为，表达一种在不安定中找到控制感、在挑战中实现自我表达的精神。
+
+就像在现实生活中，当我们面对生活压力时，我们仍然可以依靠专注、判断力和创造力来把握方向。游戏机制隐喻地代表了对抗失控、掌握节奏的生活态度。
+
+## 参考文献
+
+### 使用的素材
+
+- **Battle Arena - Cartoon Assets** | 3D Fantasy | Unity Asset Store
+- **Hypercasual Action Props Pack** | 3D Weapons | Unity Asset Store  
+- **Stylized Shoot & Hit Vol. 2** | VFX Particles | Unity Asset Store
+- **ARCADE: Ultimate Vehicles Pack - Low Poly Cars** | 3D Vehicles | Unity Asset Store
+- **PrimeTween - High-Performance Animations and Sequences** | Animation Tools | Unity Asset Store
+- **Arcade Vehicle Physics** | Physics | Unity Asset Store
+- **ProPixelizer - Realtime 3D Pixel Art** | Fullscreen & Camera Effects | Unity Asset Store
+- **Input Prompts Pixel 16** - Kenney
+- **Cursor Pixel Pack** - Kenney
+- **Super Pixel Sci-Fi UI: Futura Max** - unTied Games
+
+### 参考游戏
+
+- **Drift Survivor 2** - 早期游戏演示
+- **Drift Survivor** - Steam版本
+
+### Google Drive链接
+
+- **完整项目文件链接**: https://drive.google.com/drive/folders/1ck6NNdjqMD9IrgurzBfdtHOj3Z_PsgVmE?usp=drive_link
+- **构建应用链接**: https://drive.google.com/drive/folders/1tVsPuMeUL70ZVuJoX4j3h4bHeu7IGlT4?usp=drive_link
+- **预告片视频链接**: https://drive.google.com/drive/folders/10sng-UHa7HY3ERb-5AvHiziHO0Nk5UBP?usp=drive_link
+- **PowerPoint演示幻灯片链接**: https://drive.google.com/drive/folders/1HjLQExTCB1X161Azupuii2CZ70D7NCq8?usp=drive_link
