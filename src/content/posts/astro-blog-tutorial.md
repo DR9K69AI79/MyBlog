@@ -1,12 +1,12 @@
 ---
-title: "快速搭建并部署一个基于Astro框架的博客模板项目"
+title: 快速搭建并部署一个基于Astro框架的博客模板项目
 date: 2025-08-10
-summary: "简单介绍一下本站配置部署以及实现的一些自动化流程。"
-category: "实践记录"
+summary: 简单介绍一下本站配置部署以及实现的一些自动化流程。
+category: 实践记录
 tags:
   - VibeCoding
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 # 简介
