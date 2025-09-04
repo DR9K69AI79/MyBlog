@@ -1,16 +1,16 @@
 ---
-title: "ApexDrifters多人在线小车PVP开发流程"
+title: ApexDrifters多人在线小车PVP开发流程
 date: 2025-09-04
-summary: "记录了ApexDrifters游戏的完整开发流程，包括概念设计、核心系统实现、网络同步技术和团队协作经验。"
-category: "项目总结"
+summary: 记录了ApexDrifters游戏的完整开发流程，包括概念设计、核心系统实现、网络同步技术和团队协作经验。
+category: 项目总结
 tags:
   - Unity
   - 游戏开发
   - 多人在线
   - PhotonPUN2
   - 项目总结
-comments: True
-draft: False
+comments: true
+draft: false
 sticky: 0
 ---
 ## 引言
