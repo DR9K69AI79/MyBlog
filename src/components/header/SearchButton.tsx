@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useCurrentModal, useModal } from '@/components/ui/modal'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from '@/hooks/useDebounceValue'
+import * as Dialog from '@radix-ui/react-dialog'
 
 let pagefind: any = null
 async function loadPagefind() {

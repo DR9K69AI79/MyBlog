@@ -48,7 +48,7 @@ export default defineConfig({
         },
       ],
       rehypeLink,
-      rehypeImage,
+      [rehypeImage, { base: process.env.NODE_ENV === 'production' ? '/MyBlog' : '/' }],
       rehypeHeading,
       rehypeCodeBlock,
       rehypeCodeHighlight,

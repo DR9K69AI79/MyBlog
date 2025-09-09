@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { withBase } from '@/utils/path'
 import { useProjectViewer } from './useProjectViewer'
 import type { ModelParams } from './ProjectLibrary'
 import { useAtomValue } from 'jotai'
@@ -109,7 +110,7 @@ export default function ProjectViewer({
           <div className="relative w-full h-full flex items-center justify-center z-20">
             <img
               className="w-3/4 h-3/4 object-cover rounded-lg"
-              src="/avatar.jpeg"
+              src={withBase('/avatar.jpeg')}
               alt="Site owner avatar"
               loading="lazy"
             />
