@@ -13,7 +13,6 @@ comments: true
 draft: false
 sticky: 0
 ---
-
 ## 最终的预告片
 
 ::bilibili{#BV1JEtozyEty}
@@ -141,11 +140,10 @@ ApexDrifters是一款结合战斗、赛车和街机评分机制的多人在线�
 游戏中地图散布着各种拾取物品(Collectible),包括加分道具和增益道具。拾取物由 `CollectibleItem` 脚本控制,其功能结构涵盖物品生成、拾取判定、效果应用和物品重生等。每个拾取物在场景中作为触发器存在,当玩家驾驶的车辆进入其碰撞范围时, `OnTriggerEnter` 事件触发拾取逻辑。我们首先通过层级和Tag判断碰撞到的是玩家车辆,并确保同一个物品不会被多次拾取。当确认有效拾取后,系统会获取拾取者玩家的昵称用于记录。然后将物品标记为已拾取并调用 `ProcessCollection()`处理拾取效果,包括播放特效、音效、触发得分事件等。
 
 **道具效果与增益**: 根据物品类型的不同,我们在`ProcessItemTypeEffect` 中应用不同效果。
-
-- **分数道具 (ScoreOrb/BonusGem)**: 直接为拾取者增加基础分或倍数分,并通过 `ScoreManager` 记录。
-- **威力提升 (PowerUp)**: 临时强化玩家载具,如增加武器射速。在实现上,我们找到玩家车辆的 `VehicleWeaponManager` 组件,调用其 `SetFireRateMultiplier()`将射击频率提高一定倍数,并启动协程在持续时间结束后复原。
-- **HealthPack**: 为玩家车辆恢复一定生命值,我们调用载具的生命补给 `VehicleHealth.ResetHealth()`或特定恢复函数来实现瞬时治愈。
-- **弹药补给 (AmmoBox)**: 为玩家当前武器填满弹药,调用 `VehicleWeaponManager.ReloadAmmo()`实现。
+* **分数道具 (ScoreOrb/BonusGem)**: 直接为拾取者增加基础分或倍数分,并通过 `ScoreManager` 记录。
+* **威力提升 (PowerUp)**: 临时强化玩家载具,如增加武器射速。在实现上,我们找到玩家车辆的 `VehicleWeaponManager` 组件,调用其 `SetFireRateMultiplier()`将射击频率提高一定倍数,并启动协程在持续时间结束后复原。
+* **HealthPack**: 为玩家车辆恢复一定生命值,我们调用载具的生命补给 `VehicleHealth.ResetHealth()`或特定恢复函数来实现瞬时治愈。
+* **弹药补给 (AmmoBox)**: 为玩家当前武器填满弹药,调用 `VehicleWeaponManager.ReloadAmmo()`实现。
 
 ![12 道具效果图](/images/ApexDrifters/12_道具效果图.jpg)
 
@@ -186,25 +184,21 @@ ApexDrifters是一款结合战斗、赛车和街机评分机制的多人在线�
 ## 问题与解决方案
 
 ### 问题1: 车辆漂移操控的手感和平衡。
-
 在开发初期,我们发现直接使用Unity物理和轮胎摩擦很难达到理想的漂移效果 车辆要么过于灵敏打转,要么抓地力过强无法漂移。
 
 **解决方案**: 我们引入了自定义摩擦力曲线和扭矩控制。通过在 `VehicleMovement` 中根据横向速度动态调整`PhysicMaterial`摩擦系数,实现高速转弯时后轮打滑。同时,当玩家按下漂移键时增加转向扭矩的倍率,让车辆尾部甩出。我们不断调节 `driftMultiplier` 等参数,使车辆既易于漂移又不至于失控,从而获得了平滑的街机漂移手感。
 
 ### 问题2: 多人网络中车辆运动的平滑同步。
-
 在网络模式下,不同客户端的车辆状态需要实时同步。如果每帧同步`Transform`,不但带宽开销大,还容易导致抖动。我们需要避免远程车辆的运动不流畅或与本地模拟冲突。
 
 **解决方案**: 我们设计了定制的`NetworkVehicle`同步组件。它通过实现PUN的`IPunObservable`接口,每隔固定帧率只同步必要的数据(如速度、转向、漂移状态)。远程客户端收到这些数据后,并不直接设置物体`Transform`,而是根据同步状态只应用视觉效果,如转动车轮、倾斜车身等。实际的位置同步则借助Photon的内置机制或简单插值。这种方案下,远程车辆由本地物理推动,其他客户端仅作模拟显示,避免了多重物理计算冲突。同时,我们在进入大厅时移除了车辆上的`PhotonView`, 在远程车辆上将刚体置为`Kinematic`,保证只有拥有者客户端的物理在运行。最终效果是各客户端看到的车辆运动平稳且几乎一致,网络延迟稍高时车辆位置也不会跳跃失准。
 
 ### 问题3: 自动射击系统的目标选择与公平性。
-
 自动炮台需要智能选择目标并开火,但我们担心它过于精准和频繁会影响游戏平衡,而且所有客户端各自判断目标可能产生不一致结果。
 
 **解决方案**: 我们采取了有限距离+本地唯一决策的策略。首先,限制自动炮台的侦测半径,只有靠近的敌人才会被锁定,并在`WeaponData`中为不同武器配置不同的探测范围。其次,由于Photon房间内默认信任各客户端,我们让每辆车仅由自己的客户端执行自动瞄准和开火。这样一来,同一辆炮台不会出现多个客户端同时控制的问题。对于瞄准精度,我们适当降低炮台转速,确保快速移动的目标并非弹无虚发,从游戏性上留出空间。同时,我们在敌方车辆进入射程时才开始射击,并设计了弹药消耗和过热冷却机制(射击间隔),避免自动武器无限制扫射。通过这些平衡,自动射击既能辅助玩家攻击,又不会主宰战局。
 
 ### 问题4: 大厅载具选择与游戏场景衔接。
-
 在大厅中玩家选择了车辆模型和自定义外观,但进入游戏后必须用选定的车辆生成真实可驾驶的载具。这中间涉及从离线单机状态过渡到在线多人状态,如果处理不当可能出现玩家载具不匹配、重复或丢失。
 
 **解决方案**: 我们引入了`GameManager`状态机和临时数据存储。当玩家在大厅选车后,我们用 `GameManager`暂存选中的载具名称 `tempSelectedVehicleName` 和玩家昵称 `tempPlayerName`。随后在连接Photon房间后,进入游戏场景加载前,Master会将这些选择广播给所有客户端(Photon自动同步玩家属性,也可在房间属性中记录)。场景加载完毕时,每个客户端各自调用 `NetworkManager.SpawnLocalPlayer()`,它会读取`GameManager`中记录的已选车辆名称,生成对应的载具预制体。我们确保如果玩家未选择车辆则使用默认车辆,从而避免空引用。与此同时,大厅里的展示车辆我们设置为仅供预览的物体,它们在游戏开始时要么被销毁要么留在大厅场景,不对游戏场景造成影响。通过严密的状态流转(`Offline Lobby` -> `Connecting ToRoom` - `OnlineRoom` -> `InGame`) 和数据传递,我们平稳地衔接了大厅和游戏:玩家总是驾驶自己选定的车辆进入战斗,无任何串线。
@@ -242,7 +236,7 @@ ApexDrifters的核心价值是在现代游戏背景下重新唤醒街机游戏�
 ### 使用的素材
 
 - **Battle Arena - Cartoon Assets** | 3D Fantasy | Unity Asset Store
-- **Hypercasual Action Props Pack** | 3D Weapons | Unity Asset Store
+- **Hypercasual Action Props Pack** | 3D Weapons | Unity Asset Store  
 - **Stylized Shoot & Hit Vol. 2** | VFX Particles | Unity Asset Store
 - **ARCADE: Ultimate Vehicles Pack - Low Poly Cars** | 3D Vehicles | Unity Asset Store
 - **PrimeTween - High-Performance Animations and Sequences** | Animation Tools | Unity Asset Store
