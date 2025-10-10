@@ -85,11 +85,11 @@ html {
   color: theme('textColor.primary');
   background-color: theme('backgroundColor.root');
   scroll-padding-top: 64px;
-  overflow-x: hidden; /* 防止横向滚动 */
+  overflow-x: clip; /* 防止横向滚动，同时不破坏 sticky 定位 */
 }
 
 body {
-  overflow-x: hidden; /* 确保body不产生横向滚动 */
+  overflow-x: clip; /* 确保body不产生横向滚动 */
 }
 
 html.gray {
