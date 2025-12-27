@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import type { ProjectData } from './types'
+import { withBase } from '../../utils/path'
 
 // 状态配置
 const statusConfig = {
@@ -106,7 +107,7 @@ export function ShowcaseGallery({ project, align = 'left', disableHoverEffects =
 
                 {/* 查看详情按钮 - 使用 accent 色 */}
                 <motion.a
-                    href={`/projects/${project.id}`}
+                    href={withBase(`/projects/${project.id}`)}
                     className="absolute bottom-4 right-4 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-md text-white text-sm font-medium flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-accent hover:text-white"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

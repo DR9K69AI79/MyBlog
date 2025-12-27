@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import type { ProjectData, GalleryItem } from './types'
+import { withBase } from '../../utils/path'
 
 interface ProjectCardProps {
     project: ProjectData
@@ -72,7 +73,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
             {/* 卡片内容 */}
             <a
-                href={`/projects/${project.id}`}
+                href={withBase(`/projects/${project.id}`)}
                 className="relative block rounded-2xl bg-secondary overflow-hidden"
             >
                 {/* 封面图区域 */}
