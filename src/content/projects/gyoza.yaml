@@ -2,6 +2,8 @@ id: gyoza-blog
 displayName: DWHITE's Blog
 description: 基于Gyoza模板(基于Astro框架)二次开发的个人技术博客与作品集网站。
 showOnHomepage: true
+
+# ========== 首页 3D 展示配置 ==========
 modelType: custom
 modelPath: '/models/retro_computer_setup_free.glb'
 color: '#4F46E5'

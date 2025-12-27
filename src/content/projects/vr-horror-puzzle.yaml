@@ -1,0 +1,62 @@
+id: vr-horror-puzzle
+displayName: VR Horror Puzzle
+description: 基于 OpenXR 开发的 PCVR 恐怖解谜游戏，三个差异化玩法关卡逐步升级心理压力
+longDescription: |
+  使用 Unity + OpenXR API 开发的 PCVR 游戏，使用 Meta Quest3 有线串流测试。
+  三个差异化玩法关卡：环境探索解谜、监控室防守 (类玩具熊五夜后宫)、无限循环走廊 (类8号出口)。
+  基于物理组件 (Joint) 实现可交互机关 (抽屉、保险箱等)，增强 VR 体验真实感。
+  基于 RT 实时渲染画面实现可交互监控摄像头系统。
+timeText: "2024年9月 - 2024年11月"
+status: completed
+visibility:
+  homepage: true
+  portfolio: true
+
+# ========== 首页 3D 展示配置 ==========
+modelType: custom
+modelPath: '/models/vrHorrorGame_project.glb'
+color: '#7c3aed'
+modelParams:
+  scale: 1.25
+  rotation:
+    x: 0.2
+    y: 0
+    z: 0
+  position:
+    x: 0
+    y: -0.1
+    z: 0
+  material:
+    metalness: 0.6
+    roughness: 0.4
+    opacity: 1.0
+    transparent: true
+    wireframe: false
+  lighting:
+    intensity: 2
+    ambientIntensity: 1
+    enableShadows: true
+  animation:
+    autoRotate: false
+    rotationSpeed: 1.0
+    bounceEnabled: true
+
+# ========== Portfolio 配置 ==========
+techStack:
+  - Unity
+  - C#
+  - OpenXR
+  - Autohand
+  - VR
+  - Render Texture
+highlights:
+  - OpenXR + Autohand VR 交互
+  - 物理交互机关 (Joint 组件)
+  - 实时监控系统 (RT 渲染)
+  - 三阶段关卡设计 (探索/防守/循环)
+tags:
+  - Game
+  - VR
+  - Horror
+category: Game Dev
+projectUrl: 'https://github.com/DR9K69AI79/MyBlog'

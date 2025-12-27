@@ -1,0 +1,26 @@
+id: high-mobility-fps
+displayName: High Mobility FPS
+description: 高机动性 FPS 游戏，三个关卡包含 Boss 战
+longDescription: |
+  支持类似泰坦陨落的墙跑的高机动性机制设计
+  三个关卡包含训练教程关卡、线性遭遇战关卡、与Boss 战关卡
+  Boss 战包含机制设计与Boss二阶段设计
+timeText: "2024年7月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+
+# ========== Portfolio 配置 ==========
+techStack:
+  - Unity
+  - C#
+highlights:
+  - 高机动性移动机制
+  - 三关卡完整流程
+  - Boss 战设计
+tags:
+  - Game
+  - FPS
+  - Action
+category: Game Dev

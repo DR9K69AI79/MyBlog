@@ -1,0 +1,23 @@
+id: gamejam-survivor-like
+displayName: Survivor-like Game
+description: GameJam 作品 - 2D 类幸存者游戏
+longDescription: |
+  初次接触 Unity ，48 小时 GameJam 作品，类吸血鬼幸存者的 2D roguelike 游戏。
+  实现了玩家控制器，敌人攻击逻辑，敌人生成逻辑，背景视差滚动，以及开始页面等等。
+  使用 Asprite 绘制了像素风格的飞船与喷火特效序列帧动画。
+timeText: "2024年1月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - C#
+highlights:
+  - 类幸存者玩法
+  - GameJam 限时开发
+tags:
+  - Game
+  - GameJam
+  - Roguelike
+category: Game Dev

@@ -1,0 +1,23 @@
+id: cpp-physics-2d
+displayName: C++ 2D Physics Engine
+description: 基于 Impulse-based 方法和 Jacobian 矩阵求解的 2D 刚体物理引擎
+longDescription: |
+  一个学习项目，跟随课程使用 C++ 与 SDL 库（图像渲染）实现了一个能够进行基本 2D 刚体物理解算的小引擎
+timeText: "2025年9月 - 2025年10月"
+status: completed
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - C++
+  - Math
+  - Physics
+highlights:
+  - 纯 C++ 手动实现，不借助外部库与 AI 工具辅助
+  - Impulse-based 刚体动力学
+  - Jacobian 矩阵约束求解
+tags:
+  - Engine
+  - Physics
+  - C++
+category: Tech

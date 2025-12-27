@@ -1,0 +1,21 @@
+id: unity-maya-sp-scene
+displayName: Environment Scene Design
+description: Unity + Maya + Substance Painter 地编场景设计全流程
+longDescription: |
+  风格化氛围感 lowpoly 小岛场景
+timeText: "2024年11月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - Maya
+  - Substance Painter
+highlights:
+  - 风格化 Lowpoly 场景设计
+  - DCC 全流程制作
+tags:
+  - 3D Art
+  - Environment
+category: 3D Art

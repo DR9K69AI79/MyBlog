@@ -1,0 +1,25 @@
+id: opengl-hover-racer
+displayName: OpenGL Hover Racer
+description: C++ / OpenGL (GLUT) 开发的可交互 3D 场景，柏林噪声程序化地形
+longDescription: |
+  使用 C++ 与 OpenGL (GLUT库) 开发的可交互 Lowpoly 风格场景。
+  WASD 控制小车移动，鼠标中键控制视角转动。
+  地形无尽生成，具有起伏与基本着色效果。
+timeText: "2024年7月"
+status: completed
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - C++
+  - OpenGL
+  - GLUT
+highlights:
+  - 柏林噪声程序化地形生成
+  - OBJ 模型硬编码解析与绘制
+  - 自适应 UI 布局
+tags:
+  - Graphics
+  - OpenGL
+  - C++
+category: Tech

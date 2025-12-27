@@ -1,0 +1,56 @@
+id: ue5-time-puzzle
+displayName: UE5 Time Puzzle
+description: 基于 UE5 蓝图的时空回溯解谜的 Roll a Ball 游戏 Demo，通过后处理特效呈现时间操控效果
+longDescription: |
+  UE5 学习项目，实现了一套支持重力变换与位置回溯的控制器，设计搭建了基于这两个机制的关卡谜题。
+timeText: "2025年11月"
+status: completed
+visibility:
+  homepage: true
+  portfolio: true
+
+# ========== 首页 3D 展示配置 ==========
+# 暂无自定义模型，使用内置几何体
+modelType: sphere
+color: '#6366f1'
+modelParams:
+  scale: 0.6
+  rotation:
+    x: 0
+    y: 0
+    z: 0
+  position:
+    x: 0
+    y: 0
+    z: 0
+  material:
+    metalness: 0.3
+    roughness: 0.6
+    opacity: 1.0
+    transparent: false
+    wireframe: false
+  lighting:
+    intensity: 1.5
+    ambientIntensity: 0.8
+    enableShadows: true
+  animation:
+    autoRotate: true
+    rotationSpeed: 0.5
+    bounceEnabled: true
+
+# ========== Portfolio 配置 ==========
+techStack:
+  - UE5
+  - Blueprints
+  - Post-process Materials
+highlights:
+  - 重力变换机制
+  - 时间回溯机制设计
+  - 基于重力变换与时空回溯的谜题设计
+  - 后处理视觉特效
+tags:
+  - Game
+  - Puzzle
+  - UE5
+  - VFX
+category: Game Dev

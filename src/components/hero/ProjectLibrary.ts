@@ -38,7 +38,12 @@ export interface ProjectConfig {
   color?: string
   modelPath?: string
   fileSize?: number
-  // 显示控制
+  // 显示控制 - 新版
+  visibility?: {
+    homepage?: boolean
+    portfolio?: boolean
+  }
+  // 显示控制 - 旧版兼容
   showOnHomepage?: boolean
   modelType?: string
   // 模型参数配置
@@ -95,10 +100,18 @@ export class ProjectLibraryManager {
   getAllProjects(): ProjectConfig[] {
     // 如果有YAML项目，只返回YAML项目
     if (this.yamlProjects.length > 0) {
-      return this.yamlProjects.filter((project) => project.showOnHomepage !== false)
+      return this.yamlProjects.filter((project) => this.isVisibleOnHomepage(project))
     }
     // 如果没有YAML项目，返回空数组
     return []
+  }
+
+  // 判断项目是否在首页显示（兼容新旧配置）
+  private isVisibleOnHomepage(project: ProjectConfig): boolean {
+    if (project.visibility) {
+      return project.visibility.homepage ?? true
+    }
+    return project.showOnHomepage ?? true
   }
 
   // 获取默认项目（当没有YAML项目时的fallback）
@@ -138,7 +151,8 @@ export class ProjectLibraryManager {
             ? resolvedModelPath
             : yamlProject.modelType || 'sphere',
         modelParams: yamlProject.modelParams,
-        showOnHomepage: yamlProject.showOnHomepage !== false,
+        visibility: yamlProject.visibility, // 新版可见性配置
+        showOnHomepage: yamlProject.showOnHomepage !== false, // 向后兼容
         projectUrl: yamlProject.projectUrl,
         postUrl: yamlProject.postUrl,
         tags: yamlProject.tags || [],
@@ -193,7 +207,7 @@ export class ProjectLibraryManager {
     }
 
     // 获取所有显示的项目
-    const visibleProjects = this.yamlProjects.filter((project) => project.showOnHomepage !== false)
+    const visibleProjects = this.yamlProjects.filter((project) => this.isVisibleOnHomepage(project))
 
     if (visibleProjects.length === 0) {
       return null

@@ -20,6 +20,7 @@ export async function getProjectConfigs(): Promise<ProjectConfig[]> {
         modelPath: data.modelPath,
         modelType: data.modelType || 'sphere',
         modelParams: data.modelParams,
+        visibility: data.visibility, // 新版可见性配置
         showOnHomepage: data.showOnHomepage !== false,
         projectUrl: data.projectUrl,
         postUrl: data.postUrl,

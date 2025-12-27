@@ -1,0 +1,21 @@
+id: probuilder-level-prototype
+displayName: ProBuilder Level Prototype
+description: 使用 Unity ProBuilder 进行关卡原型快速搭建
+longDescription: |
+  使用 Unity ProBuilder 工具进行场景灰盒原型的搭建
+  参考镜之边缘的美术风格设计了一个风格化的高楼屋顶的关卡
+timeText: "2024年6月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - ProBuilder
+highlights:
+  - ProBuilder 快速原型搭建
+  - 镜之边缘风格参考
+tags:
+  - Level Design
+  - Prototype
+category: Game Dev

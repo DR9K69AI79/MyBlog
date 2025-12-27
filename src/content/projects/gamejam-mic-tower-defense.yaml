@@ -1,0 +1,22 @@
+id: gamejam-mic-tower-defense
+displayName: Mic Tower Defense
+description: GameJam 48h 作品 - 3D 麦克风操控塔防游戏
+longDescription: |
+  Sea Game Jam 2024 作品，48 小时内完成
+  使用麦克风语音操控游戏
+timeText: "2024年9月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - C#
+highlights:
+  - 麦克风语音操控
+  - 48 小时限时开发
+tags:
+  - Game
+  - GameJam
+  - Tower Defense
+category: Game Dev

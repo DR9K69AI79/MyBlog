@@ -147,78 +147,6 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
                 modelParams={currentProject.modelParams}
                 className="shrink-0"
               />
-
-              {/* 项目列表弹窗 - 优化位置和滚动条样式 */}
-              {showProjectList && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: isMobile ? 10 : -10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: isMobile ? 10 : -10 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className={`fixed z-[9999] bg-primary/95 backdrop-blur-md border border-primary/40 rounded-xl shadow-xl min-w-[280px] max-w-[320px] ${
-                    isMobile
-                      ? 'bottom-28 left-1/2 -translate-x-1/2 max-h-[40vh]'
-                      : 'right-8 top-[20%] max-h-[60vh]'
-                  }`}
-                >
-                  {/* 弹窗头部 */}
-                  <div className="flex items-center justify-between p-4 border-b border-primary/20 bg-primary/20 rounded-t-xl">
-                    <h3 className="text-sm font-semibold text-primary">选择项目</h3>
-                    <button
-                      onClick={() => setShowProjectList(false)}
-                      className="p-1.5 rounded-lg hover:bg-primary/30 transition-colors text-secondary hover:text-primary"
-                    >
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-
-                  {/* 项目列表 - 自定义滚动条样式 */}
-                  <div className="p-2 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/30">
-                    {projects.map((project) => (
-                      <motion.button
-                        key={project.id}
-                        whileHover={{ backgroundColor: 'rgba(var(--color-accent), 0.08)' }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleProjectSelect(project)}
-                        className={`w-full px-3 py-2.5 text-left text-sm transition-all duration-200 rounded-lg mb-1 last:mb-0 ${
-                          project.id === currentProject.id
-                            ? 'bg-accent/15 text-accent border border-accent/20 shadow-sm'
-                            : 'text-primary hover:text-accent hover:bg-accent/5'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium truncate flex-1">{project.displayName}</span>
-                          <span className="text-xs text-secondary ml-2 flex-shrink-0">
-                            {project.timeText || (project.type === 'built-in' ? '内置' : '自定义')}
-                          </span>
-                        </div>
-                        {project.description && (
-                          <div className="text-xs text-secondary mt-1 line-clamp-2">
-                            {project.description}
-                          </div>
-                        )}
-                        {project.category && (
-                          <div className="text-xs text-accent mt-1 font-medium">
-                            {project.category}
-                          </div>
-                        )}
-                      </motion.button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
             </motion.div>
 
             {/* 当前项目信息 - 提高z-index确保可点击，增加与渲染器的间距 */}
@@ -244,7 +172,7 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
                   {/* 项目标题和链接 */}
                   <div className="mb-3">
                     {currentProject.postUrl ||
-                    (currentProject.projectUrl && currentProject.projectUrl !== '#') ? (
+                      (currentProject.projectUrl && currentProject.projectUrl !== '#') ? (
                       <button
                         onClick={() => {
                           if (currentProject.postUrl) {
@@ -360,11 +288,10 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
                 whileHover={{ scale: 1.05, rotate: showProjectList ? -180 : 0 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleToggleProjectList}
-                className={`group relative p-3 rounded-xl backdrop-blur-md transition-all duration-300 border shadow-lg hover:shadow-xl ${
-                  showProjectList
-                    ? 'bg-accent/30 border-accent/50 text-accent rotate-180'
-                    : 'bg-primary/90 hover:bg-primary/95 border-primary/30 hover:border-accent/50 text-primary hover:text-accent'
-                }`}
+                className={`group relative p-3 rounded-xl backdrop-blur-md transition-all duration-300 border shadow-lg hover:shadow-xl ${showProjectList
+                  ? 'bg-accent/30 border-accent/50 text-accent rotate-180'
+                  : 'bg-primary/90 hover:bg-primary/95 border-primary/30 hover:border-accent/50 text-primary hover:text-accent'
+                  }`}
                 aria-label="项目列表"
               >
                 {/* 激活状态背景 */}
@@ -465,11 +392,10 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleToggleProjectList}
-                className={`group relative p-3 rounded-xl backdrop-blur-sm transition-all duration-200 border shadow-md hover:shadow-lg z-[9998] ${
-                  showProjectList
-                    ? 'bg-accent/25 border-accent/50 text-accent'
-                    : 'bg-primary/80 hover:bg-primary/90 border-primary/30 hover:border-accent/50 text-primary hover:text-accent'
-                }`}
+                className={`group relative p-3 rounded-xl backdrop-blur-sm transition-all duration-200 border shadow-md hover:shadow-lg z-[9998] ${showProjectList
+                  ? 'bg-accent/25 border-accent/50 text-accent'
+                  : 'bg-primary/80 hover:bg-primary/90 border-primary/30 hover:border-accent/50 text-primary hover:text-accent'
+                  }`}
                 aria-label="项目列表"
               >
                 {showProjectList && (
@@ -517,6 +443,73 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
                   />
                 </svg>
               </motion.button>
+            </motion.div>
+          )}
+
+          {/* 项目列表弹窗 - 放在组件顶层确保 fixed 定位正确 */}
+          {showProjectList && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="fixed z-[9999] bg-primary/95 backdrop-blur-md border border-primary/40 rounded-xl shadow-xl min-w-[280px] max-w-[320px] bottom-28 left-1/2 -translate-x-1/2 max-h-[40vh] md:bottom-auto md:left-auto md:translate-x-0 md:right-8 md:top-[20%] md:max-h-[60vh]"
+            >
+              {/* 弹窗头部 */}
+              <div className="flex items-center justify-between p-4 border-b border-primary/20 bg-primary/20 rounded-t-xl">
+                <h3 className="text-sm font-semibold text-primary">选择项目</h3>
+                <button
+                  onClick={() => setShowProjectList(false)}
+                  className="p-1.5 rounded-lg hover:bg-primary/30 transition-colors text-secondary hover:text-primary"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* 项目列表 - 自定义滚动条样式 */}
+              <div className="p-2 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/30 max-h-[calc(100%-56px)]">
+                {projects.map((project) => (
+                  <motion.button
+                    key={project.id}
+                    whileHover={{ backgroundColor: 'rgba(var(--color-accent), 0.08)' }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleProjectSelect(project)}
+                    className={`w-full px-3 py-2.5 text-left text-sm transition-all duration-200 rounded-lg mb-1 last:mb-0 ${project.id === currentProject.id
+                      ? 'bg-accent/15 text-accent border border-accent/20 shadow-sm'
+                      : 'text-primary hover:text-accent hover:bg-accent/5'
+                      }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium truncate flex-1">{project.displayName}</span>
+                      <span className="text-xs text-secondary ml-2 flex-shrink-0">
+                        {project.timeText || (project.type === 'built-in' ? '内置' : '自定义')}
+                      </span>
+                    </div>
+                    {project.description && (
+                      <div className="text-xs text-secondary mt-1 line-clamp-2">
+                        {project.description}
+                      </div>
+                    )}
+                    {project.category && (
+                      <div className="text-xs text-accent mt-1 font-medium">
+                        {project.category}
+                      </div>
+                    )}
+                  </motion.button>
+                ))}
+              </div>
             </motion.div>
           )}
         </>

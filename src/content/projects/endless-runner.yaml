@@ -1,0 +1,27 @@
+id: endless-runner
+displayName: Endless Runner
+description: 类地铁跑酷的三道式跑酷游戏，针对移动端优化
+longDescription: |
+  触屏操作控制人物变道、跳跃、滑铲，配合动画、音效与特效。
+  轻量 ObjectPool 类动态加载道路块与背景资产。
+  DFS 与回溯算法随机生成合适障碍物，避免死路。
+  可转向十字路口道路块，数学计算匹配正确道路与无尽生成。
+timeText: "2024年10月 - 2024年11月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - C#
+  - Mobile
+  - Object Pool
+highlights:
+  - 对象池管理 (ObjectPool)
+  - DFS 随机障碍生成算法
+  - 十字路口转向逻辑
+tags:
+  - Game
+  - Mobile
+  - Casual
+category: Game Dev

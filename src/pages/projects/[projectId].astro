@@ -1,0 +1,49 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection } from 'astro:content'
+import PageLayout from '@/layouts/PageLayout.astro'
+import { ProjectDetail } from '@/components/portfolio'
+
+export const getStaticPaths = (async () => {
+    const projects = await getCollection('projects')
+
+    return projects.map((project) => ({
+        params: { projectId: project.data.id },
+        props: { project },
+    }))
+}) satisfies GetStaticPaths
+
+interface Props {
+    project: Awaited<ReturnType<typeof getCollection<'projects'>>>[number]
+}
+
+const { project } = Astro.props
+
+// 转换数据格式给 React 组件
+const projectData = {
+    id: project.data.id,
+    displayName: project.data.displayName,
+    description: project.data.description,
+    cover: project.data.cover,
+    gallery: project.data.gallery,
+    longDescription: project.data.longDescription,
+    techStack: project.data.techStack,
+    highlights: project.data.highlights,
+    tags: project.data.tags,
+    category: project.data.category,
+    timeText: project.data.timeText,
+    projectUrl: project.data.projectUrl,
+    links: project.data.links,
+    status: project.data.status,
+}
+---
+
+<PageLayout
+    title={`${project.data.displayName} - 项目`}
+    description={project.data.description}
+    image={project.data.cover}
+>
+    <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-16" data-pagefind-body>
+        <ProjectDetail project={projectData} client:load />
+    </div>
+</PageLayout>

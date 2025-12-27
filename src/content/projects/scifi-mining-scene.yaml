@@ -1,0 +1,26 @@
+id: scifi-mining-scene
+displayName: Sci-Fi Mining Facility
+description: Maya + RizomUV + SP 场景建模 PBR 全流程
+longDescription: |
+  参考星际公民中的大型采矿装置
+  使用 Maya 完成多边形建模
+  使用 RizomUV 进行 UV 拆分
+  最后使用 SP 绘制 PBR 材质
+timeText: "2024年11月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Maya
+  - RizomUV
+  - Substance Painter
+  - PBR
+highlights:
+  - 科幻风格建模
+  - PBR 全流程制作
+tags:
+  - 3D Art
+  - Sci-Fi
+  - PBR
+category: 3D Art

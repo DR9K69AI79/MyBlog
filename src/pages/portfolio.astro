@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content'
+import PageLayout from '@/layouts/PageLayout.astro'
+import { PortfolioHero } from '@/components/portfolio/PortfolioHero'
+import { PortfolioTimeline } from '@/components/portfolio/PortfolioTimeline'
+import appConfig from '@/config.json'
+import { resolveVisibility, getProjectCover } from '@/utils/projectAssets'
+
+// 获取所有项目并按时间排序
+const allProjects = await getCollection('projects')
+const projects = allProjects
+    .filter((p) => {
+        // 使用新的 visibility 系统，兼容旧的 showOnHomepage
+        const visibility = resolveVisibility(p.data.visibility, p.data.showOnHomepage)
+        return visibility.portfolio
+    })
+    .sort((a, b) => {
+        // 解析 timeText 中的年份和月份进行排序
+        // 以项目结束时间为准（取最后一个日期）
+        // 支持格式：
+        // - "2025年6月 - 2025年7月" → 取 2025年7月
+        // - "2025年11月" → 取 2025年11月
+        // - "2024年10月 - 2024年12月" → 取 2024年12月
+        const parseTime = (timeText?: string): number => {
+            if (!timeText) return 0
+            // 匹配所有年月，取最后一个（项目结束时间）
+            const matches = [...timeText.matchAll(/(\d{4})年(\d{1,2})月/g)]
+            if (matches.length > 0) {
+                const lastMatch = matches[matches.length - 1]
+                const year = parseInt(lastMatch[1])
+                const month = parseInt(lastMatch[2])
+                return year * 100 + month // 如 202512 表示 2025年12月
+            }
+            // 只有年份的情况
+            const yearMatch = timeText.match(/(\d{4})/)
+            if (yearMatch) {
+                return parseInt(yearMatch[1]) * 100
+            }
+            return 0
+        }
+        return parseTime(b.data.timeText) - parseTime(a.data.timeText) // 降序（新的在前）
+    })
+    .map((p) => ({
+        id: p.data.id,
+        displayName: p.data.displayName,
+        description: p.data.description,
+        cover: getProjectCover(p.data.id, p.data.cover, p.data.assetsDir),
+        color: p.data.color,
+        gallery: p.data.gallery,
+        longDescription: p.data.longDescription,
+        techStack: p.data.techStack,
+        highlights: p.data.highlights,
+        tags: p.data.tags,
+        category: p.data.category,
+        timeText: p.data.timeText,
+        projectUrl: p.data.projectUrl,
+        status: p.data.status,
+    }))
+---
+
+<PageLayout
+    title="作品集 - DWHITE"
+    description="DWHITE 的项目作品集，展示游戏开发、前端技术与创意项目"
+>
+    <div class="bg-primary">
+        {/* Hero 区域 */}
+        <PortfolioHero
+            name={appConfig.hero.name}
+            title="作品集"
+            subtitle="数字媒体技术 · 游戏设计与开发方向"
+            projectCount={projects.length}
+            projects={projects}
+            client:load
+        />
+
+        {/* 时间线区域 */}
+        <section class="relative px-4 md:px-8 py-24" data-pagefind-body>
+            <div class="max-w-[1400px] mx-auto">
+                {/* 区域标题 */}
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        <span
+                            class="bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent"
+                        >
+                            项目历程
+                        </span>
+                    </h2>
+                    <p class="text-secondary max-w-2xl mx-auto">每个项目都是一次学习与实践的过程</p>
+                </div>
+
+                {/* 时间线 */}
+                <PortfolioTimeline projects={projects} client:load />
+            </div>
+        </section>
+
+        {/* 联系区域 */}
+        <section class="relative px-4 md:px-8 py-24 bg-secondary/30">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">欢迎交流</h2>
+                <p class="text-secondary mb-8">招聘咨询、技术交流，欢迎联系</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a
+                        href="https://github.com/DR9K69AI79"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-white font-medium hover:bg-accent/90 transition-colors"
+                    >
+                        <i class="iconfont icon-github text-lg"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a
+                        href="mailto:d_black@foxmail.com"
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-primary/20 text-primary hover:bg-secondary transition-colors"
+                    >
+                        <i class="iconfont icon-mail text-lg"></i>
+                        <span>发送邮件</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</PageLayout>

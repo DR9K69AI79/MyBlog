@@ -1,33 +1,50 @@
 ---
 import { getCollection } from 'astro:content'
+import { ProjectGrid } from './portfolio'
+import { getProjectCover } from '@/utils/projectAssets'
 
-const projects = await getCollection('projects')
+// 解析时间文本获取结束时间用于排序
+function parseEndTime(timeText?: string): number {
+  if (!timeText) return 0
+  // 格式如 "2024年7月" 或 "2024年10月 - 2025年1月"
+  const parts = timeText.split(' - ')
+  const endPart = parts[parts.length - 1] // 取结束时间
+  const match = endPart.match(/(\d{4})年(\d{1,2})月?/)
+  if (match) {
+    return parseInt(match[1]) * 100 + parseInt(match[2])
+  }
+  return 0
+}
+
+// 获取所有项目并按时间降序排序
+const allProjects = await getCollection('projects')
+const projects = allProjects
+  .map((p) => ({
+    id: p.data.id,
+    displayName: p.data.displayName,
+    description: p.data.description,
+    cover: getProjectCover(p.data.id, p.data.cover, p.data.assetsDir),
+    gallery: p.data.gallery,
+    longDescription: p.data.longDescription,
+    techStack: p.data.techStack,
+    highlights: p.data.highlights,
+    tags: p.data.tags,
+    category: p.data.category,
+    timeText: p.data.timeText,
+    projectUrl: p.data.projectUrl,
+    status: p.data.status,
+  }))
+  .sort((a, b) => parseEndTime(b.timeText) - parseEndTime(a.timeText))
 ---
 
-<ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-  {
-    projects.map((project) => (
-      <li>
-        <a href={project.data.link} target="_blank" rel="noopener noreferrer external">
-          <div class="rounded-lg bg-accent/10 overflow-hidden group">
-            <div class="aspect-video overflow-hidden">
-              <img
-                class="size-full object-cover transition-transform group-hover:scale-110"
-                src={project.data.cover || '/placeholder-project.jpg'}
-                alt={`Project cover: ${project.data.displayName}`}
-                loading="lazy"
-              />
-            </div>
-            <div class="p-4">
-              <div class="group-hover:text-accent">
-                <span class="text-xl font-bold">{project.data.displayName}</span>
-                <i class="ml-2 iconfont icon-external-link" />
-              </div>
-              <p class="mt-2 text-sm line-clamp-2">{project.data.description}</p>
-            </div>
-          </div>
-        </a>
-      </li>
-    ))
-  }
-</ul>
+<div class="space-y-6">
+  {/* 项目数量统计 */}
+  <div class="pb-4 border-b border-primary/10">
+    <p class="text-secondary text-sm">
+      共 <span class="text-accent font-semibold">{projects.length}</span> 个项目
+    </p>
+  </div>
+
+  {/* 项目网格 */}
+  <ProjectGrid projects={projects} client:load />
+</div>

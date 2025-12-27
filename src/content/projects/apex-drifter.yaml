@@ -1,0 +1,60 @@
+id: apex-drifter
+displayName: ApexDrifter
+description: 基于 Unity + Photon PUN2 的多人在线竞速射击游戏，漂移驾驶+俯视角射击
+longDescription: |
+  俯视角设计结合竞速游戏速度感和射击游戏策略性。
+  玩家使用多种武器攻击对手，掌握漂移技巧获得速度优势。
+  网络同步采用 Photon PUN2 框架，支持房间制匹配，最多 8 人同时对战。
+timeText: "2025年6月 - 2025年7月"
+status: completed
+visibility:
+  homepage: true
+  portfolio: true
+
+# ========== 首页 3D 展示配置 ==========
+modelType: custom
+modelPath: '/models/apexDrifter_project.glb'
+color: '#7c3aed'
+modelParams:
+  scale: 2.9
+  rotation:
+    x: 0.15
+    y: 0
+    z: 0
+  position:
+    x: 0.1
+    y: 0
+    z: 0
+  material:
+    metalness: 0.1
+    roughness: 0.8
+    opacity: 1.0
+    transparent: true
+    wireframe: false
+  lighting:
+    intensity: 2
+    ambientIntensity: 3
+    enableShadows: true
+  animation:
+    autoRotate: false
+    rotationSpeed: 1.0
+    bounceEnabled: true
+
+# ========== Portfolio 配置 ==========
+techStack:
+  - Unity
+  - C#
+  - Photon PUN2
+  - DOTween
+  - Cinemachine
+highlights:
+  - 支持最多 8 人同时在线对战
+  - 自研漂移物理系统
+  - 6 种不同特性武器
+  - 完整房间制匹配系统
+tags:
+  - Game
+  - Multiplayer
+  - Racing
+category: Game Dev
+projectUrl: 'https://github.com/DR9K69AI79/MyBlog'

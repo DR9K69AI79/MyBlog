@@ -1,0 +1,21 @@
+id: platformer-ball-demo
+displayName: Platformer Ball Demo
+description: 平台跳跃小球游戏 Demo
+longDescription: |
+  Unity 入门学习项目，实现了基础的平台跳跃玩法
+timeText: "2024年5月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - C#
+highlights:
+  - 平台跳跃机制
+  - Unity 基础入门
+tags:
+  - Game
+  - Platformer
+  - Casual
+category: Game Dev

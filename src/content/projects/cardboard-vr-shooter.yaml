@@ -1,0 +1,24 @@
+id: cardboard-vr-shooter
+displayName: Cardboard VR Shooter
+description: Google Cardboard VR 飞船射击安卓端 Demo
+longDescription: |
+  适配安卓端的手柄输入操控，设计并实现基于头部朝向与手柄输入的射击
+  打包适配测试安卓端手机+VR盒子+手柄控制
+timeText: "2024年10月"
+status: archived
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - Google Cardboard
+  - Android
+  - VR
+highlights:
+  - 头部朝向射击机制
+  - 安卓端 VR 盒子适配
+tags:
+  - Game
+  - VR
+  - Mobile
+category: Game Dev

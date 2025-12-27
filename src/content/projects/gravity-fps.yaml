@@ -1,0 +1,58 @@
+id: gravity-fps
+displayName: Gravity FPS
+description: 包含重力变化机制的多人派对风格 FPS 原型
+longDescription: |
+  设计实现了一套完整支持重力变换的 FPS 控制器，以及一套便于扩展配置自定义重力系统。
+  可扩展便于配置的武器系统，包括inspector编辑器工具
+  用于 3d tile 关卡搭建的简易编辑器扩展工具
+timeText: "2025年5月 - 2025年6月"
+status: completed
+visibility:
+  homepage: true
+  portfolio: true
+
+# ========== 首页 3D 展示配置 ==========
+# 暂无自定义模型，使用内置几何体
+modelType: cube
+color: '#7c3aed'
+modelParams:
+  scale: 0.8
+  rotation:
+    x: 0.4
+    y: 0
+    z: 0
+  position:
+    x: 0
+    y: 0
+    z: 0
+  material:
+    metalness: 0.8
+    roughness: 0.1
+    opacity: 1.0
+    transparent: true
+    wireframe: false
+  lighting:
+    intensity: 2
+    ambientIntensity: 1
+    enableShadows: true
+  animation:
+    autoRotate: true
+    rotationSpeed: 0.8
+    bounceEnabled: true
+
+# ========== Portfolio 配置 ==========
+techStack:
+  - Unity
+  - C#
+  - Photon PUN2
+highlights:
+  - 多人物理状态同步
+  - 多人动画状态同步
+  - 可变重力机制
+tags:
+  - Game
+  - FPS
+  - Multiplayer
+  - Editor tool
+category: Game Dev
+projectUrl: 'https://github.com/DR9K69AI79/MyBlog'

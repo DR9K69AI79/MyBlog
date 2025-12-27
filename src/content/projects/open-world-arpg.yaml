@@ -1,0 +1,28 @@
+id: open-world-arpg
+displayName: Open World ARPG
+description: 轻量开放地图动作冒险游戏，追求「硬核但不挫败」的战斗体验
+longDescription: |
+  参考类魂与刺客信条设计战斗系统，核心设计多敌人「排队攻击」调度机制，避免围攻混乱，保留玩家反击窗口。
+  模块化战斗系统基于统一攻击 FSM (Windup→Impact→Cooldown→Idle) 驱动。
+  使用 ScriptableObject 实现零代码配置攻击方式与数据驱动。
+  设计搭建了精灵王国→吸血鬼之岛→荒漠 Boss 战的完整关卡流程。
+timeText: "2024年12月 - 2025年1月"
+status: completed
+visibility:
+  homepage: false
+  portfolio: true
+techStack:
+  - Unity
+  - C#
+  - FSM
+  - ScriptableObject
+highlights:
+  - 模块化战斗系统 (FSM + ScriptableObject 数据驱动)
+  - 多敌人 AI 调度 (排队攻击机制)
+  - 多点碰撞攻击检测 (骨骼层级碰撞)
+  - 完整三区域关卡流程
+tags:
+  - Game
+  - ARPG
+  - Action
+category: Game Dev

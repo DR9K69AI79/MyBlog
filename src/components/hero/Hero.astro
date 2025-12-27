@@ -4,10 +4,14 @@ import { SocialList } from './SocialList'
 import Highlight from '@/components/Highlight.astro'
 import InteractiveProject from './InteractiveProject'
 import { getCollection } from 'astro:content'
+import { resolveVisibility } from '@/utils/projectAssets'
 
 // 获取项目配置，检查是否有项目在主页显示
 const yamlProjects = await getCollection('projects')
-const hasHomepageProjects = yamlProjects.some((project) => project.data.showOnHomepage !== false)
+const hasHomepageProjects = yamlProjects.some((project) => {
+  const visibility = resolveVisibility(project.data.visibility, project.data.showOnHomepage)
+  return visibility.homepage
+})
 ---
 
 <div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px] overflow-hidden">
