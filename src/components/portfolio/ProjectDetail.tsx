@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ImageGallery } from './ImageGallery'
 import type { ProjectData, ProjectLink } from './types'
+import { withBase } from '../../utils/path'
 
 interface ProjectDetailProps {
     project: ProjectData
@@ -50,7 +51,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
             >
                 {/* 返回按钮 */}
                 <motion.a
-                    href="/projects"
+                    href={withBase('/projects')}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
