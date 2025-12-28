@@ -4,7 +4,7 @@ import PageLayout from '@/layouts/PageLayout.astro'
 import { PortfolioHero } from '@/components/portfolio/PortfolioHero'
 import { PortfolioTimeline } from '@/components/portfolio/PortfolioTimeline'
 import appConfig from '@/config.json'
-import { resolveVisibility, getProjectCover } from '@/utils/projectAssets'
+import { resolveVisibility, getProjectCover, scanProjectGallery } from '@/utils/projectAssets'
 
 // 获取所有项目并按时间排序
 const allProjects = await getCollection('projects')
@@ -40,22 +40,25 @@ const projects = allProjects
         }
         return parseTime(b.data.timeText) - parseTime(a.data.timeText) // 降序（新的在前）
     })
-    .map((p) => ({
-        id: p.data.id,
-        displayName: p.data.displayName,
-        description: p.data.description,
-        cover: getProjectCover(p.data.id, p.data.cover, p.data.assetsDir),
-        color: p.data.color,
-        gallery: p.data.gallery,
-        longDescription: p.data.longDescription,
-        techStack: p.data.techStack,
-        highlights: p.data.highlights,
-        tags: p.data.tags,
-        category: p.data.category,
-        timeText: p.data.timeText,
-        projectUrl: p.data.projectUrl,
-        status: p.data.status,
-    }))
+    .map((p) => {
+        const cover = getProjectCover(p.data.id, p.data.cover, p.data.assetsDir)
+        return {
+            id: p.data.id,
+            displayName: p.data.displayName,
+            description: p.data.description,
+            cover: cover,
+            color: p.data.color,
+            gallery: scanProjectGallery(p.data.id, p.data.gallery, p.data.assetsDir, cover),
+            longDescription: p.data.longDescription,
+            techStack: p.data.techStack,
+            highlights: p.data.highlights,
+            tags: p.data.tags,
+            category: p.data.category,
+            timeText: p.data.timeText,
+            projectUrl: p.data.projectUrl,
+            status: p.data.status,
+        }
+    })
 ---
 
 <PageLayout

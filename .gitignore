@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # 文档
 Docs/
+
+# 源图片目录（图片管理器）
+public/raw-images/

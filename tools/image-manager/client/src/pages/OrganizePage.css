@@ -1,0 +1,193 @@
+/* OrganizePage 样式 */
+
+.project-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.project-selector label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.project-selector select {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  min-width: 250px;
+  cursor: pointer;
+}
+
+.project-selector select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.organize-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* 封面区 */
+.cover-section h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+}
+
+.cover-preview {
+  max-width: 400px;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.cover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gallery 区 */
+.gallery-section {
+  flex: 1;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.section-header h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.section-header .hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.gallery-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.15s;
+}
+
+.gallery-item.dragging {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.item-handle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  cursor: grab;
+  border-bottom: 1px solid var(--border);
+}
+
+.item-handle:active {
+  cursor: grabbing;
+}
+
+.item-handle .index {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.item-handle .drag-icon {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.item-preview {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.item-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-preview .remove-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.item-preview:hover .remove-btn {
+  opacity: 1;
+}
+
+.caption-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-top: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.caption-input:focus {
+  outline: none;
+  background: var(--accent-light);
+}
+
+.caption-input::placeholder {
+  color: var(--text-muted);
+}
+
+.empty-gallery {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-gallery p:first-child {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.no-project {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}

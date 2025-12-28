@@ -1,0 +1,119 @@
+/* CropModal 样式 */
+.crop-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn var(--transition-fast);
+}
+
+.crop-modal {
+  background: var(--bg-primary);
+  width: 90vw;
+  height: 90vh;
+  max-width: 1200px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  animation: slideUp var(--transition-normal);
+}
+
+.crop-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.crop-modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.crop-modal-body {
+  flex: 1;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.crop-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.crop-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.crop-btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.crop-btn:hover {
+  border-color: var(--accent);
+}
+
+.crop-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.crop-divider {
+  color: var(--border);
+  margin: 0 8px;
+}
+
+.crop-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.crop-info {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Cropper.js 样式覆盖 */
+.cropper-view-box,
+.cropper-face {
+  border-radius: 0;
+}
+
+.cropper-line {
+  background-color: var(--accent) !important;
+}
+
+.cropper-point {
+  background-color: var(--accent) !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.cropper-dashed {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}

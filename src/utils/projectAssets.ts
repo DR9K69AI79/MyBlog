@@ -11,6 +11,9 @@
  *   └── model.glb               # 3D 模型
  */
 
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+
 // 支持的图片扩展名（按优先级排序）
 const IMAGE_EXTENSIONS = ['webp', 'jpg', 'jpeg', 'png', 'gif']
 
@@ -171,4 +174,102 @@ export function resolveVisibility(
     homepage: show,
     portfolio: show,
   }
+}
+
+/**
+ * 扫描项目 gallery 目录，自动获取图片列表
+ * 支持与 YAML 配置的 gallery 混合使用
+ * 仅在构建时可用（需要 Node.js fs 模块）
+ *
+ * 功能：
+ * - 封面图自动作为 gallery 第一张
+ * - 从文件名解析标注信息（格式：序号-标注.扩展名，如 1-游戏开始界面.webp）
+ * - YAML 配置优先，然后是扫描的图片
+ *
+ * @param projectId 项目 ID
+ * @param configuredGallery YAML 中配置的 gallery 数组
+ * @param assetsDir 可选的自定义资源目录
+ * @param cover 项目封面图路径
+ * @returns 合并后的图库配置数组（封面 → 配置项 → 扫描项，去重）
+ */
+export function scanProjectGallery(
+  projectId: string,
+  configuredGallery?: Array<{ url: string; caption?: string; type?: string }>,
+  assetsDir?: string,
+  cover?: string,
+): Array<{ url: string; caption?: string; type: 'image' | 'gif' | 'video' }> {
+  const result: Array<{ url: string; caption?: string; type: 'image' | 'gif' | 'video' }> = []
+  const seenUrls = new Set<string>()
+
+  // 1. 封面图作为第一张（如果存在）
+  if (cover) {
+    result.push({
+      url: cover,
+      caption: '封面',
+      type: 'image',
+    })
+    seenUrls.add(cover)
+  }
+
+  // 2. 添加 YAML 中配置的 gallery
+  if (configuredGallery && configuredGallery.length > 0) {
+    for (const item of configuredGallery) {
+      if (!seenUrls.has(item.url)) {
+        result.push({
+          url: item.url,
+          caption: item.caption,
+          type: (item.type as 'image' | 'gif' | 'video') || 'image',
+        })
+        seenUrls.add(item.url)
+      }
+    }
+  }
+
+  // 3. 扫描 gallery 目录
+  try {
+    const dir = getProjectAssetsDir(projectId, assetsDir)
+    // 使用 process.cwd() 获取项目根目录（Astro 构建时的工作目录）
+    const projectRoot = process.cwd()
+    const galleryPath = path.join(projectRoot, 'public', dir.slice(1), 'gallery')
+
+    if (fs.existsSync(galleryPath) && fs.statSync(galleryPath).isDirectory()) {
+      const files = fs.readdirSync(galleryPath)
+
+      // 筛选图片文件并按名称自然排序
+      const imageFiles = files
+        .filter((file) => {
+          const ext = path.extname(file).toLowerCase().slice(1)
+          return IMAGE_EXTENSIONS.includes(ext)
+        })
+        .sort((a, b) => {
+          // 自然排序：1-xxx.webp, 2-xxx.webp, 10-xxx.webp, ...
+          return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+        })
+
+      // 添加扫描到的图片（去重）
+      for (const file of imageFiles) {
+        const url = `${dir}/gallery/${file}`
+        if (!seenUrls.has(url)) {
+          // 从文件名解析标注信息
+          // 支持格式：1-游戏开始界面.webp → 标注为"游戏开始界面"
+          // 支持格式：1.webp → 无标注
+          const nameWithoutExt = path.basename(file, path.extname(file))
+          const captionMatch = nameWithoutExt.match(/^\d+[-_](.+)$/)
+          const caption = captionMatch ? captionMatch[1] : undefined
+
+          result.push({
+            url,
+            caption,
+            type: 'image',
+          })
+          seenUrls.add(url)
+        }
+      }
+    }
+  } catch (error) {
+    // 扫描失败时静默处理，返回已有的配置
+    console.warn(`[scanProjectGallery] 扫描项目 ${projectId} gallery 目录失败:`, error)
+  }
+
+  return result
 }

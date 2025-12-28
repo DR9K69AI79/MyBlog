@@ -3,6 +3,11 @@ import type { GetStaticPaths } from 'astro'
 import { getCollection } from 'astro:content'
 import PageLayout from '@/layouts/PageLayout.astro'
 import { ProjectDetail } from '@/components/portfolio'
+import { scanProjectGallery, getProjectCover } from '@/utils/projectAssets'
+
+// 获取封面图路径（使用约定路径或配置值）
+const getCover = (projectData: { id: string; cover?: string; assetsDir?: string }) =>
+    getProjectCover(projectData.id, projectData.cover, projectData.assetsDir)
 
 export const getStaticPaths = (async () => {
     const projects = await getCollection('projects')
@@ -19,13 +24,20 @@ interface Props {
 
 const { project } = Astro.props
 
+const cover = getCover(project.data)
+
 // 转换数据格式给 React 组件
 const projectData = {
     id: project.data.id,
     displayName: project.data.displayName,
     description: project.data.description,
-    cover: project.data.cover,
-    gallery: project.data.gallery,
+    cover: cover,
+    gallery: scanProjectGallery(
+        project.data.id,
+        project.data.gallery,
+        project.data.assetsDir,
+        cover,
+    ),
     longDescription: project.data.longDescription,
     techStack: project.data.techStack,
     highlights: project.data.highlights,

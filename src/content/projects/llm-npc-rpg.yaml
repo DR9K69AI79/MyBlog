@@ -1,10 +1,10 @@
 id: llm-npc-rpg
 displayName: GenAI Tiny RPG
-description: Unity + LLM 驱动的休闲 RPG，让 NPC 理解世界、记住玩家、主动行动
+description: LLM 驱动 NPC 的休闲 RPG，让 NPC 理解世界、记住玩家、主动行动
 longDescription: |
-  独立完成的研究驱动型动森风格 RPG Demo，代码量 15,000+ 行。以「让 NPC 理解世界、记住玩家、主动行动」为设计目标。
+  独立完成的研究驱动型动森风格 RPG Demo。以「让 NPC 理解世界、记住玩家、主动行动」为设计目标。
   设计并实现「语义数据系统」，用 YAML+Markdown 描述 NPC 人格/知识/物品/场景。
-  实现 NPC「行为指令集」(Function Calling)，使 NPC 能主动赠送物品、记忆对话、触发游戏逻辑。
+  实现 NPC「行为指令集」(Function Calling)，使 NPC 能主动触发游戏逻辑（编辑转移物品、触发事件等等）。
   设计了 8 个差异化 NPC 人格及开放流程锁钥机制。
 timeText: "2025年10月 - 2025年12月"
 status: in-progress
@@ -18,6 +18,8 @@ techStack:
   - Prompt Engineering
   - Function Calling
   - JSON Schema
+  - Unity UI Toolkit
+  - 序列化与反序列化
 highlights:
   - LLM 系统设计 / Prompt Engineering
   - 语义数据系统 (YAML+Markdown 描述游戏实体)
@@ -26,5 +28,5 @@ highlights:
 tags:
   - Game
   - RPG
-  - AI
+  - Generative AI
 category: Game Dev

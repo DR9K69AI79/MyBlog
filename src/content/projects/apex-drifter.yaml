@@ -45,10 +45,9 @@ techStack:
   - Unity
   - C#
   - Photon PUN2
-  - DOTween
+  - Tween
   - Cinemachine
 highlights:
-  - 支持最多 8 人同时在线对战
   - 自研漂移物理系统
   - 6 种不同特性武器
   - 完整房间制匹配系统
