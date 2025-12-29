@@ -1,6 +1,7 @@
 import { useRef, useMemo, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import type { ProjectData } from './types'
+import { withBase } from '../../utils/path'
 
 interface PortfolioHeroProps {
     name: string
@@ -78,7 +79,7 @@ function FloatingElement({
             >
                 {item.type === 'image' ? (
                     <div className="w-32 h-20 md:w-40 md:h-24 rounded-lg overflow-hidden shadow-xl ring-1 ring-white/10 group-hover:ring-accent/50 group-hover:shadow-accent/20 transition-all">
-                        <img src={item.content} alt="project-thumb" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
+                        <img src={withBase(item.content)} alt="project-thumb" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         {/* 点击提示 */}
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

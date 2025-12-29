@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { GalleryItem } from './types'
+import { withBase } from '../../utils/path'
 
 interface ImageGalleryProps {
     items: GalleryItem[]
@@ -96,7 +97,7 @@ export function ImageGallery({
             return (
                 <video
                     className={className}
-                    src={item.url}
+                    src={withBase(item.url)}
                     autoPlay
                     loop
                     muted
@@ -107,7 +108,7 @@ export function ImageGallery({
         return (
             <img
                 className={className}
-                src={item.url}
+                src={withBase(item.url)}
                 alt={item.caption || '项目截图'}
                 loading="lazy"
             />
@@ -232,9 +233,9 @@ export function ImageGallery({
                                     }`}
                             >
                                 {item.type === 'video' ? (
-                                    <video className="size-full object-cover" src={item.url} muted />
+                                    <video className="size-full object-cover" src={withBase(item.url)} muted />
                                 ) : (
-                                    <img className="size-full object-cover" src={item.url} alt="" loading="lazy" />
+                                    <img className="size-full object-cover" src={withBase(item.url)} alt="" loading="lazy" />
                                 )}
                                 {item.type === 'gif' && (
                                     <span className="absolute bottom-0.5 right-0.5 text-[10px] bg-accent text-white px-1 rounded">GIF</span>
@@ -262,8 +263,8 @@ export function ImageGallery({
                     >
                         {/* 关闭按钮 */}
                         <button
-                            onClick={() => setIsFullscreen(false)}
-                            className="absolute top-4 right-4 z-10 size-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+                            onClick={(e) => { e.stopPropagation(); setIsFullscreen(false) }}
+                            className="absolute top-4 right-4 z-50 size-12 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
                             aria-label="关闭"
                         >
                             <i className="iconfont icon-close text-2xl" />

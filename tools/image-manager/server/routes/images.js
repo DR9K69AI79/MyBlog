@@ -23,6 +23,8 @@ import {
   saveConfig,
   reorderGallery,
   updateGalleryCaption,
+  assignMultiple,
+  setCover,
 } from '../services/imageProcessor.js'
 
 const router = express.Router()
@@ -311,6 +313,65 @@ router.post('/caption', async (req, res) => {
     })
   } catch (err) {
     console.error('更新标注失败:', err)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+/**
+ * 批量分配图片到项目 Gallery
+ * POST /api/images/assign-multiple
+ * Body: { filenames: string[], projectId: string }
+ */
+router.post('/assign-multiple', async (req, res) => {
+  try {
+    const { filenames, projectId } = req.body
+
+    if (!filenames || !Array.isArray(filenames) || filenames.length === 0) {
+      return res.status(400).json({ error: '缺少文件名列表' })
+    }
+
+    if (!projectId) {
+      return res.status(400).json({ error: '缺少项目 ID' })
+    }
+
+    const results = await assignMultiple(filenames, projectId)
+    const successCount = results.filter((r) => r.success).length
+
+    res.json({
+      success: true,
+      projectId,
+      total: filenames.length,
+      assigned: successCount,
+      failed: filenames.length - successCount,
+      results,
+    })
+  } catch (err) {
+    console.error('批量分配失败:', err)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+/**
+ * 设置项目封面
+ * POST /api/images/set-cover
+ * Body: { projectId: string, filename: string }
+ */
+router.post('/set-cover', async (req, res) => {
+  try {
+    const { projectId, filename } = req.body
+
+    if (!projectId || !filename) {
+      return res.status(400).json({ error: '缺少必要参数' })
+    }
+
+    const result = await setCover(projectId, filename)
+
+    res.json({
+      success: true,
+      ...result,
+    })
+  } catch (err) {
+    console.error('设置封面失败:', err)
     res.status(500).json({ error: err.message })
   }
 })

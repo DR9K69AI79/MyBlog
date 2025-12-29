@@ -159,6 +159,39 @@ export const imagesApi = {
         body: JSON.stringify({ filename, caption }),
       },
     ),
+
+  // 批量分配图片到项目 Gallery
+  assignMultiple: (filenames: string[], projectId: string) =>
+    request<{
+      success: boolean
+      projectId: string
+      total: number
+      assigned: number
+      failed: number
+      results: Array<{
+        success: boolean
+        oldFilename: string
+        newFilename?: string
+        error?: string
+      }>
+    }>('/images/assign-multiple', {
+      method: 'POST',
+      body: JSON.stringify({ filenames, projectId }),
+    }),
+
+  // 设置项目封面
+  setCover: (projectId: string, filename: string) =>
+    request<{
+      success: boolean
+      changed: boolean
+      newCoverFilename?: string
+      oldCoverFilename?: string
+      oldCoverNewFilename?: string
+      message?: string
+    }>('/images/set-cover', {
+      method: 'POST',
+      body: JSON.stringify({ projectId, filename }),
+    }),
 }
 
 // 配置相关

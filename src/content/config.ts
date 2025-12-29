@@ -99,15 +99,15 @@ const projectsCollection = defineCollection({
       })
       .optional(),
 
-    // 链接配置
+    // 链接配置（旧版兼容）
     projectUrl: z.string().optional(),
     postUrl: z.string().optional(),
 
-    // 动态链接列表
+    // 动态链接列表（推荐使用）
     links: z
       .array(
         z.object({
-          type: z.enum(['github', 'report', 'video', 'demo', 'docs', 'download']),
+          type: z.enum(['github', 'report', 'video', 'demo', 'docs', 'download', 'post']),
           url: z.string(),
           label: z.string().optional(), // 可选自定义标签
         }),

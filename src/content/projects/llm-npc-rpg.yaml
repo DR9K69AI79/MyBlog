@@ -22,9 +22,11 @@ techStack:
   - 序列化与反序列化
 highlights:
   - LLM 系统设计 / Prompt Engineering
+  - 模板化Prompt设计
   - 语义数据系统 (YAML+Markdown 描述游戏实体)
   - 行为指令集 (Function Calling 驱动游戏逻辑)
   - 8 个差异化 NPC 人格与锁钥流程
+  - 复刻动森风格的中文语音合成
 tags:
   - Game
   - RPG

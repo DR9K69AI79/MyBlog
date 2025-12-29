@@ -14,7 +14,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     const cardRef = useRef<HTMLDivElement>(null)
 
     // 获取封面图：优先使用 gallery 第一张，否则使用 cover
-    const coverImage = project.gallery?.[0]?.url || project.cover || '/placeholder-project.jpg'
+    // 使用 withBase() 确保生产环境下路径正确
+    const rawCoverImage = project.gallery?.[0]?.url || project.cover || '/placeholder-project.jpg'
+    const coverImage = withBase(rawCoverImage)
     const previewImages = project.gallery?.slice(0, 4) || []
 
     // 计算鼠标位置用于光效
@@ -109,9 +111,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                                     className="rounded overflow-hidden"
                                 >
                                     {item.type === 'video' ? (
-                                        <video className="size-full object-cover" src={item.url} muted loop autoPlay />
+                                        <video className="size-full object-cover" src={withBase(item.url)} muted loop autoPlay />
                                     ) : (
-                                        <img className="size-full object-cover" src={item.url} alt="" loading="lazy" />
+                                        <img className="size-full object-cover" src={withBase(item.url)} alt="" loading="lazy" />
                                     )}
                                 </motion.div>
                             ))}

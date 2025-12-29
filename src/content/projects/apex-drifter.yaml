@@ -56,4 +56,15 @@ tags:
   - Multiplayer
   - Racing
 category: Game Dev
-projectUrl: 'https://github.com/DR9K69AI79/MyBlog'
+
+# 项目链接
+links:
+  - type: post
+    url: "/posts/apexdrifters开发流程"
+    label: "开发日志"
+  - type: video
+    url: "https://www.bilibili.com/video/BV1JEtozyEty"
+    label: "B站预告片"
+  - type: download
+    url: "https://drive.google.com/drive/folders/1tVsPuMeUL70ZVuJoX4j3h4bHeu7IGlT4"
+    label: "下载游戏"

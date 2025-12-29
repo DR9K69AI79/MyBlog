@@ -254,14 +254,41 @@ export async function processAndPublish(filename, options = {}) {
   // 使用 Sharp 处理图片
   let pipeline = sharp(srcPath)
 
-  // 应用裁剪
+  // 验证并应用裁剪
   if (cropData) {
-    pipeline = pipeline.extract({
-      left: Math.round(cropData.x),
-      top: Math.round(cropData.y),
-      width: Math.round(cropData.width),
-      height: Math.round(cropData.height),
-    })
+    // 获取图片实际尺寸
+    const metadata = await sharp(srcPath).metadata()
+    const imgWidth = metadata.width
+    const imgHeight = metadata.height
+
+    const cropX = Math.round(cropData.x)
+    const cropY = Math.round(cropData.y)
+    const cropWidth = Math.round(cropData.width)
+    const cropHeight = Math.round(cropData.height)
+
+    // 检查裁剪区域是否在有效范围内
+    const isValidCrop =
+      cropX >= 0 &&
+      cropY >= 0 &&
+      cropWidth > 0 &&
+      cropHeight > 0 &&
+      cropX + cropWidth <= imgWidth &&
+      cropY + cropHeight <= imgHeight
+
+    if (isValidCrop) {
+      pipeline = pipeline.extract({
+        left: cropX,
+        top: cropY,
+        width: cropWidth,
+        height: cropHeight,
+      })
+    } else {
+      // 裁剪区域无效，跳过裁剪并记录警告
+      console.warn(
+        `[警告] 裁剪区域无效，已跳过裁剪: ${filename} ` +
+          `(图片: ${imgWidth}x${imgHeight}, 裁剪: x=${cropX} y=${cropY} w=${cropWidth} h=${cropHeight})`,
+      )
+    }
   }
 
   // 调整尺寸并转换为 WebP
@@ -275,6 +302,7 @@ export async function processAndPublish(filename, options = {}) {
 
 /**
  * 发布所有已分配的图片
+ * 覆盖式更新：先清空项目的 gallery 目录，再写入新文件
  * @param {Object} options 处理选项
  * @returns {Promise<Object>} 发布结果
  */
@@ -286,6 +314,16 @@ export async function publishAll(options = {}) {
   const results = { success: [], failed: [] }
 
   for (const [projectId, images] of Object.entries(assigned)) {
+    const projectDir = path.join(PROJECTS_DIR, projectId)
+    const galleryDir = path.join(projectDir, 'gallery')
+
+    // 覆盖式更新：先清空 gallery 目录
+    try {
+      await fs.rm(galleryDir, { recursive: true, force: true })
+    } catch {
+      // 目录不存在，忽略
+    }
+
     // 发布封面
     if (images.cover) {
       try {
@@ -427,4 +465,106 @@ export async function updateGalleryCaption(filename, newCaption) {
   await saveConfig(config)
 
   return newFilename
+}
+
+/**
+ * 批量分配图片到项目 Gallery
+ * @param {string[]} filenames 原始文件名列表
+ * @param {string} projectId 目标项目 ID
+ * @returns {Promise<Array>} 分配结果列表
+ */
+export async function assignMultiple(filenames, projectId) {
+  const results = []
+  let nextIndex = await getNextGalleryIndex(projectId)
+
+  for (const filename of filenames) {
+    try {
+      const srcPath = path.join(RAW_IMAGES_DIR, filename)
+      const ext = filename.split('.').pop()
+      const newFilename = `${projectId}__gallery_${nextIndex}.${ext}`
+      const destPath = path.join(RAW_IMAGES_DIR, newFilename)
+
+      await fs.rename(srcPath, destPath)
+      results.push({
+        success: true,
+        oldFilename: filename,
+        newFilename,
+        index: nextIndex,
+      })
+      nextIndex++
+    } catch (err) {
+      results.push({
+        success: false,
+        oldFilename: filename,
+        error: err.message,
+      })
+    }
+  }
+
+  return results
+}
+
+/**
+ * 设置项目封面（从 gallery 图片中选择）
+ * @param {string} projectId 项目 ID
+ * @param {string} filename 要设为封面的图片文件名
+ * @returns {Promise<Object>} 操作结果
+ */
+export async function setCover(projectId, filename) {
+  const parsed = parseFilename(filename)
+  if (!parsed) {
+    throw new Error('无效的文件名格式')
+  }
+  if (parsed.projectId !== projectId) {
+    throw new Error('图片不属于该项目')
+  }
+
+  const config = await loadConfig()
+  const ext = parsed.ext
+
+  // 如果已是封面，无需操作
+  if (parsed.type === 'cover') {
+    return { changed: false, message: '该图片已是封面' }
+  }
+
+  // 1. 检查是否已有封面，如果有，将其转为 gallery
+  const existingCover = await findExistingCover(projectId)
+  let oldCoverNewFilename = null
+
+  if (existingCover) {
+    const existingExt = existingCover.split('.').pop()
+    const nextIndex = await getNextGalleryIndex(projectId)
+    oldCoverNewFilename = `${projectId}__gallery_${nextIndex}.${existingExt}`
+
+    const oldCoverPath = path.join(RAW_IMAGES_DIR, existingCover)
+    const newGalleryPath = path.join(RAW_IMAGES_DIR, oldCoverNewFilename)
+    await fs.rename(oldCoverPath, newGalleryPath)
+
+    // 更新 cropData
+    if (config.cropData[existingCover]) {
+      config.cropData[oldCoverNewFilename] = config.cropData[existingCover]
+      delete config.cropData[existingCover]
+    }
+  }
+
+  // 2. 将选中的 gallery 图片设为封面
+  const newCoverFilename = `${projectId}__cover.${ext}`
+  const srcPath = path.join(RAW_IMAGES_DIR, filename)
+  const destPath = path.join(RAW_IMAGES_DIR, newCoverFilename)
+  await fs.rename(srcPath, destPath)
+
+  // 更新 cropData
+  if (config.cropData[filename]) {
+    config.cropData[newCoverFilename] = config.cropData[filename]
+    delete config.cropData[filename]
+  }
+
+  await saveConfig(config)
+
+  return {
+    changed: true,
+    newCoverFilename,
+    oldCoverFilename: existingCover,
+    oldCoverNewFilename,
+  }
 }

@@ -7,14 +7,15 @@ interface ProjectDetailProps {
     project: ProjectData
 }
 
-// 链接类型配置
+// 链接类型配置（图标使用 iconfont.css 中定义的）
 const linkConfig: Record<ProjectLink['type'], { icon: string; label: string; primary?: boolean }> = {
     github: { icon: 'icon-github', label: '查看源码', primary: true },
-    report: { icon: 'icon-file-text', label: '相关文章' },
-    video: { icon: 'icon-play', label: '视频演示' },
-    demo: { icon: 'icon-globe', label: '在线演示', primary: true },
-    docs: { icon: 'icon-book', label: '文档' },
-    download: { icon: 'icon-download', label: '下载' },
+    report: { icon: 'icon-file-list', label: '相关文章' },
+    video: { icon: 'icon-bilibili', label: '视频演示' },
+    demo: { icon: 'icon-rocket', label: '在线演示', primary: true },
+    docs: { icon: 'icon-contacts-book', label: '文档' },
+    download: { icon: 'icon-down', label: '下载' },
+    post: { icon: 'icon-pen', label: '查看文章' },
 }
 
 export function ProjectDetail({ project }: ProjectDetailProps) {
@@ -266,10 +267,12 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
                                 {allLinks.map((link, idx) => {
                                     const config = linkConfig[link.type]
                                     const isExternal = link.url.startsWith('http')
+                                    // 站内链接需要加 withBase
+                                    const href = isExternal ? link.url : withBase(link.url)
                                     return (
                                         <a
                                             key={idx}
-                                            href={link.url}
+                                            href={href}
                                             target={isExternal ? '_blank' : undefined}
                                             rel={isExternal ? 'noopener noreferrer' : undefined}
                                             className="flex items-center gap-3 p-3 rounded-xl bg-primary hover:bg-accent/10 transition-colors group"

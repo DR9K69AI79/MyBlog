@@ -6,7 +6,7 @@ export interface GalleryItem {
 }
 
 export interface ProjectLink {
-  type: 'github' | 'report' | 'video' | 'demo' | 'docs' | 'download'
+  type: 'github' | 'report' | 'video' | 'demo' | 'docs' | 'download' | 'post'
   url: string
   label?: string
 }

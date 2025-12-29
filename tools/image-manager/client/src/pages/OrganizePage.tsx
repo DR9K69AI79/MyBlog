@@ -1,9 +1,10 @@
 /**
  * 排序/标注页面
- * 调整 Gallery 顺序和编辑标注
+ * 调整 Gallery 顺序、编辑标注、选择封面
+ * 改进：自动保存，所见即所得
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     DndContext,
@@ -28,6 +29,21 @@ import { useImageManager } from '../store/useImageManager';
 import { ImageInfo, Project } from '../api/client';
 import './OrganizePage.css';
 
+// 防抖函数
+function useDebouncedCallback<T extends (...args: any[]) => any>(
+    callback: T,
+    delay: number
+) {
+    const timeoutRef = useState<NodeJS.Timeout | null>(null)[1];
+
+    return useCallback((...args: Parameters<T>) => {
+        timeoutRef((prev) => {
+            if (prev) clearTimeout(prev);
+            return setTimeout(() => callback(...args), delay);
+        });
+    }, [callback, delay, timeoutRef]);
+}
+
 function OrganizePage() {
     const { projectId } = useParams();
     const navigate = useNavigate();
@@ -38,24 +54,31 @@ function OrganizePage() {
         reorderGallery,
         updateCaption,
         unassignImage,
+        setCoverImage,
     } = useImageManager();
 
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-    const [galleryItems, setGalleryItems] = useState<ImageInfo[]>([]);
-    const [isSaving, setIsSaving] = useState(false);
-    const [hasChanges, setHasChanges] = useState(false);
+    const [allImages, setAllImages] = useState<(ImageInfo & { isCover: boolean })[]>([]);
 
     useEffect(() => {
         fetchData();
     }, [fetchData]);
 
-    // 选择项目
+    // 选择项目并合并所有图片
     useEffect(() => {
         if (projectId && projects.length > 0) {
             const project = projects.find(p => p.id === projectId);
             if (project) {
                 setSelectedProject(project);
-                setGalleryItems([...project.rawImages.gallery]);
+                // 合并封面和 gallery，封面排在最前
+                const merged: (ImageInfo & { isCover: boolean })[] = [];
+                if (project.rawImages.cover) {
+                    merged.push({ ...project.rawImages.cover, isCover: true });
+                }
+                project.rawImages.gallery.forEach(img => {
+                    merged.push({ ...img, isCover: false });
+                });
+                setAllImages(merged);
             }
         } else if (projects.length > 0 && !projectId) {
             // 自动选择第一个有图片的项目
@@ -73,58 +96,52 @@ function OrganizePage() {
         useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
     );
 
-    const handleDragEnd = (event: DragEndEvent) => {
+    // 拖拽结束 - 自动保存排序
+    const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
-        if (!over || active.id === over.id) return;
+        if (!over || active.id === over.id || !selectedProject) return;
 
-        const oldIndex = galleryItems.findIndex(item => item.filename === active.id);
-        const newIndex = galleryItems.findIndex(item => item.filename === over.id);
+        const oldIndex = allImages.findIndex(item => item.filename === active.id);
+        const newIndex = allImages.findIndex(item => item.filename === over.id);
 
-        const newItems = arrayMove(galleryItems, oldIndex, newIndex);
-        setGalleryItems(newItems);
-        setHasChanges(true);
-    };
+        const newItems = arrayMove(allImages, oldIndex, newIndex);
+        setAllImages(newItems);
 
-    const handleCaptionChange = (filename: string, newCaption: string) => {
-        setGalleryItems(items =>
-            items.map(item =>
-                item.filename === filename
-                    ? { ...item, caption: newCaption }
-                    : item
-            )
-        );
-        setHasChanges(true);
-    };
-
-    const handleSave = async () => {
-        if (!selectedProject) return;
-
-        setIsSaving(true);
+        // 立即保存排序
         try {
-            // 1. 保存排序
+            const galleryItems = newItems.filter(item => !item.isCover);
             const newOrder = galleryItems.map((item, idx) => ({
                 filename: item.filename,
                 newIndex: idx + 1,
             }));
             await reorderGallery(selectedProject.id, newOrder);
-
-            // 2. 保存标注变更
-            for (const item of galleryItems) {
-                const original = selectedProject.rawImages.gallery.find(
-                    g => g.index === (galleryItems.indexOf(item) + 1)
-                );
-                if (original?.caption !== item.caption) {
-                    await updateCaption(item.filename, item.caption || '');
-                }
-            }
-
-            toast.success('保存成功');
-            setHasChanges(false);
-            fetchData(); // 刷新数据
+            toast.success('排序已保存');
         } catch {
-            toast.error('保存失败');
-        } finally {
-            setIsSaving(false);
+            toast.error('排序保存失败');
+            // 恢复原状态
+            fetchData();
+        }
+    };
+
+    // 标注变更 - 自动保存（失焦时）
+    const handleCaptionSave = async (filename: string, newCaption: string) => {
+        try {
+            await updateCaption(filename, newCaption);
+            toast.success('标注已保存');
+        } catch {
+            toast.error('标注保存失败');
+        }
+    };
+
+    // 设置封面
+    const handleSetCover = async (filename: string) => {
+        if (!selectedProject) return;
+
+        try {
+            await setCoverImage(selectedProject.id, filename);
+            toast.success('已设为封面');
+        } catch {
+            toast.error('设置封面失败');
         }
     };
 
@@ -132,7 +149,7 @@ function OrganizePage() {
         if (!confirm('确定移除此图片？')) return;
         try {
             await unassignImage(filename);
-            setGalleryItems(items => items.filter(item => item.filename !== filename));
+            setAllImages(items => items.filter(item => item.filename !== filename));
             toast.success('已移除');
         } catch {
             toast.error('移除失败');
@@ -157,18 +174,7 @@ function OrganizePage() {
     return (
         <PageLayout
             title="🔢 排序/标注"
-            description="拖拽调整 Gallery 顺序，直接编辑标注文字"
-            footer={
-                hasChanges && (
-                    <button
-                        className="btn btn-primary"
-                        onClick={handleSave}
-                        disabled={isSaving}
-                    >
-                        {isSaving ? '保存中...' : '💾 保存更改'}
-                    </button>
-                )
-            }
+            description="拖拽自动保存排序 · 标注失焦自动保存 · 点击⭐设为封面"
         >
             {/* 项目选择器 */}
             <div className="project-selector">
@@ -180,7 +186,7 @@ function OrganizePage() {
                     <option value="" disabled>请选择项目</option>
                     {projectsWithImages.map(p => (
                         <option key={p.id} value={p.id}>
-                            {p.id} ({p.rawImages.gallery.length} 张)
+                            {p.id} ({(p.rawImages.cover ? 1 : 0) + p.rawImages.gallery.length} 张)
                         </option>
                     ))}
                 </select>
@@ -188,41 +194,33 @@ function OrganizePage() {
 
             {selectedProject ? (
                 <div className="organize-content">
-                    {/* 封面展示 */}
-                    {selectedProject.rawImages.cover && (
-                        <section className="cover-section">
-                            <h3>📷 封面</h3>
-                            <div className="cover-preview">
-                                <img src={selectedProject.rawImages.cover.url} alt="cover" />
-                            </div>
-                        </section>
-                    )}
-
-                    {/* Gallery 排序 */}
+                    {/* 统一的图片列表 */}
                     <section className="gallery-section">
                         <div className="section-header">
-                            <h3>🎨 Gallery ({galleryItems.length})</h3>
-                            <span className="hint">拖拽卡片调整顺序</span>
+                            <h3>📸 项目图片 ({allImages.length})</h3>
+                            <span className="hint">自动保存 · 拖拽调整顺序 · 点击⭐设为封面</span>
                         </div>
 
-                        {galleryItems.length > 0 ? (
+                        {allImages.length > 0 ? (
                             <DndContext
                                 sensors={sensors}
                                 collisionDetection={closestCenter}
                                 onDragEnd={handleDragEnd}
                             >
                                 <SortableContext
-                                    items={galleryItems.map(item => item.filename)}
+                                    items={allImages.map(item => item.filename)}
                                     strategy={rectSortingStrategy}
                                 >
                                     <div className="gallery-grid">
-                                        {galleryItems.map((item, index) => (
+                                        {allImages.map((item, index) => (
                                             <SortableGalleryItem
                                                 key={item.filename}
                                                 item={item}
                                                 index={index}
-                                                onCaptionChange={handleCaptionChange}
+                                                isCover={item.isCover}
+                                                onCaptionSave={handleCaptionSave}
                                                 onRemove={handleRemove}
+                                                onSetCover={handleSetCover}
                                             />
                                         ))}
                                     </div>
@@ -230,7 +228,7 @@ function OrganizePage() {
                             </DndContext>
                         ) : (
                             <div className="empty-gallery">
-                                <p>暂无 Gallery 图片</p>
+                                <p>暂无图片</p>
                                 <p>请先在「分拣」页面分配图片</p>
                             </div>
                         )}
@@ -245,18 +243,31 @@ function OrganizePage() {
     );
 }
 
-// 可排序的 Gallery 项
+// 可排序的图片项
 function SortableGalleryItem({
     item,
     index,
-    onCaptionChange,
+    isCover,
+    onCaptionSave,
     onRemove,
+    onSetCover,
 }: {
-    item: ImageInfo;
+    item: ImageInfo & { isCover: boolean };
     index: number;
-    onCaptionChange: (filename: string, caption: string) => void;
+    isCover: boolean;
+    onCaptionSave: (filename: string, caption: string) => void;
     onRemove: (filename: string) => void;
+    onSetCover: (filename: string) => void;
 }) {
+    const [localCaption, setLocalCaption] = useState(item.caption || '');
+    const [originalCaption, setOriginalCaption] = useState(item.caption || '');
+
+    // 同步外部数据变化
+    useEffect(() => {
+        setLocalCaption(item.caption || '');
+        setOriginalCaption(item.caption || '');
+    }, [item.caption, item.filename]);
+
     const {
         attributes,
         listeners,
@@ -273,11 +284,19 @@ function SortableGalleryItem({
         zIndex: isDragging ? 100 : 1,
     };
 
+    // 失焦时保存（只在内容有变化时）
+    const handleBlur = () => {
+        if (localCaption !== originalCaption) {
+            onCaptionSave(item.filename, localCaption);
+            setOriginalCaption(localCaption);
+        }
+    };
+
     return (
         <div
             ref={setNodeRef}
             style={style}
-            className={`gallery-item ${isDragging ? 'dragging' : ''}`}
+            className={`gallery-item ${isDragging ? 'dragging' : ''} ${isCover ? 'is-cover' : ''}`}
         >
             <div className="item-handle" {...attributes} {...listeners}>
                 <span className="index">{index + 1}</span>
@@ -286,22 +305,38 @@ function SortableGalleryItem({
 
             <div className="item-preview">
                 <img src={item.url} alt="" />
-                <button
-                    className="remove-btn"
-                    onClick={() => onRemove(item.filename)}
-                    title="移除"
-                >
-                    ×
-                </button>
+                {isCover && <span className="cover-badge">封面</span>}
+
+                <div className="item-actions">
+                    {!isCover && (
+                        <button
+                            className="action-btn set-cover"
+                            onClick={() => onSetCover(item.filename)}
+                            title="设为封面"
+                        >
+                            ⭐
+                        </button>
+                    )}
+                    <button
+                        className="action-btn remove"
+                        onClick={() => onRemove(item.filename)}
+                        title="移除"
+                    >
+                        ×
+                    </button>
+                </div>
             </div>
 
-            <input
-                type="text"
-                className="caption-input"
-                placeholder="添加标注..."
-                value={item.caption || ''}
-                onChange={(e) => onCaptionChange(item.filename, e.target.value)}
-            />
+            {!isCover && (
+                <input
+                    type="text"
+                    className="caption-input"
+                    placeholder="添加标注（失焦自动保存）..."
+                    value={localCaption}
+                    onChange={(e) => setLocalCaption(e.target.value)}
+                    onBlur={handleBlur}
+                />
+            )}
         </div>
     );
 }

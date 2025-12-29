@@ -70,7 +70,7 @@ export function ShowcaseGallery({ project, align = 'left', disableHoverEffects =
                     {images.map((img, idx) => (
                         <motion.img
                             key={idx}
-                            src={img.url}
+                            src={withBase(img.url)}
                             alt={img.caption || project.displayName}
                             className="absolute inset-0 size-full object-cover"
                             initial={false}

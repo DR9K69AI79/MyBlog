@@ -34,29 +34,6 @@
   gap: 32px;
 }
 
-/* 封面区 */
-.cover-section h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0 0 12px;
-  color: var(--text-secondary);
-}
-
-.cover-preview {
-  max-width: 400px;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-}
-
-.cover-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* Gallery 区 */
 .gallery-section {
   flex: 1;
@@ -84,7 +61,7 @@
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
 }
 
@@ -98,6 +75,12 @@
 
 .gallery-item.dragging {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 封面样式 */
+.gallery-item.is-cover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
 }
 
 .item-handle {
@@ -136,24 +119,64 @@
   object-fit: cover;
 }
 
-.item-preview .remove-btn {
+/* 封面标识 */
+.item-preview .cover-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: var(--accent);
+  color: white;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* 操作按钮组 */
+.item-actions {
   position: absolute;
   top: 6px;
   right: 6px;
-  width: 24px;
-  height: 24px;
-  background: var(--danger);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 14px;
-  cursor: pointer;
+  display: flex;
+  gap: 4px;
   opacity: 0;
   transition: opacity 0.15s;
 }
 
-.item-preview:hover .remove-btn {
+.item-preview:hover .item-actions {
   opacity: 1;
+}
+
+.action-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.action-btn.set-cover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #f59e0b;
+}
+
+.action-btn.set-cover:hover {
+  background: #fef3c7;
+  transform: scale(1.1);
+}
+
+.action-btn.remove {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+.action-btn.remove:hover {
+  background: var(--danger);
 }
 
 .caption-input {
@@ -164,6 +187,7 @@
   background: transparent;
   color: var(--text-primary);
   font-size: 0.85rem;
+  box-sizing: border-box;
 }
 
 .caption-input:focus {

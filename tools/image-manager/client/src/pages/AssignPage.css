@@ -33,7 +33,6 @@
 }
 
 .pending-header h2 {
-  flex: 1;
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-secondary);
@@ -47,6 +46,16 @@
   padding: 2px 8px;
   border-radius: 10px;
   margin-left: 8px;
+}
+
+.pending-header .selected-hint {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.pending-header .btn {
+  margin-left: auto;
 }
 
 .pending-images {
@@ -74,6 +83,7 @@
   opacity: 0.5;
 }
 
+/* 可选择的待分配图片 */
 .pending-image {
   position: relative;
   width: 100px;
@@ -95,10 +105,32 @@
   cursor: grabbing;
 }
 
+.pending-image.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
 .pending-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
+}
+
+.pending-image .selected-check {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 
 .pending-image .delete-btn {
@@ -176,20 +208,27 @@
 /* 项目网格 */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
 
+/* 简化的项目放置区 */
 .project-drop-zone {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: 10px;
   padding: 12px;
   transition: all 0.15s;
+  min-height: 120px;
 }
 
 .project-drop-zone:hover {
   border-color: var(--border-light);
+}
+
+.project-drop-zone.dragover {
+  border-color: var(--accent);
+  background: var(--accent-light);
 }
 
 .project-header {
@@ -204,9 +243,10 @@
   height: 8px;
   border-radius: 50%;
   background: var(--border);
+  flex-shrink: 0;
 }
 
-.status-dot.has-cover {
+.status-dot.has-images {
   background: var(--success);
 }
 
@@ -216,79 +256,110 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
 }
 
-.cover-drop {
-  aspect-ratio: 16 / 9;
-  background: var(--bg-secondary);
-  border: 2px dashed var(--border);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.image-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* 项目图片展示 */
+.project-images {
+  min-height: 60px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.image-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
   overflow: hidden;
-  margin-bottom: 8px;
-  transition: all 0.15s;
 }
 
-.cover-drop.dragover {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
-
-.cover-drop.has-image {
-  border-style: solid;
-  border-color: var(--border);
-}
-
-.cover-drop img {
+.image-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.drop-hint {
+.image-thumb.is-cover {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.image-thumb .cover-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: var(--accent);
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.image-thumb .unassign-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-thumb:hover .unassign-btn {
+  opacity: 1;
+}
+
+.image-thumb .unassign-btn:hover {
+  background: var(--danger);
+}
+
+.more-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border-radius: 6px;
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
-.gallery-drop {
-  height: 36px;
-  background: var(--bg-secondary);
-  border: 2px dashed var(--border);
-  border-radius: 6px;
+.drop-hint {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
-}
-
-.gallery-drop.dragover {
-  border-color: var(--success);
-  background: var(--success-light);
-}
-
-.gallery-preview {
-  display: flex;
+  height: 60px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
   gap: 4px;
-  align-items: center;
 }
 
-.gallery-preview img {
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
-  object-fit: cover;
-}
-
-.gallery-preview .more {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  padding-left: 4px;
+.drop-hint span:first-child {
+  font-size: 1.2rem;
+  opacity: 0.5;
 }
 
 /* 拖拽预览 */
 .drag-preview {
+  position: relative;
   width: 120px;
   height: 80px;
   border-radius: 8px;
@@ -301,4 +372,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.drag-preview .drag-count {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: var(--accent);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
 }

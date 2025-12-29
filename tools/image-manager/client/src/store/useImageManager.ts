@@ -57,6 +57,10 @@ interface ImageManagerState {
   }
   openCaptionModal: (image: ImageInfo, projectId: string) => void
   closeCaptionModal: () => void
+
+  // 批量分配和设置封面
+  assignMultipleImages: (filenames: string[], projectId: string) => Promise<void>
+  setCoverImage: (projectId: string, filename: string) => Promise<void>
 }
 
 export const useImageManager = create<ImageManagerState>((set, get) => ({
@@ -244,5 +248,27 @@ export const useImageManager = create<ImageManagerState>((set, get) => ({
     set({
       captionModal: { open: false, image: null, projectId: null },
     })
+  },
+
+  // 批量分配图片到项目
+  assignMultipleImages: async (filenames, projectId) => {
+    try {
+      await imagesApi.assignMultiple(filenames, projectId)
+      await get().fetchData()
+    } catch (err) {
+      set({ error: (err as Error).message })
+      throw err
+    }
+  },
+
+  // 设置项目封面
+  setCoverImage: async (projectId, filename) => {
+    try {
+      await imagesApi.setCover(projectId, filename)
+      await get().fetchData()
+    } catch (err) {
+      set({ error: (err as Error).message })
+      throw err
+    }
   },
 }))
