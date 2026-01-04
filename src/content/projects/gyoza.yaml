@@ -1,9 +1,30 @@
 id: gyoza-blog
 displayName: DWHITE's Blog
 description: 基于Gyoza模板(基于Astro框架)二次开发的个人技术博客与作品集网站。
+
+# 详细描述
+longDescription: |
+  基于 [Gyoza](https://github.com/lxchapu/astro-gyoza) 模板二次开发的个人博客，用于记录学习笔记和展示个人项目。
+  
+  主要做了首页 3D 项目展示、作品集页面等定制化修改，大部分功能为模板自带。
+
+# 显示控制
 visibility:
   homepage: true
-  portfolio: false
+  portfolio: true
+status: in-progress
+
+# 技术栈（模板技术栈）
+techStack:
+  - Astro
+  - React
+  - TypeScript
+
+# 项目亮点
+highlights:
+  - 首页 3D 项目展示（基于 Three.js）
+  - 作品集时间线页面
+  - GitHub Pages 自动部署
 
 # ========== 首页 3D 展示配置 ==========
 modelType: custom
@@ -33,8 +54,20 @@ modelParams:
     autoRotate: false
     rotationSpeed: 0.5
     bounceEnabled: true
-projectUrl: 'https://github.com/DR9K69AI79/MyBlog'
-cover: 'https://avatars.githubusercontent.com/u/185234493?v=4'
-tags: ['Astro', 'React', 'TypeScript', 'Blog']
-category: 'Web Development'
+
+# 链接配置
+links:
+  - type: github
+    url: 'https://github.com/DR9K69AI79/MyBlog'
+  - type: demo
+    url: 'https://dr9k69ai79.github.io/MyBlog'
+    label: '在线访问'
+
+tags:
+  - Astro
+  - React
+  - TypeScript
+  - Three.js
+  - Blog
+category: Web Development
 timeText: '2025年8月'
