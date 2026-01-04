@@ -74,7 +74,7 @@ export default function ProjectSwitcher({
         </svg>
       </motion.button>
 
-      {/* 当前项目信息 */}
+      {/* 当前项目信息 - 默认跳转到项目详情页 */}
       <div className="flex-1 text-center min-w-0">
         <motion.div
           key={currentProject.id}
@@ -82,25 +82,15 @@ export default function ProjectSwitcher({
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          {currentProject.postUrl ||
-          (currentProject.projectUrl && currentProject.projectUrl !== '#') ? (
-            <button
-              onClick={() => {
-                if (currentProject.postUrl) {
-                  window.location.href = currentProject.postUrl
-                } else if (currentProject.projectUrl && currentProject.projectUrl !== '#') {
-                  window.open(currentProject.projectUrl, '_blank')
-                }
-              }}
-              className="text-sm font-medium text-primary hover:text-accent transition-colors cursor-pointer underline decoration-dotted underline-offset-2 truncate block text-center w-full"
-            >
-              {currentProject.displayName}
-            </button>
-          ) : (
-            <div className="text-sm font-medium text-primary truncate text-center">
-              {currentProject.displayName}
-            </div>
-          )}
+          <button
+            onClick={() => {
+              // 默认跳转到项目详情页
+              window.location.href = `/projects/${currentProject.id}`
+            }}
+            className="text-sm font-medium text-primary hover:text-accent transition-colors cursor-pointer underline decoration-dotted underline-offset-2 truncate block text-center w-full"
+          >
+            {currentProject.displayName}
+          </button>
           <div className="text-xs text-secondary mt-1">
             {currentProject.timeText || (currentProject.type === 'built-in' ? '内置' : '自定义')}
           </div>
@@ -166,11 +156,10 @@ export default function ProjectSwitcher({
               key={project.id}
               whileHover={{ backgroundColor: 'rgba(79, 70, 229, 0.1)' }}
               onClick={() => handleProjectSelect(project)}
-              className={`w-full px-4 py-2 text-left text-sm transition-colors ${
-                project.id === currentProject.id
+              className={`w-full px-4 py-2 text-left text-sm transition-colors ${project.id === currentProject.id
                   ? 'bg-accent/20 text-accent'
                   : 'text-primary hover:text-accent'
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between">
                 <span>{project.displayName}</span>
@@ -282,9 +271,8 @@ function ProjectUploaderModal({
 
         {uploadStatus && !isUploading && (
           <div
-            className={`text-sm text-center ${
-              uploadStatus.includes('成功') ? 'text-green-500' : 'text-red-500'
-            }`}
+            className={`text-sm text-center ${uploadStatus.includes('成功') ? 'text-green-500' : 'text-red-500'
+              }`}
           >
             {uploadStatus}
           </div>

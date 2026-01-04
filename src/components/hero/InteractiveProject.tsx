@@ -169,30 +169,17 @@ export default function InteractiveProject({ className = '' }: InteractiveProjec
                   }}
                   className="space-y-4"
                 >
-                  {/* 项目标题和链接 */}
+                  {/* 项目标题和链接 - 默认跳转到项目详情页 */}
                   <div className="mb-3">
-                    {currentProject.postUrl ||
-                      (currentProject.projectUrl && currentProject.projectUrl !== '#') ? (
-                      <button
-                        onClick={() => {
-                          if (currentProject.postUrl) {
-                            window.location.href = currentProject.postUrl
-                          } else if (
-                            currentProject.projectUrl &&
-                            currentProject.projectUrl !== '#'
-                          ) {
-                            window.open(currentProject.projectUrl, '_blank')
-                          }
-                        }}
-                        className="text-lg font-semibold text-primary hover:text-accent transition-colors cursor-pointer underline decoration-dotted underline-offset-4 hover:decoration-solid relative z-50"
-                      >
-                        {currentProject.displayName}
-                      </button>
-                    ) : (
-                      <h3 className="text-lg font-semibold text-primary">
-                        {currentProject.displayName}
-                      </h3>
-                    )}
+                    <button
+                      onClick={() => {
+                        // 默认跳转到项目详情页
+                        window.location.href = `/projects/${currentProject.id}`
+                      }}
+                      className="text-lg font-semibold text-primary hover:text-accent transition-colors cursor-pointer underline decoration-dotted underline-offset-4 hover:decoration-solid relative z-50"
+                    >
+                      {currentProject.displayName}
+                    </button>
                     <div className="text-sm text-secondary mt-1">
                       {currentProject.timeText ||
                         (currentProject.type === 'built-in' ? '内置项目' : '自定义项目')}

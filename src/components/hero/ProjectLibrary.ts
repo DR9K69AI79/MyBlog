@@ -245,7 +245,7 @@ export class ProjectLibraryManager {
     }
 
     // 获取所有显示的项目
-    const visibleProjects = this.yamlProjects.filter((project) => project.showOnHomepage !== false)
+    const visibleProjects = this.yamlProjects.filter((project) => this.isVisibleOnHomepage(project))
 
     if (visibleProjects.length === 0) {
       return null
